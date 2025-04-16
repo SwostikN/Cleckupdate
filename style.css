@@ -1,0 +1,406 @@
+/* Custom styles to complement Bulma */
+
+/* Header Styling */
+.navbar {
+    padding: 0.5rem 1rem;
+}
+
+.navbar-item.nav-link {
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.navbar-item.nav-link:hover {
+    color: #48c774 !important; /* Green to match Cleckfax Traders logo */
+}
+
+.navbar-item.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #48c774;
+    transition: width 0.3s ease;
+}
+
+.navbar-item.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Hero Section Styling */
+.hero.is-medium .hero-body {
+    padding: 3rem 1.5rem;
+}
+
+.hero .columns.is-vcentered {
+    align-items: center;
+}
+
+.hero .column.is-half img {
+    width: 100%;
+    height: auto;
+}
+
+/* Category Circles  */
+.category-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #e0e0e0; /* Light gray to match wireframe */
+    border: 2px solid #d0d0d0; /* Add border for visibility */
+    margin: 0 auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.columns.is-multiline.is-centered .column.is-narrow p {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+/* Unlock Local Community Offer Styling */
+.section.has-background-light .columns.is-vcentered {
+    align-items: center;
+}
+
+.section.has-background-light .column.is-half img {
+    width: 100%;
+    height: auto;
+}
+
+/* Social Icons */
+.social-icons a {
+    margin: 0 10px;
+    color: #333;
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #48c774;
+}
+
+/* Card Styling */
+.card {
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* Carousel Arrow */
+.carousel-arrow {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Footer Styling */
+.footer {
+    background-color: #f5f5f5;
+    padding: 3rem 1.5rem;
+}
+
+.footer-logo img {
+    margin-bottom: 1rem;
+}
+
+.footer ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer ul li a {
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.footer ul li a:hover {
+    color: #48c774;
+}
+
+.footer .has-text-right {
+    text-align: right;
+}
+
+/* Ensure Responsiveness */
+@media (max-width: 768px) {
+    .category-circle {
+        width: 100px;
+        height: 100px;
+    }
+
+    .columns.is-multiline.is-centered .column.is-narrow p {
+        font-size: 0.8rem;
+    }
+
+    .navbar-item.nav-link {
+        font-size: 0.9rem;
+    }
+
+    .footer .columns {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer .social-icons {
+        justify-content: center;
+        display: flex;
+    }
+
+    .footer-logo img {
+        margin: 0 auto;
+        display: block;
+    }
+
+    .carousel-arrow {
+        display: none; /* Hide arrows on mobile for simplicity */
+    }
+
+    .hero .columns {
+        flex-direction: column;
+    }
+
+    .hero .column.is-half {
+        text-align: center;
+    }
+
+    .hero .column.is-half img {
+        margin-top: 1.5rem;
+    }
+
+    .section.has-background-light .columns {
+        flex-direction: column;
+    }
+
+    .section.has-background-light .column.is-half {
+        text-align: center;
+    }
+
+    .section.has-background-light .column.is-half img {
+        margin-top: 1.5rem;
+    }
+
+    .footer .has-text-right {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-circle {
+        width: 80px;
+        height: 80px;
+    }
+
+    .columns.is-multiline.is-centered .column.is-narrow p {
+        font-size: 0.7rem;
+    }
+
+    .navbar-item.nav-link {
+        font-size: 0.8rem;
+    }
+}
+
+/* Product Overview Section */
+.section .columns .column.is-half img {
+    width: 100%;
+    height: auto;
+}
+
+.quantity-btn {
+    border: 1px solid #dbdbdb;
+    background-color: #f5f5f5;
+}
+
+.quantity-input {
+    width: 60px;
+    text-align: center;
+}
+
+/* Rating and Reviews Section */
+.box .media-left img {
+    border-radius: 50%;
+}
+
+/* Other Similar Products Section */
+.section .has-text-right {
+    text-align: right;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .section .columns {
+        flex-direction: column;
+    }
+
+    .quantity-input {
+        width: 50px;
+    }
+
+    .section .has-text-right {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .quantity-input {
+        width: 40px;
+    }
+}
+/* Hero Section Styling */
+.hero.is-medium .hero-body {
+    padding: 3rem 1.5rem;
+}
+
+.hero .columns.is-vcentered {
+    align-items: center;
+}
+
+.hero .column.is-half img {
+    width: 100%;
+    height: auto;
+}
+
+/* Product Listing Section */
+.slider {
+    width: 100%;
+    margin: 0.5rem 0;
+}
+
+#priceRangeMin, #priceRangeMax {
+    display: block;
+}
+
+/* Ensure Responsiveness */
+@media (max-width: 768px) {
+    .hero .columns {
+        flex-direction: column;
+    }
+
+    .hero .column.is-half {
+        text-align: center;
+    }
+
+    .hero .column.is-half img {
+        margin-top: 1.5rem;
+    }
+
+    .section .columns {
+        flex-direction: column;
+    }
+
+    .section .column.is-3, .section .column.is-9 {
+        width: 100%;
+    }
+
+    .section .has-text-right {
+        text-align: center;
+    }
+}
+
+/* Logo Styling */
+.header-logo {
+    max-height: 50px;
+}
+
+/* Ensure Buttons are Spaced Properly */
+.buttons.is-centered {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* Dark Button Styling for Login/Sign Up */
+.button.is-dark {
+    background-color: #2c3e50;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.button.is-dark:hover {
+    background-color: #34495e;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .columns.is-centered .column {
+        padding: 0.5rem;
+    }
+
+    .buttons.is-centered {
+        flex-direction: column;
+    }
+
+    .button.is-medium {
+        width: 100%;
+    }
+
+    .navbar-menu {
+        text-align: center;
+    }
+}
+
+/* Footer Logo */
+.footer-logo-img {
+    max-height: 50px;
+}
+
+/* Social Icons */
+.social-icons a {
+    margin-right: 1rem;
+    font-size: 1.5rem;
+    color: #363636;
+}
+
+.social-icons a:hover {
+    color: #3273dc;
+}
+
+/* Logo Styling */
+.header-logo {
+    max-height: 50px;
+}
+
+/* Ensure Buttons are Spaced Properly */
+.buttons.is-centered {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* Dark Button Styling for Login/Sign Up */
+.button.is-dark {
+    background-color: #2c3e50;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.button.is-dark:hover {
+    background-color: #34495e;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .columns.is-centered .column {
+        padding: 0.5rem;
+    }
+
+    .buttons.is-centered {
+        flex-direction: column;
+    }
+
+    .button.is-medium {
+        width: 100%;
+    }
+}

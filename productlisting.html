@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleckfax Traders - Product Listing</title>
+    <!-- Bulma CSS CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar Section -->
+    <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item logo-container" href="index.html">
+                <img src="logo.png" alt="Cleckfax Traders Logo" class="header-logo">
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navbarMenu" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item nav-link" href="product-listing.html">Shop</a>
+                <a class="navbar-item nav-link" href="#">Offers</a>
+                <a class="navbar-item nav-link" href="about.html">About Us</a>
+                <a class="navbar-item nav-link" href="product-listing.html">Products</a>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <input class="input" type="text" placeholder="Search products...">
+                </div>
+                <div class="navbar-item">
+                    <a class="button is-light" href="#">
+                        <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+                        <span>Cart (0)</span>
+                    </a>
+                </div>
+                <div class="navbar-item">
+                    <a class="button is-primary" href="login.html">Login</a>
+                </div>
+                <div class="navbar-item">
+                    <a class="button is-success" href="register.html">Become a trader</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero is-medium is-light">
+        <div class="hero-body">
+            <div class="columns is-vcentered">
+                <div class="column is-half">
+                    <p class="tag is-warning mb-2">Absolutely hot collections 🔥</p>
+                    <p class="title is-1">The Best Place To Find And Buy Amazing Product</p>
+                    <div class="stars mb-2">
+                        <span class="icon"><i class="fas fa-star"></i></span>
+                        <span class="icon"><i class="fas fa-star"></i></span>
+                        <span class="icon"><i class="fas fa-star"></i></span>
+                        <span class="icon"><i class="fas fa-star"></i></span>
+                        <span class="icon"><i class="fas fa-star"></i></span>
+                    </div>
+                    <p class="subtitle is-4">$330</p>
+                    <a class="button is-primary is-large" href="#">Shop Now</a>
+                </div>
+                <div class="column is-half">
+                    <figure class="image">
+                        <img src="hero-image.png" alt="Product Banner">
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Listing Section -->
+    <section class="section">
+        <div class="columns">
+            <!-- Filters -->
+            <div class="column is-one-quarter">
+                <h3 class="title is-5">Filters</h3>
+                <div class="field">
+                    <label class="label">Price Range</label>
+                    <input type="range" min="20" max="600" value="600" class="slider" id="priceRange">
+                    <p>€20 - €<span id="priceValue">600</span></p>
+                </div>
+                <div class="field">
+                    <label class="label">Condition 1</label>
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox"> Checkbox
+                        </label>
+                    </div>
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox"> Checkbox
+                        </label>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Condition 2</label>
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox"> Checkbox
+                        </label>
+                    </div>
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox"> Checkbox
+                        </label>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Rating</label>
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox"> ★★★★★
+                        </label>
+                    </div>
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox"> ★★★★☆
+                        </label>
+                    </div>
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox"> ★★★☆☆
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <!-- Product Grid -->
+            <div class="column is-three-quarters">
+                <div class="level">
+                    <div class="level-left">
+                        <p>Product Results (100+)</p>
+                    </div>
+                    <div class="level-right">
+                        <div class="select">
+                            <select>
+                                <option>Sort by: Last</option>
+                                <option>Sort by: Price Low to High</option>
+                                <option>Sort by: Price High to Low</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="columns is-multiline">
+                    <div class="column is-one-third">
+                        <a href="product-detail.html">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="placeholder.png" alt="Product">
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <p class="title is-5">Product name</p>
+                                    <p class="subtitle is-6">Ulamco tempor duis mollit aliqua incididunt culpa elit commodo.</p>
+                                    <p>$330</p>
+                                    <button class="button is-primary add-to-cart" data-product="Product 1">
+                                        <span class="icon"><i class="fas fa-heart"></i></span>
+                                        <span>Add to cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="column is-one-third">
+                        <a href="product-detail.html">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="placeholder.png" alt="Product">
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <p class="title is-5">Product name</p>
+                                    <p class="subtitle is-6">Ex adipiscing anim elit sit commodo labore.</p>
+                                    <p>$23</p>
+                                    <button class="button is-primary add-to-cart" data-product="Product 2">
+                                        <span class="icon"><i class="fas fa-heart"></i></span>
+                                        <span>Add to cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="column is-one-third">
+                        <a href="product-detail.html">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="placeholder.png" alt="Product">
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <p class="title is-5">Product name</p>
+                                    <p class="subtitle is-6">Sunt quem amet pariatur in veriam aliquip dolore quis.</p>
+                                    <p>$399</p>
+                                    <button class="button is-primary add-to-cart" data-product="Product 3">
+                                        <span class="icon"><i class="fas fa-heart"></i></span>
+                                        <span>Add to cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="column is-one-third">
+                        <a href="product-detail.html">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="placeholder.png" alt="Product">
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <p class="title is-5">Product name</p>
+                                    <p class="subtitle is-6">Aliqua occaecat anim amet non reprehenderit.</p>
+                                    <p>$160</p>
+                                    <button class="button is-primary add-to-cart" data-product="Product 4">
+                                        <span class="icon"><i class="fas fa-heart"></i></span>
+                                        <span>Add to cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="column is-one-third">
+                        <a href="product-detail.html">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="placeholder.png" alt="Product">
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <p class="title is-5">Product name</p>
+                                    <p class="subtitle is-6">Proident cupidatat dolor amet in deserunt.</p>
+                                    <p>$69</p>
+                                    <button class="button is-primary add-to-cart" data-product="Product 5">
+                                        <span class="icon"><i class="fas fa-heart"></i></span>
+                                        <span>Add to cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="column is-one-third">
+                        <a href="product-detail.html">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="placeholder.png" alt="Product">
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <p class="title is-5">Product name</p>
+                                    <p class="subtitle is-6">Amet sit eiusmod, anim proident laborum.</p>
+                                    <p>$420</p>
+                                    <button class="button is-primary add-to-cart" data-product="Product 6">
+                                        <span class="icon"><i class="fas fa-heart"></i></span>
+                                        <span>Add to cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="column is-one-third">
+                        <a href="product-detail.html">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="placeholder.png" alt="Product">
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <p class="title is-5">Product name</p>
+                                    <p class="subtitle is-6">Sit fugiat amet exceptur cupidatat non.</p>
+                                    <p>$120</p>
+                                    <button class="button is-primary add-to-cart" data-product="Product 7">
+                                        <span class="icon"><i class="fas fa-heart"></i></span>
+                                        <span>Add to cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="column is-one-third">
+                        <a href="product-detail.html">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="placeholder.png" alt="Product">
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <p class="title is-5">Product name</p>
+                                    <p class="subtitle is-6">Aliqua dolore ipsum nisl velti est.</p>
+                                    <p>$190</p>
+                                    <button class="button is-primary add-to-cart" data-product="Product 8">
+                                        <span class="icon"><i class="fas fa-heart"></i></span>
+                                        <span>Add to cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="column is-one-third">
+                        <a href="product-detail.html">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="placeholder.png" alt="Product">
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <p class="title is-5">Product name</p>
+                                    <p class="subtitle is-6">Ex pariatur aliqua consectetur cupidatat.</p>
+                                    <p>$109</p>
+                                    <button class="button is-primary add-to-cart" data-product="Product 9">
+                                        <span class="icon"><i class="fas fa-heart"></i></span>
+                                        <span>Add to cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="columns">
+            <div class="column is-half">
+                <div class="footer-logo">
+                    <img src="logo.png" alt="Cleckfax Traders Logo" class="footer-logo-img">
+                </div>
+                <p class="title is-4">Cleckfax Traders</p>
+                <p>Email: info@cleckfaxtraders.com</p>
+                <p>Phone: 646-675-5074</p>
+                <p>3961 Smith Street, New York, United States</p>
+                <div class="social-icons mt-4">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="column is-half">
+                <h2 class="title is-4">Contact Us</h2>
+                <form>
+                    <div class="field">
+                        <label class="label">Name</label>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <div class="control">
+                            <input class="input" type="email" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Message</label>
+                        <div class="control">
+                            <textarea class="textarea" placeholder="Type your message here..."></textarea>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-primary" type="submit">Send</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
