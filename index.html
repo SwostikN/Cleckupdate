@@ -9,7 +9,26 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #f0f8ff;
+        }
+        .circle-img {
+            width: 128px;
+            height: 128px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .circle-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+    </style>
 </head>
 <body>
     <!-- Navbar Section -->
@@ -52,7 +71,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero is-medium is-light">
+    <!-- <section class="hero is-medium is-light">
         <div class="hero-body">
             <div class="columns is-vcentered">
                 <div class="column is-half">
@@ -62,14 +81,76 @@
                 </div>
                 <div class="column is-half">
                     <figure class="image">
-                        <img src="hero-image.png" alt="Local Traders Banner">
+                        <img src="static/Images/product image/slider11.jpg" alt="Local Traders Banner">
                     </figure>
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
+   <!-- <section class="hero is-fullheight is-primary slider-hero">
+        <div class="hero-body">
+          <div class="container has-text-left">
+        <div class="hero-body">
+          <div class="container has-text-centered">
+            <h1 class="title is-1 has-text-white">FRESH - SUPPORT YOUR LOCAL TRADERS</h1>
+            <p class="subtitle has-text-white">Order by Tuesday midnight for pickup Wed-Fri</p>
+            <a class="button is-light is-large" href="product-listing.html">Shop Now</a>
+          </div>
+        </div>
+      </section>  -->
 
-    <!-- Top Categories Section -->
+      <section class="hero is-fullheight is-primary slider-hero">
+        <div class="hero-body">
+          <div class="container has-text-left">
+            <h1 class="title is-1 has-text-white">
+              FRESH - SUPPORT YOUR LOCAL TRADERS
+            </h1>
+            <p class="subtitle has-text-white">
+              Order by Tuesday midnight for pickup Wed-Fri
+            </p>
+            <a class="button is-light is-large" href="product-listing.html">Shop Now</a>
+          </div>
+        </div>
+      </section>
+      
+<!-- Top Categories Section -->
+<section class="section">
+    <h2 class="title has-text-centered">TOP CATEGORIES</h2>
+    <div class="columns is-multiline is-centered">
+        <div class="column is-narrow has-text-centered">
+            <figure class="image is-128x128 is-inline-block">
+                <img class="circle-img" src="static/Images/product image/category/bakery.jpeg" alt="Bakery">
+            </figure>
+            <p class="mt-2">Bakery</p>
+        </div>
+        <div class="column is-narrow has-text-centered">
+            <figure class="image is-128x128 is-inline-block">
+                <img class="circle-img" src="static/Images/product image/category/meat.jpeg" alt="Meat">
+            </figure>
+            <p class="mt-2">Meat</p>
+        </div>
+        <div class="column is-narrow has-text-centered">
+            <figure class="image is-128x128 is-inline-block">
+                <img class="circle-img" src="static/Images/product image/category/hake-fish.jpeg" alt="Fish">
+            </figure>
+            <p class="mt-2">Fish</p>
+        </div>
+        <div class="column is-narrow has-text-centered">
+            <figure class="image is-128x128 is-inline-block">
+                <img class="circle-img" src="static/Images/product image/category/img10.jpeg" alt="Fruits">
+            </figure>
+            <p class="mt-2">Fruits</p>
+        </div>
+        <div class="column is-narrow has-text-centered">
+            <figure class="image is-128x128 is-inline-block">
+                <img class="circle-img" src="static/Images/product image/category/veges.jpeg" alt="Vegetables">
+            </figure>
+            <p class="mt-2">Vegetables</p>
+        </div>
+    </div>
+</section>
+
+    <!-- Top Categories Section
     <section class="section">
         <h2 class="title has-text-centered">TOP CATEGORIES</h2>
         <div class="columns is-multiline is-centered">
@@ -94,22 +175,22 @@
                 <p>Vegetables</p>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Our Bestsellers Section -->
     <section class="section">
         <h2 class="title has-text-centered">OUR BESTSELLERS</h2>
         <div class="columns is-multiline is-centered">
             <div class="column is-one-third">
-                <a href="product-detail.html">
+                <a href="static/Images/product image/img2.jpeg">
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                                <img src="placeholder.png" alt="Product">
+                                <img src="static/Images/product image/img1.jpeg" alt="Product">
                             </figure>
                         </div>
                         <div class="card-content">
-                            <p class="title is-5">Product name</p>
+                            <p class="title is-5">Silver Fish</p>
                             <p class="subtitle is-6">€ 100</p>
                             <button class="button is-primary add-to-cart" data-product="Product 1">
                                 <span class="icon"><i class="fas fa-heart"></i></span>
@@ -124,11 +205,11 @@
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                                <img src="placeholder.png" alt="Product">
+                                <img src="static/Images/product image/img5.jpeg" alt="Product">
                             </figure>
                         </div>
                         <div class="card-content">
-                            <p class="title is-5">Product name</p>
+                            <p class="title is-5">Cheese Chookies</p>
                             <p class="subtitle is-6">€ 100</p>
                             <button class="button is-primary add-to-cart" data-product="Product 2">
                                 <span class="icon"><i class="fas fa-heart"></i></span>
@@ -143,11 +224,11 @@
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                                <img src="placeholder.png" alt="Product">
+                                <img src="static/Images/product image/img14.jpeg" alt="Product">
                             </figure>
                         </div>
                         <div class="card-content">
-                            <p class="title is-5">Product name</p>
+                            <p class="title is-5">Gauva</p>
                             <p class="subtitle is-6">€ 100</p>
                             <button class="button is-primary add-to-cart" data-product="Product 3">
                                 <span class="icon"><i class="fas fa-heart"></i></span>
@@ -173,7 +254,7 @@
             </div>
             <div class="column is-half">
                 <figure class="image">
-                    <img src="offer-image.png" alt="Community Offer Banner">
+                    <img src="static/Images/product image/banner2.jpg" alt="Community Offer Banner">
                 </figure>
             </div>
         </div>
@@ -188,11 +269,11 @@
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                                <img src="placeholder.png" alt="Product">
+                                <img src="static/Images/product image/img7.jpeg" alt="Product">
                             </figure>
                         </div>
                         <div class="card-content">
-                            <p class="title is-6">Product name</p>
+                            <p class="title is-6">Buff Lever</p>
                             <p class="subtitle is-7">€ 100</p>
                             <button class="button is-primary is-small add-to-cart" data-product="Product 4">
                                 <span class="icon"><i class="fas fa-heart"></i></span>
@@ -207,11 +288,11 @@
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                                <img src="placeholder.png" alt="Product">
+                                <img src="static/Images/product image/img8.jpeg" alt="Product">
                             </figure>
                         </div>
                         <div class="card-content">
-                            <p class="title is-6">Product name</p>
+                            <p class="title is-6">Pork Ribs</p>
                             <p class="subtitle is-7">€ 100</p>
                             <button class="button is-primary is-small add-to-cart" data-product="Product 5">
                                 <span class="icon"><i class="fas fa-heart"></i></span>
@@ -226,11 +307,11 @@
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                                <img src="placeholder.png" alt="Product">
+                                <img src="static/Images/product image/img13.jpeg" alt="Product">
                             </figure>
                         </div>
                         <div class="card-content">
-                            <p class="title is-6">Product name</p>
+                            <p class="title is-6">Baekon</p>
                             <p class="subtitle is-7">€ 100</p>
                             <button class="button is-primary is-small add-to-cart" data-product="Product 6">
                                 <span class="icon"><i class="fas fa-heart"></i></span>
@@ -245,11 +326,11 @@
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                                <img src="placeholder.png" alt="Product">
+                                <img src="static/Images/product image/img1.jpeg" alt="Product">
                             </figure>
                         </div>
                         <div class="card-content">
-                            <p class="title is-6">Product name</p>
+                            <p class="title is-6">Hake-Fish</p>
                             <p class="subtitle is-7">€ 100</p>
                             <button class="button is-primary is-small add-to-cart" data-product="Product 7">
                                 <span class="icon"><i class="fas fa-heart"></i></span>
@@ -264,11 +345,11 @@
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                                <img src="placeholder.png" alt="Product">
+                                <img src="static/Images/product image/img2.jpeg" alt="Product">
                             </figure>
                         </div>
                         <div class="card-content">
-                            <p class="title is-6">Product name</p>
+                            <p class="title is-6">Yak Cheese</p>
                             <p class="subtitle is-7">€ 100</p>
                             <button class="button is-primary is-small add-to-cart" data-product="Product 8">
                                 <span class="icon"><i class="fas fa-heart"></i></span>
@@ -293,7 +374,7 @@
                 <div class="card">
                     <div class="card-image">
                         <figure class="image is-4by3">
-                            <img src="placeholder.png" alt="Trader">
+                            <img src="static/Images/product image/trader1.jpg" alt="Trader">
                         </figure>
                     </div>
                     <div class="card-content">
@@ -305,7 +386,7 @@
                 <div class="card">
                     <div class="card-image">
                         <figure class="image is-4by3">
-                            <img src="placeholder.png" alt="Trader">
+                            <img src="static/Images/product image/trader2.jpg" alt="Trader">
                         </figure>
                     </div>
                     <div class="card-content">
@@ -317,7 +398,7 @@
                 <div class="card">
                     <div class="card-image">
                         <figure class="image is-4by3">
-                            <img src="placeholder.png" alt="Trader">
+                            <img src="static/Images/product image/trader3.jpg" alt="Trader">
                         </figure>
                     </div>
                     <div class="card-content">
@@ -329,7 +410,7 @@
                 <div class="card">
                     <div class="card-image">
                         <figure class="image is-4by3">
-                            <img src="placeholder.png" alt="Trader">
+                            <img src="static/Images/product image/trader4.jpg" alt="Trader">
                         </figure>
                     </div>
                     <div class="card-content">
@@ -341,7 +422,7 @@
                 <div class="card">
                     <div class="card-image">
                         <figure class="image is-4by3">
-                            <img src="placeholder.png" alt="Trader">
+                            <img src="static/Images/product image/trader5.jpg" alt="Trader">
                         </figure>
                     </div>
                     <div class="card-content">
