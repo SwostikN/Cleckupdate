@@ -1,4 +1,10 @@
 /* Custom styles to complement Bulma */
+/* style.css */
+body {
+    background-color: rgb(234, 238, 239); 
+    width:auto
+}
+
 
 /* Header Styling */
 .navbar {
@@ -311,7 +317,18 @@
 
 /* Logo Styling */
 .header-logo {
-    max-height: 50px;
+    max-height: 80px;
+    
+}
+
+/* Targeting the logo inside the section */
+.section .header-logo {
+    
+    width: 100px;
+    height: 100px;
+    max-height: none;
+    object-fit: contain;
+    
 }
 
 /* Ensure Buttons are Spaced Properly */
@@ -403,4 +420,31 @@
     .button.is-medium {
         width: 100%;
     }
+}
+
+/* -------product list---- */
+
+.hero-background {
+    background-image: url('istockphoto-1217108202-1024x1024.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: relative;
+    color: white;
+}
+
+.hero-background::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4); /* Optional dark overlay */
+    z-index: 1;
+}
+
+.hero-background .hero-body {
+    position: relative;
+    z-index: 2;
 }

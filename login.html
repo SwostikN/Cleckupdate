@@ -3,21 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cleckfax Traders - Login</title>
+    <title>Login </title>
     <!-- Bulma CSS CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- Navbar Section -->
+    <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item logo-container" href="index.html">
+                <img src="logo.png" alt="Cleckfax Traders Logo" class="header-logo">
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarMenu" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item nav-link" href="product-listing.html">Shop</a>
+                <a class="navbar-item nav-link" href="#">Offers</a>
+                <a class="navbar-item nav-link" href="about.html">About Us</a>
+                <a class="navbar-item nav-link" href="product-listing.html">Products</a>
+            </div>
+        </div>
+    </nav>
+
     <!-- Login Section -->
-    <section class="section">
+    <section class="section" >
+
         <div class="columns is-centered">
             <div class="column is-5">
                 <div class="has-text-centered mb-6">
-                    <img src="logo.png" alt="Cleckfax Traders Logo" class="header-logo mb-4">
+                    <!-- Targeted logo within the section -->
+                    <img src="logo removebg.png" alt="Cleckfax Traders Logo" class="header-logo mb-2">
                     <h1 class="title is-2">Welcome Back</h1>
                 </div>
                 <div class="buttons is-centered mb-4">
@@ -62,7 +88,7 @@
         </div>
     </section>
 
-    <!-- JavaScript -->
-    <script src="script.js"></script>
+    
+    </script>
 </body>
 </html>

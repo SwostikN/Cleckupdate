@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cleckfax Traders - Product Listing</title>
+    <title>Product Listing</title>
     <!-- Bulma CSS CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Navbar Section -->
@@ -52,30 +52,25 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero is-medium is-light">
-        <div class="hero-body">
-            <div class="columns is-vcentered">
-                <div class="column is-half">
-                    <p class="tag is-warning mb-2">Absolutely hot collections 🔥</p>
-                    <p class="title is-1">The Best Place To Find And Buy Amazing Product</p>
-                    <div class="stars mb-2">
-                        <span class="icon"><i class="fas fa-star"></i></span>
-                        <span class="icon"><i class="fas fa-star"></i></span>
-                        <span class="icon"><i class="fas fa-star"></i></span>
-                        <span class="icon"><i class="fas fa-star"></i></span>
-                        <span class="icon"><i class="fas fa-star"></i></span>
-                    </div>
-                    <p class="subtitle is-4">$330</p>
-                    <a class="button is-primary is-large" href="#">Shop Now</a>
-                </div>
-                <div class="column is-half">
-                    <figure class="image">
-                        <img src="hero-image.png" alt="Product Banner">
-                    </figure>
-                </div>
+<section class="hero is-medium is-light hero-background">
+    <div class="hero-body">
+        <div class="container has-text-left">
+            <p class="tag is-warning mb-2">Absolutely hot collections 🔥</p>
+            <p class="title is-1 has-text-white">The Best Place To Find And Buy 
+                Amazing Product</p>
+            <div class="stars mb-2">
+                <span class="icon has-text-warning"><i class="fas fa-star"></i></span>
+                <span class="icon has-text-warning"><i class="fas fa-star"></i></span>
+                <span class="icon has-text-warning"><i class="fas fa-star"></i></span>
+                <span class="icon has-text-warning"><i class="fas fa-star"></i></span>
+                <span class="icon has-text-warning"><i class="fas fa-star"></i></span>
             </div>
+            <p class="subtitle is-4 has-text-white">$330</p>
+            <a class="button is-primary is-large" href="#">Shop Now</a>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <!-- Product Listing Section -->
     <section class="section">
@@ -89,28 +84,58 @@
                     <p>€20 - €<span id="priceValue">600</span></p>
                 </div>
                 <div class="field">
-                    <label class="label">Condition 1</label>
+                    <label class="label">Traders</label>
                     <div class="control">
                         <label class="checkbox">
-                            <input type="checkbox"> Checkbox
+                            <input type="checkbox"> Trader 1
                         </label>
                     </div>
                     <div class="control">
                         <label class="checkbox">
-                            <input type="checkbox"> Checkbox
+                            <input type="checkbox"> Trader 2
+                        </label>
+                    </div>
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox"> Trader 3
+                        </label>
+                    </div>
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox"> Trader 4
+                        </label>
+                    </div>
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox"> Trader 5
                         </label>
                     </div>
                 </div>
                 <div class="field">
-                    <label class="label">Condition 2</label>
+                    <label class="label">Categories</label>
                     <div class="control">
                         <label class="checkbox">
-                            <input type="checkbox"> Checkbox
+                            <input type="checkbox"> Bakery
                         </label>
                     </div>
                     <div class="control">
                         <label class="checkbox">
-                            <input type="checkbox"> Checkbox
+                            <input type="checkbox"> Meat
+                        </label>
+                    </div>
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox"> Fish
+                        </label>
+                    </div>
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox"> Fruits
+                        </label>
+                    </div>
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox"> Vegetable
                         </label>
                     </div>
                 </div>
@@ -131,6 +156,18 @@
                             <input type="checkbox"> ★★★☆☆
                         </label>
                     </div>
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox"> ★★☆☆☆
+                        </label>
+                    </div>
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox"> ★☆☆☆☆
+                        </label>
+                    </div>
+                    
+                    
                 </div>
             </div>
             <!-- Product Grid -->
@@ -155,14 +192,14 @@
                             <div class="card">
                                 <div class="card-image">
                                     <figure class="image is-4by3">
-                                        <img src="placeholder.png" alt="Product">
+                                        <img src="./Bakery/Bakery/apple strudel.jpeg" alt="Apple Strudel">
                                     </figure>
                                 </div>
                                 <div class="card-content">
-                                    <p class="title is-5">Product name</p>
-                                    <p class="subtitle is-6">Ulamco tempor duis mollit aliqua incididunt culpa elit commodo.</p>
+                                    <p class="title is-5">Apple Strudel</p>
+                                    <p class="subtitle is-6">Flaky pastry filled with spiced apples and a hint of cinnamon sugar.</p>
                                     <p>$330</p>
-                                    <button class="button is-primary add-to-cart" data-product="Product 1">
+                                    <button class="button is-primary add-to-cart" data-product="Apple Strudel">
                                         <span class="icon"><i class="fas fa-heart"></i></span>
                                         <span>Add to cart</span>
                                     </button>
@@ -170,19 +207,20 @@
                             </div>
                         </a>
                     </div>
+                
                     <div class="column is-one-third">
                         <a href="product-detail.html">
                             <div class="card">
                                 <div class="card-image">
                                     <figure class="image is-4by3">
-                                        <img src="placeholder.png" alt="Product">
+                                        <img src="./Bakery/Bakery/assorted glazed doughnuts.jpeg" alt="Glazed Doughnuts">
                                     </figure>
                                 </div>
                                 <div class="card-content">
-                                    <p class="title is-5">Product name</p>
-                                    <p class="subtitle is-6">Ex adipiscing anim elit sit commodo labore.</p>
+                                    <p class="title is-5">Assorted Glazed Doughnuts</p>
+                                    <p class="subtitle is-6">A variety of soft, fluffy doughnuts topped with colorful glazes.</p>
                                     <p>$23</p>
-                                    <button class="button is-primary add-to-cart" data-product="Product 2">
+                                    <button class="button is-primary add-to-cart" data-product="Assorted Glazed Doughnuts">
                                         <span class="icon"><i class="fas fa-heart"></i></span>
                                         <span>Add to cart</span>
                                     </button>
@@ -190,19 +228,20 @@
                             </div>
                         </a>
                     </div>
+                
                     <div class="column is-one-third">
                         <a href="product-detail.html">
                             <div class="card">
                                 <div class="card-image">
                                     <figure class="image is-4by3">
-                                        <img src="placeholder.png" alt="Product">
+                                        <img src="./Bakery/Bakery/blueberry cheesecake slice.jpeg" alt="Blueberry Cheesecake">
                                     </figure>
                                 </div>
                                 <div class="card-content">
-                                    <p class="title is-5">Product name</p>
-                                    <p class="subtitle is-6">Sunt quem amet pariatur in veriam aliquip dolore quis.</p>
+                                    <p class="title is-5">Blueberry Cheesecake Slice</p>
+                                    <p class="subtitle is-6">Creamy cheesecake layered with blueberry topping and a graham crust.</p>
                                     <p>$399</p>
-                                    <button class="button is-primary add-to-cart" data-product="Product 3">
+                                    <button class="button is-primary add-to-cart" data-product="Blueberry Cheesecake Slice">
                                         <span class="icon"><i class="fas fa-heart"></i></span>
                                         <span>Add to cart</span>
                                     </button>
@@ -210,19 +249,20 @@
                             </div>
                         </a>
                     </div>
+                
                     <div class="column is-one-third">
                         <a href="product-detail.html">
                             <div class="card">
                                 <div class="card-image">
                                     <figure class="image is-4by3">
-                                        <img src="placeholder.png" alt="Product">
+                                        <img src="./Bakery/Bakery/cherry pie.jpeg" alt="Cherry Pie">
                                     </figure>
                                 </div>
                                 <div class="card-content">
-                                    <p class="title is-5">Product name</p>
-                                    <p class="subtitle is-6">Aliqua occaecat anim amet non reprehenderit.</p>
+                                    <p class="title is-5">Cherry Pie</p>
+                                    <p class="subtitle is-6">Classic buttery pie crust filled with juicy cherries and baked to perfection.</p>
                                     <p>$160</p>
-                                    <button class="button is-primary add-to-cart" data-product="Product 4">
+                                    <button class="button is-primary add-to-cart" data-product="Cherry Pie">
                                         <span class="icon"><i class="fas fa-heart"></i></span>
                                         <span>Add to cart</span>
                                     </button>
@@ -230,19 +270,20 @@
                             </div>
                         </a>
                     </div>
+                
                     <div class="column is-one-third">
                         <a href="product-detail.html">
                             <div class="card">
                                 <div class="card-image">
                                     <figure class="image is-4by3">
-                                        <img src="placeholder.png" alt="Product">
+                                        <img src="./Bakery/Bakery/chewy brownies.jpeg" alt="Chewy Brownies">
                                     </figure>
                                 </div>
                                 <div class="card-content">
-                                    <p class="title is-5">Product name</p>
-                                    <p class="subtitle is-6">Proident cupidatat dolor amet in deserunt.</p>
+                                    <p class="title is-5">Chewy Brownies</p>
+                                    <p class="subtitle is-6">Rich and fudgy chocolate brownies with a soft chewy center.</p>
                                     <p>$69</p>
-                                    <button class="button is-primary add-to-cart" data-product="Product 5">
+                                    <button class="button is-primary add-to-cart" data-product="Chewy Brownies">
                                         <span class="icon"><i class="fas fa-heart"></i></span>
                                         <span>Add to cart</span>
                                     </button>
@@ -250,19 +291,20 @@
                             </div>
                         </a>
                     </div>
+                
                     <div class="column is-one-third">
                         <a href="product-detail.html">
                             <div class="card">
                                 <div class="card-image">
                                     <figure class="image is-4by3">
-                                        <img src="placeholder.png" alt="Product">
+                                        <img src="./Bakery/Bakery/chocolate chip cookies.jpeg" alt="Chocolate Chip Cookies">
                                     </figure>
                                 </div>
                                 <div class="card-content">
-                                    <p class="title is-5">Product name</p>
-                                    <p class="subtitle is-6">Amet sit eiusmod, anim proident laborum.</p>
+                                    <p class="title is-5">Chocolate Chip Cookies</p>
+                                    <p class="subtitle is-6">Golden brown cookies packed with gooey chocolate chips.</p>
                                     <p>$420</p>
-                                    <button class="button is-primary add-to-cart" data-product="Product 6">
+                                    <button class="button is-primary add-to-cart" data-product="Chocolate Chip Cookies">
                                         <span class="icon"><i class="fas fa-heart"></i></span>
                                         <span>Add to cart</span>
                                     </button>
@@ -270,19 +312,20 @@
                             </div>
                         </a>
                     </div>
+                
                     <div class="column is-one-third">
                         <a href="product-detail.html">
                             <div class="card">
                                 <div class="card-image">
                                     <figure class="image is-4by3">
-                                        <img src="placeholder.png" alt="Product">
+                                        <img src="./Bakery/Bakery/cinnammon roll.jpeg" alt="Cinnamon Roll">
                                     </figure>
                                 </div>
                                 <div class="card-content">
-                                    <p class="title is-5">Product name</p>
-                                    <p class="subtitle is-6">Sit fugiat amet exceptur cupidatat non.</p>
+                                    <p class="title is-5">Cinnamon Roll</p>
+                                    <p class="subtitle is-6">Soft and swirled roll coated with cinnamon sugar and icing drizzle.</p>
                                     <p>$120</p>
-                                    <button class="button is-primary add-to-cart" data-product="Product 7">
+                                    <button class="button is-primary add-to-cart" data-product="Cinnamon Roll">
                                         <span class="icon"><i class="fas fa-heart"></i></span>
                                         <span>Add to cart</span>
                                     </button>
@@ -290,19 +333,20 @@
                             </div>
                         </a>
                     </div>
+                
                     <div class="column is-one-third">
                         <a href="product-detail.html">
                             <div class="card">
                                 <div class="card-image">
                                     <figure class="image is-4by3">
-                                        <img src="placeholder.png" alt="Product">
+                                        <img src="./Bakery/Bakery/Croissant.jpeg" alt="Croissant">
                                     </figure>
                                 </div>
                                 <div class="card-content">
-                                    <p class="title is-5">Product name</p>
-                                    <p class="subtitle is-6">Aliqua dolore ipsum nisl velti est.</p>
+                                    <p class="title is-5">Butter Croissant</p>
+                                    <p class="subtitle is-6">Flaky, buttery croissant baked to golden perfection.</p>
                                     <p>$190</p>
-                                    <button class="button is-primary add-to-cart" data-product="Product 8">
+                                    <button class="button is-primary add-to-cart" data-product="Butter Croissant">
                                         <span class="icon"><i class="fas fa-heart"></i></span>
                                         <span>Add to cart</span>
                                     </button>
@@ -310,19 +354,20 @@
                             </div>
                         </a>
                     </div>
+                
                     <div class="column is-one-third">
                         <a href="product-detail.html">
                             <div class="card">
                                 <div class="card-image">
                                     <figure class="image is-4by3">
-                                        <img src="placeholder.png" alt="Product">
+                                        <img src="./Bakery/Bakery/digestive biscuit.jpeg" alt="Digestive Biscuit">
                                     </figure>
                                 </div>
                                 <div class="card-content">
-                                    <p class="title is-5">Product name</p>
-                                    <p class="subtitle is-6">Ex pariatur aliqua consectetur cupidatat.</p>
+                                    <p class="title is-5">Digestive Biscuit</p>
+                                    <p class="subtitle is-6">Crunchy whole wheat biscuit perfect for tea time or snacking.</p>
                                     <p>$109</p>
-                                    <button class="button is-primary add-to-cart" data-product="Product 9">
+                                    <button class="button is-primary add-to-cart" data-product="Digestive Biscuit">
                                         <span class="icon"><i class="fas fa-heart"></i></span>
                                         <span>Add to cart</span>
                                     </button>
@@ -331,10 +376,8 @@
                         </a>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
+                
+            </section>
     <!-- Footer Section -->
     <footer class="footer">
         <div class="columns">
