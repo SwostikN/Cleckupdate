@@ -36,7 +36,7 @@ body {
 }
 
 /* Hero Section Styling */
-.hero.is-medium .hero-body {
+/* .hero.is-medium .hero-body {
     padding: 3rem 1.5rem;
 }
 
@@ -47,7 +47,12 @@ body {
 .hero .column.is-half img {
     width: 100%;
     height: auto;
+} */
+.slider-hero {
+    background: url('static/Images/product image/1111.jpg') center center no-repeat;
+    background-size: cover;
 }
+
 
 /* Category Circles  */
 .category-circle {

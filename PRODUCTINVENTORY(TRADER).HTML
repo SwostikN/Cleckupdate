@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Inventory (Trader)</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      max-width: 1300px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+    .header-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .header-section .title {
+      font-weight: 700;
+      color: #2c3e50;
+    }
+    .filter-bar {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .filter-bar .control {
+      flex: 1;
+      min-width: 200px;
+    }
+    .filter-bar .select, .filter-bar input {
+      width: 100%;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .product-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+    .product-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #e0e0e0;
+    }
+    .product-details {
+      padding: 15px;
+    }
+    .product-details p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+    .product-name {
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 16px;
+    }
+    .product-price {
+      color: #e67e22;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .low-stock {
+      background: #ff3860;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+    .product-actions {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 5px;
+    }
+    .product-actions button {
+      background: rgba(0, 0_vid: 0px;
+      color: white;
+      border: none;
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .product-actions button:hover {
+      background: rgba(0, 0, 0, 0.9);
+    }
+    .pagination {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+    }
+    .pagination .button.is-selected {
+      background-color: #3273dc;
+      color: white;
+    }
+    .modal-card {
+      width: 700px;
+      border-radius: 10px;
+    }
+    .modal-card-head {
+      background: #2c3e50;
+      color: white;
+    }
+    .modal-card-body .field {
+      margin-bottom: 20px;
+    }
+    .media-upload {
+      border: 2px dashed #ccc;
+      padding: 20px;
+      text-align: center;
+      border-radius: 5px;
+    }
+    .preview-btn {
+      margin-left: 10px;
+    }
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      transition: opacity 0.5s ease;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-section">
+      <h1 class="title is-4">Product Inventory (Trader)</h1>
+      <button class="button is-primary" id="create-product-btn">
+        <span class="icon"><i class="fas fa-plus"></i></span>
+        <span>Create New Product</span>
+      </button>
+    </div>
+
+    <div class="filter-bar">
+      <div class="control">
+        <input class="input" type="text" id="search-input" placeholder="Search products...">
+      </div>
+      <div class="control">
+        <div class="select">
+          <select id="filter-category">
+            <option value="">All Categories</option>
+            <option value="Meat">Meat</option>
+            <option value="Vegetables">Vegetables</option>
+            <option value="Fish">Fish</option>
+            <option value="Bakery">Bakery</option>
+            <option value="Deli">Deli</option>
+          </select>
+        </div>
+      </div>
+      <div class="control">
+        <div class="select">
+          <select id="group-by">
+            <option value="Collection Shop">Collection Shop</option>
+          </select>
+        </div>
+      </div>
+      <div class="control">
+        <div class="select">
+          <select id="sort-by">
+            <option value="name-asc">Name (A-Z)</option>
+            <option value="name-desc">Name (Z-A)</option>
+            <option value="price-asc">Price (Low to High)</option>
+            <option value="price-desc">Price (High to Low)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-grid" id="product-list">
+      <!-- Products will be populated via JavaScript -->
+    </div>
+
+    <div class="pagination" id="pagination">
+      <!-- Pagination will be populated via JavaScript -->
+    </div>
+  </div>
+
+  <!-- Modal for Create New Product -->
+  <div class="modal" id="create-product-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Create New Product</p>
+        <button class="delete" aria-label="close" id="close-modal"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="field">
+          <label class="label">Basic Information</label>
+          <div class="field">
+            <label class="label">Product Name</label>
+            <div class="control">
+              <input class="input" type="text" id="product-name" placeholder="Enter product name">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Category</label>
+            <div class="control">
+              <div class="select">
+                <select id="product-category">
+                  <option value="Meat">Meat</option>
+                  <option value="Vegetables">Vegetables</option>
+                  <option value="Fish">Fish</option>
+                  <option value="Bakery">Bakery</option>
+                  <option value="Deli">Deli</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Location</label>
+            <div class="control">
+              <div class="select">
+                <select id="product-location">
+                  <option value="Collection Shop">Collection Shop</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Description</label>
+            <div class="control">
+              <textarea class="textarea" id="product-description" placeholder="Enter product description"></textarea>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Allergy Information</label>
+            <div class="control">
+              <input class="input" type="text" id="product-allergy" placeholder="Enter allergy information (e.g., Contains nuts)">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Stock Keeping Unit (SKU)</label>
+            <div class="control">
+              <input class="input" type="text" id="product-sku" placeholder="Enter SKU">
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Media (images, video or 3D models)</label>
+          <div class="control">
+            <div class="media-upload">
+              <span id="media-preview">Drag & Drop or Click to Upload</span>
+              <br><button class="button is-small" id="upload-media">Upload</button>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Pricing Information</label>
+          <div class="field">
+            <label class="label">Price</label>
+            <div class="control">
+              <input class="input" type="number" id="product-price" placeholder="$0.00" step="0.01">
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Inventory</label>
+          <div class="field">
+            <label class="label">Quantity</label>
+            <div class="control">
+              <input class="input" type="number" id="product-quantity" placeholder="0">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Unit</label>
+            <div class="control">
+              <div class="select">
+                <select id="product-unit">
+                  <option value="item">Item</option>
+                  <option value="kg">Kilogram</option>
+                  <option value="g">Gram</option>
+                  <option value="pack">Pack</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Minimum Order</label>
+            <div class="control">
+              <input class="input" type="number" id="product-min-order" placeholder="1" min="1">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Maximum Order</label>
+            <div class="control">
+              <input class="input" type="number" id="product-max-order" placeholder="100" min="1">
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success" id="save-product">Save</button>
+        <button class="button is-info preview-btn" id="preview-product">Preview</button>
+        <button class="button" id="cancel-modal">Cancel</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Notification -->
+  <div class="notification" id="notification"></div>
+
+  <script>
+    let products = [
+      { name: "Sirloin Steak", code: "BUTCH-1", price: 12.50, quantity: 50, category: "Meat", location: "Collection Shop", lowStock: false, description: "Premium grass-fed sirloin steak", allergy: "None", minOrder: 1, maxOrder: 10 },
+      { name: "Organic Carrots", code: "GREEN-1", price: 2.50, quantity: 100, category: "Vegetables", location: "Collection Shop", lowStock: false, description: "Fresh organic carrots", allergy: "None", minOrder: 1, maxOrder: 20 },
+      { name: "Fresh Salmon Fillet", code: "FISH-1", price: 8.75, quantity: 30, category: "Fish", location: "Collection Shop", lowStock: true, description: "Wild-caught salmon fillet", allergy: "Fish", minOrder: 1, maxOrder: 5 },
+      { name: "Sourdough Bread", code: "BAKE-1", price: 4.00, quantity: 40, category: "Bakery", location: "Collection Shop", lowStock: false, description: "Artisanal sourdough loaf", allergy: "Gluten", minOrder: 1, maxOrder: 10 },
+      { name: "Italian Prosciutto", code: "DELI-1", price: 15.00, quantity: 20, category: "Deli", location: "Collection Shop", lowStock: true, description: "Aged Italian prosciutto", allergy: "None", minOrder: 1, maxOrder: 5 },
+      { name: "Free-Range Chicken", code: "BUTCH-2", price: 7.50, quantity: 25, category: "Meat", location: "Collection Shop", lowStock: true, description: "Whole free-range chicken", allergy: "None", minOrder: 1, maxOrder: 5 },
+      { name: "Organic Spinach", code: "GREEN-2", price: 3.00, quantity: 80, category: "Vegetables", location: "Collection Shop", lowStock: false, description: "Fresh organic spinach leaves", allergy: "None", minOrder: 1, maxOrder: 15 },
+      { name: "Croissant", code: "BAKE-2", price: 2.50, quantity: 60, category: "Bakery", location: "Collection Shop", lowStock: false, description: "Buttery flaky croissant", allergy: "Gluten, Dairy", minOrder: 1, maxOrder: 20 },
+    ];
+
+    let currentPage = 1;
+    let pageSize = 8;
+    let searchQuery = "";
+    let filterCategory = "";
+    let sortOption = "name-asc";
+
+    // Render products
+    function renderProducts() {
+      const productList = document.getElementById("product-list");
+      productList.innerHTML = "";
+
+      let filteredProducts = products.filter(product => {
+        const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesCategory = filterCategory ? product.category === filterCategory : true;
+        return matchesSearch && matchesCategory;
+      });
+
+      // Sort products
+      filteredProducts.sort((a, b) => {
+        if (sortOption === "name-asc") return a.name.localeCompare(b.name);
+        if (sortOption === "name-desc") return b.name.localeCompare(a.name);
+        if (sortOption === "price-asc") return a.price - b.price;
+        if (sortOption === "price-desc") return b.price - a.price;
+      });
+
+      const start = (currentPage - 1) * pageSize;
+      const end = start + pageSize;
+      const paginated = filteredProducts.slice(start, end);
+
+      paginated.forEach((product, index) => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.innerHTML = `
+          <img src="https://via.placeholder.com/250x180" alt="${product.name}" class="product-image">
+          ${product.lowStock ? '<span class="low-stock">Low Stock</span>' : ""}
+          <div class="product-actions">
+            <button class="edit-btn" data-index="${products.indexOf(product)}"><i class="fas fa-edit"></i></button>
+            <button class="delete-btn" data-index="${products.indexOf(product)}"><i class="fas fa-trash"></i></button>
+          </div>
+          <div class="product-details">
+            <p class="product-name">${product.name}</p>
+            <p class="product-price">$${product.price.toFixed(2)}</p>
+            <p>Category: ${product.category}</p>
+            <p>Code: ${product.code}</p>
+            <p>Stock: ${product.quantity} ${product.unit || "items"}</p>
+            <p>Allergy: ${product.allergy}</p>
+          </div>
+        `;
+        productList.appendChild(card);
+
+        // Edit product
+        card.querySelector(".edit-btn").addEventListener("click", () => {
+          const idx = parseInt(card.querySelector(".edit-btn").dataset.index);
+          const product = products[idx];
+          document.getElementById("product-name").value = product.name;
+          document.getElementById("product-category").value = product.category;
+          document.getElementById("product-location").value = product.location;
+          document.getElementById("product-description").value = product.description;
+          document.getElementById("product-allergy").value = product.allergy;
+          document.getElementById("product-sku").value = product.code;
+          document.getElementById("product-price").value = product.price;
+          document.getElementById("product-quantity").value = product.quantity;
+          document.getElementById("product-unit").value = product.unit || "item";
+          document.getElementById("product-min-order").value = product.minOrder;
+          document.getElementById("product-max-order").value = product.maxOrder;
+          document.getElementById("save-product").dataset.editIndex = idx;
+          document.getElementById("create-product-modal").classList.add("is-active");
+        });
+
+        // Delete product
+        card.querySelector(".delete-btn").addEventListener("click", () => {
+          const idx = parseInt(card.querySelector(".delete-btn").dataset.index);
+          if (confirm(`Are you sure you want to delete ${products[idx].name}?`)) {
+            products.splice(idx, 1);
+            renderProducts();
+            showNotification("Product deleted successfully!", "is-success");
+          }
+        });
+      });
+
+      renderPagination(filteredProducts.length);
+    }
+
+    // Render pagination
+    function renderPagination(totalItems) {
+      const pagination = document.getElementById("pagination");
+      pagination.innerHTML = "";
+      const totalPages = Math.ceil(totalItems / pageSize);
+      const prevButton = document.createElement("button");
+      prevButton.className = "button is-small";
+      prevButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
+      prevButton.disabled = currentPage === 1;
+      prevButton.addEventListener("click", () => {
+        currentPage--;
+        renderProducts();
+      });
+      pagination.appendChild(prevButton);
+
+      const pageRange = 5;
+      const startPage = Math.max(1, currentPage - Math.floor(pageRange / 2));
+      const endPage = Math.min(totalPages, startPage + pageRange - 1);
+
+      for (let i = startPage; i <= endPage; i++) {
+        const button = document.createElement("button");
+        button.className = "button is-small" + (i === currentPage ? " is-selected" : "");
+        button.textContent = i;
+        button.addEventListener("click", () => {
+          currentPage = i;
+          renderProducts();
+        });
+        pagination.appendChild(button);
+      }
+
+      const nextButton = document.createElement("button");
+      nextButton.className = "button is-small";
+      nextButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
+      nextButton.disabled = currentPage === totalPages;
+      nextButton.addEventListener("click", () => {
+        currentPage++;
+        renderProducts();
+      });
+      pagination.appendChild(nextButton);
+    }
+
+    // Search functionality
+    document.getElementById("search-input").addEventListener("input", (e) => {
+      searchQuery = e.target.value;
+      currentPage = 1;
+      renderProducts();
+    });
+
+    // Filter by category
+    document.getElementById("filter-category").addEventListener("change", (e) => {
+      filterCategory = e.target.value;
+      currentPage = 1;
+      renderProducts();
+    });
+
+    // Sort functionality
+    document.getElementById("sort-by").addEventListener("change", (e) => {
+      sortOption = e.target.value;
+      currentPage = 1;
+      renderProducts();
+    });
+
+    // Create Product Modal
+    const modal = document.getElementById("create-product-modal");
+    document.getElementById("create-product-btn").addEventListener("click", () => {
+      clearForm();
+      document.getElementById("save-product").removeAttribute("data-edit-index");
+      modal.classList.add("is-active");
+    });
+    document.getElementById("close-modal").addEventListener("click", () => {
+      modal.classList.remove("is-active");
+      clearForm();
+    });
+    document.getElementById("cancel-modal").addEventListener("click", () => {
+      modal.classList.remove("is-active");
+      clearForm();
+    });
+
+    // Save Product
+    document.getElementById("save-product").addEventListener("click", () => {
+      const name = document.getElementById("product-name").value.trim();
+      const category = document.getElementById("product-category").value;
+      const location = document.getElementById("product-location").value;
+      const description = document.getElementById("product-description").value.trim();
+      const allergy = document.getElementById("product-allergy").value.trim();
+      const sku = document.getElementById("product-sku").value.trim();
+      const price = parseFloat(document.getElementById("product-price").value) || 0;
+      const quantity = parseInt(document.getElementById("product-quantity").value) || 0;
+      const unit = document.getElementById("product-unit").value;
+      const minOrder = parseInt(document.getElementById("product-min-order").value) || 1;
+      const maxOrder = parseInt(document.getElementById("product-max-order").value) || 100;
+
+      if (!name || !sku || price <= 0 || quantity < 0 || !category || !description || minOrder < 1 || maxOrder < minOrder) {
+        showNotification("Please fill all required fields with valid data.", "is-danger");
+        return;
+      }
+
+      const editIndex = document.getElementById("save-product").dataset.editIndex;
+      const newProduct = {
+        name,
+        code: sku,
+        price,
+        quantity,
+        category,
+        location,
+        description,
+        allergy,
+        unit,
+        minOrder,
+        maxOrder,
+        lowStock: quantity < 50,
+      };
+
+      if (editIndex !== undefined) {
+        products[parseInt(editIndex)] = newProduct;
+        showNotification("Product updated successfully!", "is-success");
+      } else {
+        products.push(newProduct);
+        showNotification("Product added successfully!", "is-success");
+      }
+
+      modal.classList.remove("is-active");
+      clearForm();
+      renderProducts();
+    });
+
+    // Preview Product
+    document.getElementById("preview-product").addEventListener("click", () => {
+      const name = document.getElementById("product-name").value.trim();
+      const price = document.getElementById("product-price").value;
+      const quantity = document.getElementById("product-quantity").value;
+      const category = document.getElementById("product-category").value;
+      const description = document.getElementById("product-description").value.trim();
+      if (!name || !price || !quantity || !category || !description) {
+        showNotification("Please fill all required fields to preview.", "is-danger");
+        return;
+      }
+      showNotification(`Preview: ${name} (${category}) - $${price}, Stock: ${quantity}, Desc: ${description}`, "is-info");
+    });
+
+    // Upload Media (placeholder)
+    document.getElementById("upload-media").addEventListener("click", () => {
+      showNotification("Media upload feature is a placeholder (use actual file input for implementation).", "is-warning");
+      document.getElementById("media-preview").textContent = "Media uploaded (placeholder)";
+    });
+
+    function clearForm() {
+      document.getElementById("product-name").value = "";
+      document.getElementById("product-category").value = "Meat";
+      document.getElementById("product-location").value = "Collection Shop";
+      document.getElementById("product-description").value = "";
+      document.getElementById("product-allergy").value = "";
+      document.getElementById("product-sku").value = "";
+      document.getElementById("product-price").value = "";
+      document.getElementById("product-quantity").value = "";
+      document.getElementById("product-unit").value = "item";
+      document.getElementById("product-min-order").value = "1";
+      document.getElementById("product-max-order").value = "100";
+      document.getElementById("media-preview").textContent = "Drag & Drop or Click to Upload";
+    }
+
+    // Show Notification
+    function showNotification(message, type) {
+      const notification = document.getElementById("notification");
+      notification.textContent = message;
+      notification.className = `notification ${type}`;
+      notification.style.opacity = "1";
+      setTimeout(() => {
+        notification.style.opacity = "0";
+        setTimeout(() => notification.className = "notification", 500);
+      }, 3000);
+    }
+
+    // Initial render
+    renderProducts();
+  </script>
+</body>
+</html>
