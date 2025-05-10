@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clickax Traders - My Cart</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background-color: #fff;
+      color: #333;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    /* Navigation */
+    nav {
+      background-color: #e5e7eb;
+      padding: 15px 0;
+    }
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .nav-left img {
+      width: 40px;
+      height: 40px;
+    }
+    .nav-left a, .nav-right a {
+      text-decoration: none;
+      color: #6b7280;
+      font-size: 16px;
+    }
+    .nav-left a.active {
+      font-weight: bold;
+      color: #374151;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .nav-right input {
+      padding: 5px;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      width: 150px;
+    }
+    /* Page Container */
+    .page {
+      display: none;
+    }
+    .page.active {
+      display: block;
+    }
+    /* My Cart Section */
+    .my-cart {
+      padding: 50px 0;
+    }
+    .my-cart h1 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .cart-header a {
+      text-decoration: none;
+      color: #374151;
+      font-size: 16px;
+    }
+    .cart-table {
+      width: 100%;
+      margin-bottom: 30px;
+    }
+    .cart-table .header-row {
+      display: flex;
+      border-bottom: 1px solid #d1d5db;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    .cart-table .header-row div, .cart-table .cart-item div {
+      flex: 1;
+      text-align: center;
+    }
+    .cart-table .header-row div:first-child, .cart-table .cart-item div:first-child {
+      flex: 2;
+      text-align: left;
+    }
+    .cart-item {
+      display: flex;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .cart-item img {
+      width: 50px;
+      height: 50px;
+      background-color: #f3f4f6;
+      margin-right: 15px;
+    }
+    .cart-item .product-info {
+      flex: 2;
+    }
+    .cart-item .product-info p {
+      color: #6b7280;
+      font-size: 14px;
+    }
+    .cart-item .price, .cart-item .total {
+      font-weight: bold;
+    }
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .quantity-control button {
+      background-color: #e5e7eb;
+      border: 1px solid #d1d5db;
+      padding: 2px 8px;
+      cursor: pointer;
+    }
+    .quantity-control span {
+      font-weight: bold;
+    }
+    .pickup-info {
+      background-color: #fff;
+      border: 1px solid #d1d5db;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+    .pickup-info p {
+      color: #6b7280;
+      margin-bottom: 5px;
+    }
+    .totals {
+      text-align: right;
+    }
+    .totals p {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .checkout-btn {
+      background-color: #374151;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      float: right;
+      transition: background-color 0.2s;
+    }
+    .checkout-btn:hover {
+      background-color: #4b5563;
+    }
+    @media (max-width: 768px) {
+      .nav-right input {
+        width: 120px;
+      }
+      .cart-table .header-row, .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .cart-table .header-row div, .cart-table .cart-item div {
+        flex: none;
+        text-align: left;
+      }
+      .totals, .checkout-btn {
+        text-align: center;
+        float: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container container">
+      <div class="nav-left">
+        <img src="https://via.placeholder.com/40" alt="Clickax Traders Logo">
+        <a href="#" data-page="about-us">Clickax Traders</a>
+        <a href="#" data-page="shop">Shop</a>
+        <a href="#" data-page="offers">Offers</a>
+        <a href="#" data-page="about-us">About Us</a>
+        <a href="#" data-page="products">Products</a>
+      </div>
+      <div class="nav-right">
+        <input type="text" placeholder="Search products...">
+        <a href="#" data-page="my-cart" id="cart-link">Cart (2)</a>
+        <a href="#" data-page="login">Login</a>
+        <a href="#" data-page="become-trader">Become a trader</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- My Cart Page -->
+  <section class="page my-cart-page active" id="my-cart-page">
+    <div class="my-cart">
+      <div class="container">
+        <div class="cart-header">
+          <h1>My Cart</h1>
+          <a href="#" data-page="about-us"><i class="fas fa-arrow-left"></i> Continue shopping</a>
+        </div>
+        <div class="cart-table">
+          <div class="header-row">
+            <div>PRODUCT</div>
+            <div>PRICE</div>
+            <div>QTY</div>
+            <div>TOTAL</div>
+          </div>
+          <div class="cart-item">
+            <div class="product-info">
+              <img src="https://via.placeholder.com/50" alt="Product Image">
+              <p>Xiaomi365</p>
+              <p>#2143235343452</p>
+              <p>Color:White//Extra:Sport Tire + Battery High 100</p>
+            </div>
+            <div class="price">
+              <p>+50.99$Sport Tire</p>
+              <p>+35$ Battery H</p>
+              <p>484,999$</p>
+            </div>
+            <div class="quantity-control">
+              <button class="decrement">-</button>
+              <span>1</span>
+              <button class="increment">+</button>
+            </div>
+            <div class="total">484.99</div>
+          </div>
+          <div class="cart-item">
+            <div class="product-info">
+              <img src="https://via.placeholder.com/50" alt="Product Image">
+              <p>Ninebot ES2</p>
+              <p>#2143235246353</p>
+              <p>Color:Black//Extra:Full Tire</p>
+            </div>
+            <div class="price">
+              <p>+80.99$Full Tire</p>
+              <p>489,999$</p>
+            </div>
+            <div class="quantity-control">
+              <button class="decrement">-</button>
+              <span>3</span>
+              <button class="increment">+</button>
+            </div>
+            <div class="total">1469.97</div>
+          </div>
+        </div>
+        <div class="pickup-info">
+          <p>Pickup Info:</p>
+          <p>Store pickup after 24hrs</p>
+          <p>Store pickup ONLY on Wednesday Thursday and Friday</p>
+        </div>
+        <div class="totals">
+          <p>SUBTOTAL TTC 1954.97</p>
+          <p>TOTAL 1954.97</p>
+          <button class="checkout-btn">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Page Navigation
+    function showPage(pageId) {
+      document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
+      document.getElementById(`${pageId}-page`).classList.add("active");
+      document.querySelectorAll(".nav-left a").forEach(link => link.classList.remove("active"));
+      document.querySelector(`.nav-left a[data-page="${pageId}"]`).classList.add("active");
+    }
+    document.querySelectorAll(".nav-left a[data-page], .nav-right a[data-page], .cart-header a[data-page]").forEach(link => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        showPage(link.dataset.page);
+      });
+    });
+
+    // Cart Data and Functionality
+    let cartItems = [
+      { name: "Xiaomi365", id: "#2143235343452", details: "Color:White//Extra:Sport Tire + Battery High 100", extra: ["+50.99$Sport Tire", "+35$ Battery H"], basePrice: 484999, quantity: 1, total: 484.99 },
+      { name: "Ninebot ES2", id: "#2143235246353", details: "Color:Black//Extra:Full Tire", extra: ["+80.99$Full Tire"], basePrice: 489999, quantity: 3, total: 1469.97 }
+    ];
+
+    function updateCartDisplay() {
+      const cartLink = document.getElementById("cart-link");
+      const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+      cartLink.textContent = `Cart (${totalItems})`;
+
+      const subtotal = cartItems.reduce((sum, item) => sum + item.total, 0);
+      document.querySelector(".totals p:nth-child(1)").textContent = `SUBTOTAL TTC ${subtotal.toFixed(2)}`;
+      document.querySelector(".totals p:nth-child(2)").textContent = `TOTAL ${subtotal.toFixed(2)}`;
+    }
+
+    document.querySelectorAll(".cart-item").forEach((item, index) => {
+      const decrementBtn = item.querySelector(".decrement");
+      const incrementBtn = item.querySelector(".increment");
+      const quantitySpan = item.querySelector(".quantity-control span");
+      const totalSpan = item.querySelector(".total");
+
+      decrementBtn.addEventListener("click", () => {
+        if (cartItems[index].quantity > 1) {
+          cartItems[index].quantity--;
+          cartItems[index].total = (cartItems[index].basePrice / 1000 + (index === 0 ? 50.99 + 35 : 80.99)) * cartItems[index].quantity;
+          quantitySpan.textContent = cartItems[index].quantity;
+          totalSpan.textContent = cartItems[index].total.toFixed(2);
+          updateCartDisplay();
+        }
+      });
+
+      incrementBtn.addEventListener("click", () => {
+        cartItems[index].quantity++;
+        cartItems[index].total = (cartItems[index].basePrice / 1000 + (index === 0 ? 50.99 + 35 : 80.99)) * cartItems[index].quantity;
+        quantitySpan.textContent = cartItems[index].quantity;
+        totalSpan.textContent = cartItems[index].total.toFixed(2);
+        updateCartDisplay();
+      });
+    });
+
+    // Other Interactivity
+    document.querySelector(".checkout-btn").addEventListener("click", () => {
+      alert("Proceeding to checkout!");
+    });
+
+    // Initialize
+    updateCartDisplay();
+  </script>
+</body>
+</html>
