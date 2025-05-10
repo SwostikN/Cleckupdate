@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Header Section (Same as Homepage) -->
     <nav class="navbar is-light" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item logo-container" href="index.html">
@@ -26,14 +25,13 @@
         </div>
         <div id="navbarMenu" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item nav-link" href="#">Shop</a>
-                <a class="navbar-item nav-link" href="#">Offers</a>
-                <a class="navbar-item nav-link" href="about.html">About Us</a>
-                <a class="navbar-item nav-link" href="#">Products</a>
+                <a class="navbar-item nav-link" href="productlisting.html">Shop</a>
+                <a class="navbar-item nav-link" href="Aboutus.html">About Us</a>
+                <a class="navbar-item nav-link" href="productlisting.html">Products</a>
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">
-                    <input class="input" type="text" placeholder="Search...">
+                    <input class="input" type="text" placeholder="Search products...">
                 </div>
                 <div class="navbar-item">
                     <a class="button is-light" href="#">
@@ -42,10 +40,10 @@
                     </a>
                 </div>
                 <div class="navbar-item">
-                    <a class="button is-primary" href="#">Login</a>
+                    <a class="button is-primary" href="login.html">Login</a>
                 </div>
                 <div class="navbar-item">
-                    <a class="button is-success" href="#">Become a trader</a>
+                    <a class="button is-success" href="traderregestier.html">Become a trader</a>
                 </div>
             </div>
         </div>
@@ -245,52 +243,63 @@
     </section>
 
     <!-- Footer Section (Matches Wireframe) -->
-    <footer class="footer">
-        <div class="columns">
-            <div class="column is-half">
-                <div class="footer-logo">
+<footer class="footer">
+    <div class="columns">
+        <!-- Company Info -->
+        <div class="column is-half">
+            <div class="footer-logo">
+                <a href="index.html">
                     <img src="logo.png" alt="Cleckfax Traders Logo" class="footer-logo-img">
-                </div>
-                <p class="title is-4">Cleckfax Traders</p>
-                <p>Email: info@cleckfaxtraders.com</p>
-                <p>Phone: 646-675-5074</p>
-                <p>3961 Smith Street, New York, United States</p>
-                <div class="social-icons mt-4">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
+                </a>
             </div>
-            <div class="column is-half">
-                <h2 class="title is-4">Contact Us</h2>
-                <form>
-                    <div class="field">
-                        <label class="label">Name</label>
-                        <div class="control">
-                            <input class="input" type="text" placeholder="Name">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Email</label>
-                        <div class="control">
-                            <input class="input" type="email" placeholder="Email">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Message</label>
-                        <div class="control">
-                            <textarea class="textarea" placeholder="Type your message here..."></textarea>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="control">
-                            <button class="button is-primary" type="submit">Send</button>
-                        </div>
-                    </div>
-                </form>
+            <p class="title is-4">Cleckfax Traders</p>
+            <p>Email: <a href="mailto:info@cleckfaxtraders.com">info@cleckfaxtraders.com</a></p>
+            <p>Phone: <a href="tel:+16466755074">646-675-5074</a></p>
+            <p>3961 Smith Street, New York, United States</p>
+            <div class="social-icons mt-4">
+                <a href="https://www.facebook.com" target="_blank" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.twitter.com" target="_blank" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
             </div>
         </div>
-    </footer>
+
+        <!-- Contact Form -->
+        <div class="column is-half">
+            <h2 class="title is-4">Contact Us</h2>
+            <form method="post" action="/contact">
+                <div class="field">
+                    <label class="label" for="name">Name</label>
+                    <div class="control">
+                        <input class="input" type="text" id="name" name="name" placeholder="Name" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="email">Email</label>
+                    <div class="control">
+                        <input class="input" type="email" id="email" name="email" placeholder="Email" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="message">Message</label>
+                    <div class="control">
+                        <textarea class="textarea" id="message" name="message" placeholder="Type your message here..." required></textarea>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</footer>
 
     <!-- JavaScript -->
     <script src="script.js"></script>

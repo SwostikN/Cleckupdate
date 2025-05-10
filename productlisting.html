@@ -10,9 +10,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+    <style>
+        .card-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .heart-button {
+            background-color: #f5f5f5;
+            border: 1px solid #dbdbdb;
+            border-radius: 4px;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .heart-button:hover {
+            background-color: #f0f0f0;
+            color: #ff3860;
+        }
+    </style>
 </head>
 <body>
-    <!-- Navbar Section -->
     <nav class="navbar is-light" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item logo-container" href="index.html">
@@ -26,10 +44,9 @@
         </div>
         <div id="navbarMenu" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item nav-link" href="product-listing.html">Shop</a>
-                <a class="navbar-item nav-link" href="#">Offers</a>
-                <a class="navbar-item nav-link" href="about.html">About Us</a>
-                <a class="navbar-item nav-link" href="product-listing.html">Products</a>
+                <a class="navbar-item nav-link" href="productlisting.html">Shop</a>
+                <a class="navbar-item nav-link" href="Aboutus.html">About Us</a>
+                <a class="navbar-item nav-link" href="productlisting.html">Products</a>
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">
@@ -45,7 +62,7 @@
                     <a class="button is-primary" href="login.html">Login</a>
                 </div>
                 <div class="navbar-item">
-                    <a class="button is-success" href="register.html">Become a trader</a>
+                    <a class="button is-success" href="traderregestier.html">Become a trader</a>
                 </div>
             </div>
         </div>
@@ -199,10 +216,14 @@
                                     <p class="title is-5">Apple Strudel</p>
                                     <p class="subtitle is-6">Flaky pastry filled with spiced apples and a hint of cinnamon sugar.</p>
                                     <p>$330</p>
-                                    <button class="button is-primary add-to-cart" data-product="Apple Strudel">
-                                        <span class="icon"><i class="fas fa-heart"></i></span>
-                                        <span>Add to cart</span>
-                                    </button>
+                                    <div class="card-buttons">
+                                        <button class="button is-primary buy-now" data-product="Apple Strudel">
+                                            <span>Buy Now</span>
+                                        </button>
+                                        <button class="heart-button" aria-label="Add to favorites">
+                                            <span class="icon"><i class="fas fa-heart"></i></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -220,10 +241,14 @@
                                     <p class="title is-5">Assorted Glazed Doughnuts</p>
                                     <p class="subtitle is-6">A variety of soft, fluffy doughnuts topped with colorful glazes.</p>
                                     <p>$23</p>
-                                    <button class="button is-primary add-to-cart" data-product="Assorted Glazed Doughnuts">
-                                        <span class="icon"><i class="fas fa-heart"></i></span>
-                                        <span>Add to cart</span>
-                                    </button>
+                                    <div class="card-buttons">
+                                        <button class="button is-primary buy-now" data-product="Assorted Glazed Doughnuts">
+                                            <span>Buy Now</span>
+                                        </button>
+                                        <button class="heart-button" aria-label="Add to favorites">
+                                            <span class="icon"><i class="fas fa-heart"></i></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -241,10 +266,14 @@
                                     <p class="title is-5">Blueberry Cheesecake Slice</p>
                                     <p class="subtitle is-6">Creamy cheesecake layered with blueberry topping and a graham crust.</p>
                                     <p>$399</p>
-                                    <button class="button is-primary add-to-cart" data-product="Blueberry Cheesecake Slice">
-                                        <span class="icon"><i class="fas fa-heart"></i></span>
-                                        <span>Add to cart</span>
-                                    </button>
+                                    <div class="card-buttons">
+                                        <button class="button is-primary buy-now" data-product="Blueberry Cheesecake Slice">
+                                            <span>Buy Now</span>
+                                        </button>
+                                        <button class="heart-button" aria-label="Add to favorites">
+                                            <span class="icon"><i class="fas fa-heart"></i></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -262,10 +291,14 @@
                                     <p class="title is-5">Cherry Pie</p>
                                     <p class="subtitle is-6">Classic buttery pie crust filled with juicy cherries and baked to perfection.</p>
                                     <p>$160</p>
-                                    <button class="button is-primary add-to-cart" data-product="Cherry Pie">
-                                        <span class="icon"><i class="fas fa-heart"></i></span>
-                                        <span>Add to cart</span>
-                                    </button>
+                                    <div class="card-buttons">
+                                        <button class="button is-primary buy-now" data-product="Cherry Pie">
+                                            <span>Buy Now</span>
+                                        </button>
+                                        <button class="heart-button" aria-label="Add to favorites">
+                                            <span class="icon"><i class="fas fa-heart"></i></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -283,10 +316,14 @@
                                     <p class="title is-5">Chewy Brownies</p>
                                     <p class="subtitle is-6">Rich and fudgy chocolate brownies with a soft chewy center.</p>
                                     <p>$69</p>
-                                    <button class="button is-primary add-to-cart" data-product="Chewy Brownies">
-                                        <span class="icon"><i class="fas fa-heart"></i></span>
-                                        <span>Add to cart</span>
-                                    </button>
+                                    <div class="card-buttons">
+                                        <button class="button is-primary buy-now" data-product="Chewy Brownies">
+                                            <span>Buy Now</span>
+                                        </button>
+                                        <button class="heart-button" aria-label="Add to favorites">
+                                            <span class="icon"><i class="fas fa-heart"></i></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -304,10 +341,14 @@
                                     <p class="title is-5">Chocolate Chip Cookies</p>
                                     <p class="subtitle is-6">Golden brown cookies packed with gooey chocolate chips.</p>
                                     <p>$420</p>
-                                    <button class="button is-primary add-to-cart" data-product="Chocolate Chip Cookies">
-                                        <span class="icon"><i class="fas fa-heart"></i></span>
-                                        <span>Add to cart</span>
-                                    </button>
+                                    <div class="card-buttons">
+                                        <button class="button is-primary buy-now" data-product="Chocolate Chip Cookies">
+                                            <span>Buy Now</span>
+                                        </button>
+                                        <button class="heart-button" aria-label="Add to favorites">
+                                            <span class="icon"><i class="fas fa-heart"></i></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -325,10 +366,14 @@
                                     <p class="title is-5">Cinnamon Roll</p>
                                     <p class="subtitle is-6">Soft and swirled roll coated with cinnamon sugar and icing drizzle.</p>
                                     <p>$120</p>
-                                    <button class="button is-primary add-to-cart" data-product="Cinnamon Roll">
-                                        <span class="icon"><i class="fas fa-heart"></i></span>
-                                        <span>Add to cart</span>
-                                    </button>
+                                    <div class="card-buttons">
+                                        <button class="button is-primary buy-now" data-product="Cinnamon Roll">
+                                            <span>Buy Now</span>
+                                        </button>
+                                        <button class="heart-button" aria-label="Add to favorites">
+                                            <span class="icon"><i class="fas fa-heart"></i></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -346,10 +391,14 @@
                                     <p class="title is-5">Butter Croissant</p>
                                     <p class="subtitle is-6">Flaky, buttery croissant baked to golden perfection.</p>
                                     <p>$190</p>
-                                    <button class="button is-primary add-to-cart" data-product="Butter Croissant">
-                                        <span class="icon"><i class="fas fa-heart"></i></span>
-                                        <span>Add to cart</span>
-                                    </button>
+                                    <div class="card-buttons">
+                                        <button class="button is-primary buy-now" data-product="Butter Croissant">
+                                            <span>Buy Now</span>
+                                        </button>
+                                        <button class="heart-button" aria-label="Add to favorites">
+                                            <span class="icon"><i class="fas fa-heart"></i></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -367,10 +416,14 @@
                                     <p class="title is-5">Digestive Biscuit</p>
                                     <p class="subtitle is-6">Crunchy whole wheat biscuit perfect for tea time or snacking.</p>
                                     <p>$109</p>
-                                    <button class="button is-primary add-to-cart" data-product="Digestive Biscuit">
-                                        <span class="icon"><i class="fas fa-heart"></i></span>
-                                        <span>Add to cart</span>
-                                    </button>
+                                    <div class="card-buttons">
+                                        <button class="button is-primary buy-now" data-product="Digestive Biscuit">
+                                            <span>Buy Now</span>
+                                        </button>
+                                        <button class="heart-button" aria-label="Add to favorites">
+                                            <span class="icon"><i class="fas fa-heart"></i></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -379,54 +432,91 @@
                 
             </section>
     <!-- Footer Section -->
-    <footer class="footer">
-        <div class="columns">
-            <div class="column is-half">
-                <div class="footer-logo">
+<footer class="footer">
+    <div class="columns">
+        <!-- Company Info -->
+        <div class="column is-half">
+            <div class="footer-logo">
+                <a href="index.html">
                     <img src="logo.png" alt="Cleckfax Traders Logo" class="footer-logo-img">
-                </div>
-                <p class="title is-4">Cleckfax Traders</p>
-                <p>Email: info@cleckfaxtraders.com</p>
-                <p>Phone: 646-675-5074</p>
-                <p>3961 Smith Street, New York, United States</p>
-                <div class="social-icons mt-4">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
+                </a>
             </div>
-            <div class="column is-half">
-                <h2 class="title is-4">Contact Us</h2>
-                <form>
-                    <div class="field">
-                        <label class="label">Name</label>
-                        <div class="control">
-                            <input class="input" type="text" placeholder="Name">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Email</label>
-                        <div class="control">
-                            <input class="input" type="email" placeholder="Email">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Message</label>
-                        <div class="control">
-                            <textarea class="textarea" placeholder="Type your message here..."></textarea>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="control">
-                            <button class="button is-primary" type="submit">Send</button>
-                        </div>
-                    </div>
-                </form>
+            <p class="title is-4">Cleckfax Traders</p>
+            <p>Email: <a href="mailto:info@cleckfaxtraders.com">info@cleckfaxtraders.com</a></p>
+            <p>Phone: <a href="tel:+16466755074">646-675-5074</a></p>
+            <p>3961 Smith Street, New York, United States</p>
+            <div class="social-icons mt-4">
+                <a href="https://www.facebook.com" target="_blank" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.twitter.com" target="_blank" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
             </div>
         </div>
-    </footer>
+
+        <!-- Contact Form -->
+        <div class="column is-half">
+            <h2 class="title is-4">Contact Us</h2>
+            <form method="post" action="/contact">
+                <div class="field">
+                    <label class="label" for="name">Name</label>
+                    <div class="control">
+                        <input class="input" type="text" id="name" name="name" placeholder="Name" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="email">Email</label>
+                    <div class="control">
+                        <input class="input" type="email" id="email" name="email" placeholder="Email" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="message">Message</label>
+                    <div class="control">
+                        <textarea class="textarea" id="message" name="message" placeholder="Type your message here..." required></textarea>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</footer>
 
     <!-- JavaScript -->
-    <script src="script.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle button clicks
+        const buyNowButtons = document.querySelectorAll('.buy-now');
+        buyNowButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const product = this.getAttribute('data-product');
+                alert('Buying now: ' + product);
+            });
+        });
+
+        const heartButtons = document.querySelectorAll('.heart-button');
+        heartButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                // Toggle active state
+                this.classList.toggle('has-text-danger');
+                // Get the product name from the parent card
+                const productCard = this.closest('.card');
+                const productName = productCard.querySelector('.title').textContent;
+                alert('Added ' + productName + ' to favorites!');
+            });
+        });
+    });
+    </script>
 </body>
 </html>

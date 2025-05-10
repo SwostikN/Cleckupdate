@@ -1,82 +1,478 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cleckfax Traders - Register as Seller</title>
-    <!-- Bulma CSS CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clickax Traders - Register</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background-color: rgb(234, 238, 239);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    /* Navigation */
+    .navbar {
+      background-color: #e5e7eb;
+      padding: 0.5rem 1rem;
+    }
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .nav-left img.header-logo {
+      max-height: 50px;
+    }
+    .nav-left a, .nav-right a {
+      text-decoration: none;
+      color: #6b7280;
+      font-size: 16px;
+    }
+    .nav-left a.active {
+      font-weight: bold;
+      color: #374151;
+    }
+    .navbar-item.nav-link {
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    .navbar-item.nav-link:hover {
+      color: #48c774 !important;
+    }
+    .navbar-item.nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: #48c774;
+      transition: width 0.3s ease;
+    }
+    .navbar-item.nav-link:hover::after {
+      width: 100%;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .nav-right input {
+      padding: 5px;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      width: 150px;
+    }
+    /* Register Section */
+    .register-section {
+      flex: 1;
+      padding: 50px 0;
+      display: flex;
+      align-items: center;
+    }
+    .register-container {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+    .register-form {
+      width: 50%;
+    }
+    .register-form .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .register-form .logo img {
+      max-height: 50px;
+    }
+    .register-form h2 {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .social-buttons a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background-color 0.2s;
+    }
+    .social-buttons a:hover {
+      background-color: #f3f4f6;
+    }
+    .divider {
+      text-align: center;
+      margin: 20px 0;
+      color: #6b7280;
+      position: relative;
+    }
+    .divider::before,
+    .divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background-color: #d1d5db;
+    }
+    .divider::before {
+      left: 0;
+    }
+    .divider::after {
+      right: 0;
+    }
+    .register-form p {
+      color: #6b7280;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .register-form .field {
+      margin-bottom: 15px;
+    }
+    .register-form .name-fields {
+      display: flex;
+      gap: 15px;
+    }
+    .register-form .name-fields .field {
+      flex: 1;
+    }
+    .register-form input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+    }
+    .register-form button {
+      background-color: #374151;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .register-form button:hover {
+      background-color: #4b5563;
+    }
+    .signin-link {
+      text-align: center;
+      margin: 15px 0;
+      font-size: 14px;
+    }
+    .signin-link a {
+      color: #3273dc;
+      text-decoration: none;
+    }
+    .signin-link a:hover {
+      text-decoration: underline;
+    }
+    .seller-link {
+      text-align: center;
+      font-size: 14px;
+    }
+    .seller-link a {
+      color: #3273dc;
+      text-decoration: none;
+    }
+    .seller-link a:hover {
+      text-decoration: underline;
+    }
+    .register-image {
+      width: 50%;
+      background-color: #e5e7eb;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .register-image img {
+      max-width: 100%;
+      max-height: 100%;
+      opacity: 0.5;
+    }
+    /* Footer */
+    .footer {
+      background-color: #f5f5f5;
+      padding: 3rem 1.5rem;
+    }
+    .footer-logo img {
+      margin-bottom: 1rem;
+    }
+    .footer ul li {
+      margin-bottom: 0.5rem;
+    }
+    .footer ul li a {
+      color: #333;
+      transition: color 0.3s ease;
+    }
+    .footer ul li a:hover {
+      color: #48c774;
+    }
+    .contact-info img.footer-logo-img {
+      max-height: 50px;
+      margin-bottom: 10px;
+    }
+    .contact-info p {
+      color: #6b7280;
+      margin-bottom: 5px;
+    }
+    .contact-info .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+    }
+    .contact-info .social-icons a {
+      color: #363636;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+    .contact-info .social-icons a:hover {
+      color: #3273dc;
+    }
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .register-container {
+        flex-direction: column;
+      }
+      .register-form, .register-image {
+        width: 100%;
+      }
+      .register-image {
+        display: none;
+      }
+      .nav-right input {
+        width: 120px;
+      }
+      .navbar-menu {
+        text-align: center;
+      }
+      .footer .columns {
+        flex-direction: column;
+        text-align: center;
+      }
+      .footer .social-icons {
+        justify-content: center;
+        display: flex;
+      }
+      .footer-logo img {
+        margin: 0 auto;
+        display: block;
+      }
+      .register-form .name-fields {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Register Section (Seller) -->
-    <section class="section">
-        <div class="columns is-centered">
-            <div class="column is-5">
-                <div class="has-text-centered mb-6">
-                    <img src="logo.png" alt="Cleckfax Traders Logo" class="header-logo mb-4">
-                    <h1 class="title is-2">Open Your Shop Today!</h1>
-                    <p class="subtitle is-5">Sign up to start selling your products on our platform.</p>
-                </div>
-                <div class="buttons is-centered mb-4">
-                    <button class="button is-light is-medium">
-                        <span class="icon"><i class="fab fa-google"></i></span>
-                        <span>Sign up with Google</span>
-                    </button>
-                    <button class="button is-light is-medium">
-                        <span class="icon"><i class="fab fa-facebook-f"></i></span>
-                        <span>Sign up with Facebook</span>
-                    </button>
-                </div>
-                <div class="has-text-centered mb-4">
-                    <p class="is-size-6">OR</p>
-                </div>
-                <div class="field">
-                    <div class="control">
-                        <input class="input" type="text" placeholder="Shop Name">
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="control">
-                        <input class="input" type="email" placeholder="Email">
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="control">
-                        <div class="select is-fullwidth">
-                            <select>
-                                <option>Select Business Category</option>
-                                <option>Bakery</option>
-                                <option>Meat</option>
-                                <option>Fish</option>
-                                <option>Deli</option>
-                                <option>Vegetables</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="field">
-                    <label class="checkbox">
-                        <input type="checkbox">
-                        I agree to the <a href="#">terms & conditions</a> for sellers
-                    </label>
-                </div>
-                <div class="field">
-                    <div class="control">
-                        <button class="button is-dark is-fullwidth">Sign up</button>
-                    </div>
-                </div>
-                <div class="has-text-centered mt-4">
-                    <p class="is-size-6">Already have an account? <a href="login.html">Sign In</a></p>
-                </div>
-            </div>
+  <!-- Navigation -->
+  <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item logo-container" href="index.html">
+        <img src="logo.png" alt="Cleckfax Traders Logo" class="header-logo">
+      </a>
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div id="navbarMenu" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item nav-link" href="productlisting.html">Shop</a>
+        <a class="navbar-item nav-link" href="Aboutus.html">About Us</a>
+        <a class="navbar-item nav-link" href="productlisting.html">Products</a>
+      </div>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <input class="input" type="text" placeholder="Search products...">
         </div>
-    </section>
+        <div class="navbar-item">
+          <a class="button is-light" href="#">
+            <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+            <span>Cart (0)</span>
+          </a>
+        </div>
+        <div class="navbar-item">
+          <a class="button is-primary" href="login.html">Login</a>
+        </div>
+        <div class="navbar-item">
+          <a class="button is-success" href="register.html">Become a trader</a>
+        </div>
+      </div>
+    </div>
+  </nav>
 
-    <!-- JavaScript -->
-    <script src="script.js"></script>
+  <!-- Register Section -->
+  <section class="register-section">
+    <div class="container register-container">
+      <div class="register-form">
+        <div class="logo">
+          <img src="logo.png" alt="Cleckfax Traders Logo">
+        </div>
+        <h2>Get started now</h2>
+        <div class="social-buttons">
+          <a href="https://accounts.google.com" target="_blank">
+            <span class="icon"><i class="fab fa-google"></i></span>
+            Sign up with Google
+          </a>
+          <a href="https://www.facebook.com" target="_blank">
+            <span class="icon"><i class="fab fa-facebook-f"></i></span>
+            Sign up with Facebook
+          </a>
+        </div>
+        <div class="divider">OR</div>
+        <p>You have the option to register using either your email or phone number</p>
+        <form method="post" action="/register">
+          <div class="field">
+            <input class="input" type="text" id="email-or-phone" name="email-or-phone" placeholder="Email / Phone Number" required>
+          </div>
+          <div class="name-fields">
+            <div class="field">
+              <input class="input" type="text" id="first-name" name="first-name" placeholder="First Name" required>
+            </div>
+            <div class="field">
+              <input class="input" type="text" id="last-name" name="last-name" placeholder="Last Name" required>
+            </div>
+          </div>
+          <div class="field">
+            <input class="input" type="password" id="password" name="password" placeholder="Password" required>
+          </div>
+          <div class="field">
+            <button type="submit">Continue</button>
+          </div>
+        </form>
+        <div class="signin-link">
+          Have an account? <a href="login.html">Sign In</a>
+        </div>
+        <div class="seller-link">
+          <a href="traderregister.html">Become a seller</a>
+        </div>
+      </div>
+      <div class="register-image">
+        <img src="" alt="Register Image">
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="columns">
+      <div class="column is-half">
+        <div class="footer-logo">
+          <a href="index.html">
+            <img src="logo.png" alt="Cleckfax Traders Logo" class="footer-logo-img">
+          </a>
+        </div>
+        <p class="title is-4">Cleckfax Traders</p>
+        <p>Email: <a href="mailto:info@cleckfaxtraders.com">info@cleckfaxtraders.com</a></p>
+        <p>Phone: <a href="tel:+16466755074">646-675-5074</a></p>
+        <p>3961 Smith Street, New York, United States</p>
+        <div class="social-icons mt-4">
+          <a href="https://www.facebook.com/cleckfaxtraders" target="_blank" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://www.twitter.com/cleckfaxtraders" target="_blank" aria-label="Twitter">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/cleckfaxtraders" target="_blank" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+      <div class="column is-half">
+        <h2 class="title is-4">Contact Us</h2>
+        <form method="post" action="/contact">
+          <div class="field">
+            <label class="label" for="name">Name</label>
+            <div class="control">
+              <input class="input" type="text" id="name" name="name" placeholder="Name" required>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label" for="email">Email</label>
+            <div class="control">
+              <input class="input" type="email" id="email" name="email" placeholder="Email" required>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label" for="message">Message</label>
+            <div class="control">
+              <textarea class="textarea" id="message" name="message" placeholder="Type your message here..." required></textarea>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <button class="button is-primary" type="submit">Send</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar Burger Toggle
+    document.addEventListener('DOMContentLoaded', () => {
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+      if ($navbarBurgers.length > 0) {
+        $navbarBurgers.forEach(el => {
+          el.addEventListener('click', () => {
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+          });
+        });
+      }
+    });
+
+    // Contact Form Submission
+    document.querySelector(".footer .button").addEventListener("click", () => {
+      alert("Message sent successfully!");
+    });
+
+    // Register Form Submission
+    document.querySelector(".register-form button").addEventListener("click", (e) => {
+      e.preventDefault();
+      alert("Registration successful! Please log in.");
+      // In a real application, you would redirect to the login page after registration
+      window.location.href = "login.html";
+    });
+  </script>
 </body>
 </html>

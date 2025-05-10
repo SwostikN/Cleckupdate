@@ -28,6 +28,29 @@
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         }
         
+        .product-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .heart-icon {
+            background: none;
+            border: none;
+            color: #4a4a4a;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+        
+        .heart-icon:hover {
+            transform: scale(1.2);
+        }
+        
+        .heart-icon.active {
+            color: #ff3860;
+        }
     </style>
 </head>
 <body>
@@ -47,7 +70,7 @@
             <div class="navbar-start">
                 <a class="navbar-item nav-link" href="productlisting.html">Shop</a>
                 <a class="navbar-item nav-link" href="Aboutus.html">About Us</a>
-                <a class="navbar-item nav-link" href="product-listing.html">Products</a>
+                <a class="navbar-item nav-link" href="productlisting.html">Products</a>
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">
@@ -63,42 +86,13 @@
                     <a class="button is-primary" href="login.html">Login</a>
                 </div>
                 <div class="navbar-item">
-                    <a class="button is-success" href="register.html">Become a trader</a>
+                    <a class="button is-success" href="traderregestier.html">Become a trader</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <!-- <section class="hero is-medium is-light">
-        <div class="hero-body">
-            <div class="columns is-vcentered">
-                <div class="column is-half">
-                    <p class="title is-1">FRESH-SUPPORT YOUR LOCAL TRADERS</p>
-                    <p class="subtitle">Order by Tuesday midnight for pickup Wed-Fri</p>
-                    <a class="button is-primary is-large" href="product-listing.html">Shop Now</a>
-                </div>
-                <div class="column is-half">
-                    <figure class="image">
-                        <img src="static/Images/product image/slider11.jpg" alt="Local Traders Banner">
-                    </figure>
-                </div>
-            </div>
-        </div>
-    </section> -->
-   <!-- <section class="hero is-fullheight is-primary slider-hero">
-        <div class="hero-body">
-          <div class="container has-text-left">
-        <div class="hero-body">
-          <div class="container has-text-centered">
-            <h1 class="title is-1 has-text-white">FRESH - SUPPORT YOUR LOCAL TRADERS</h1>
-            <p class="subtitle has-text-white">Order by Tuesday midnight for pickup Wed-Fri</p>
-            <a class="button is-light is-large" href="product-listing.html">Shop Now</a>
-          </div>
-        </div>
-      </section>  -->
-
-      <section class="hero is-fullheight is-primary slider-hero">
+    <section class="hero is-fullheight is-primary slider-hero">
         <div class="hero-body">
           <div class="container has-text-left">
             <h1 class="title is-1 has-text-white">
@@ -107,7 +101,7 @@
             <p class="subtitle has-text-white">
               Order by Tuesday midnight for pickup Wed-Fri
             </p>
-            <a class="button is-light is-large" href="product-listing.html">Shop Now</a>
+            <a class="button is-light is-large" href="productlisting.html">Shop Now</a>
           </div>
         </div>
       </section>
@@ -149,93 +143,84 @@
     </div>
 </section>
 
-    <!-- Top Categories Section
-    <section class="section">
-        <h2 class="title has-text-centered">TOP CATEGORIES</h2>
-        <div class="columns is-multiline is-centered">
-            <div class="column is-narrow has-text-centered">
-                <div class="category-circle"></div>
-                <p>Bakery</p>
-            </div>
-            <div class="column is-narrow has-text-centered">
-                <div class="category-circle"></div>
-                <p>Meat</p>
-            </div>
-            <div class="column is-narrow has-text-centered">
-                <div class="category-circle"></div>
-                <p>Fish</p>
-            </div>
-            <div class="column is-narrow has-text-centered">
-                <div class="category-circle"></div>
-                <p>Deli</p>
-            </div>
-            <div class="column is-narrow has-text-centered">
-                <div class="category-circle"></div>
-                <p>Vegetables</p>
-            </div>
-        </div>
-    </section> -->
-
     <!-- Our Bestsellers Section -->
     <section class="section">
         <h2 class="title has-text-centered">OUR BESTSELLERS</h2>
         <div class="columns is-multiline is-centered">
             <div class="column is-one-third">
-                <a href="static/Images/product image/img2.jpeg">
-                    <div class="card">
-                        <div class="card-image">
+                <div class="card">
+                    <div class="card-image">
+                        <a href="productdetail.html">
                             <figure class="image is-4by3">
                                 <img src="static/Images/product image/img1.jpeg" alt="Product">
                             </figure>
-                        </div>
-                        <div class="card-content">
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <a href="productdetail.html">
                             <p class="title is-5">Silver Fish</p>
-                            <p class="subtitle is-6">€ 100</p>
-                            <button class="button is-primary add-to-cart" data-product="Product 1">
-                                <span class="icon"><i class="fas fa-heart"></i></span>
-                                <span>Add to cart</span>
+                        </a>
+                        <p class="subtitle is-6">€ 100</p>
+                        <div class="product-actions">
+                            <button class="button is-primary" onclick="window.location.href='productlisting.html'">
+                                <span>Buy Now</span>
+                            </button>
+                            <button class="heart-icon" data-product="Product 1">
+                                <i class="fas fa-heart"></i>
                             </button>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
             <div class="column is-one-third">
-                <a href="product-detail.html">
-                    <div class="card">
-                        <div class="card-image">
+                <div class="card">
+                    <div class="card-image">
+                        <a href="productdetail.html">
                             <figure class="image is-4by3">
                                 <img src="static/Images/product image/img5.jpeg" alt="Product">
                             </figure>
-                        </div>
-                        <div class="card-content">
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <a href="productdetail.html">
                             <p class="title is-5">Cheese Chookies</p>
-                            <p class="subtitle is-6">€ 100</p>
-                            <button class="button is-primary add-to-cart" data-product="Product 2">
-                                <span class="icon"><i class="fas fa-heart"></i></span>
-                                <span>Add to cart</span>
+                        </a>
+                        <p class="subtitle is-6">€ 100</p>
+                        <div class="product-actions">
+                            <button class="button is-primary" onclick="window.location.href='productlisting.html'">
+                                <span>Buy Now</span>
+                            </button>
+                            <button class="heart-icon" data-product="Product 2">
+                                <i class="fas fa-heart"></i>
                             </button>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
             <div class="column is-one-third">
-                <a href="product-detail.html">
-                    <div class="card">
-                        <div class="card-image">
+                <div class="card">
+                    <div class="card-image">
+                        <a href="productdetail.html">
                             <figure class="image is-4by3">
                                 <img src="static/Images/product image/img14.jpeg" alt="Product">
                             </figure>
-                        </div>
-                        <div class="card-content">
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <a href="productdetail.html">
                             <p class="title is-5">Gauva</p>
-                            <p class="subtitle is-6">€ 100</p>
-                            <button class="button is-primary add-to-cart" data-product="Product 3">
-                                <span class="icon"><i class="fas fa-heart"></i></span>
-                                <span>Add to cart</span>
+                        </a>
+                        <p class="subtitle is-6">€ 100</p>
+                        <div class="product-actions">
+                            <button class="button is-primary" onclick="window.location.href='productlisting.html'">
+                                <span>Buy Now</span>
+                            </button>
+                            <button class="heart-icon" data-product="Product 3">
+                                <i class="fas fa-heart"></i>
                             </button>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
             <!-- Carousel Arrow (Right) -->
             <div class="carousel-arrow">
@@ -249,7 +234,7 @@
         <div class="columns is-vcentered">
             <div class="column is-half has-text-centered">
                 <h2 class="title">UNLOCK LOCAL COMMUNITY EXCLUSIVE OFFER</h2>
-                <a class="button is-primary is-large" href="product-listing.html">Shop Now</a>
+                <a class="button is-primary is-large" href="productlisting.html">Shop Now</a>
             </div>
             <div class="column is-half">
                 <figure class="image">
@@ -264,99 +249,129 @@
         <h2 class="title has-text-centered">Build your basket</h2>
         <div class="columns is-multiline is-centered">
             <div class="column is-one-fifth">
-                <a href="product-detail.html">
-                    <div class="card">
-                        <div class="card-image">
+                <div class="card">
+                    <div class="card-image">
+                        <a href="productdetail.html">
                             <figure class="image is-4by3">
                                 <img src="static/Images/product image/img7.jpeg" alt="Product">
                             </figure>
-                        </div>
-                        <div class="card-content">
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <a href="productdetail.html">
                             <p class="title is-6">Buff Lever</p>
-                            <p class="subtitle is-7">€ 100</p>
-                            <button class="button is-primary is-small add-to-cart" data-product="Product 4">
-                                <span class="icon"><i class="fas fa-heart"></i></span>
-                                <span>Add to cart</span>
+                        </a>
+                        <p class="subtitle is-7">€ 100</p>
+                        <div class="product-actions">
+                            <button class="button is-primary is-small" onclick="window.location.href='productlisting.html'">
+                                <span>Buy Now</span>
+                            </button>
+                            <button class="heart-icon" data-product="Product 4">
+                                <i class="fas fa-heart"></i>
                             </button>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
             <div class="column is-one-fifth">
-                <a href="product-detail.html">
-                    <div class="card">
-                        <div class="card-image">
+                <div class="card">
+                    <div class="card-image">
+                        <a href="productdetail.html">
                             <figure class="image is-4by3">
                                 <img src="static/Images/product image/img8.jpeg" alt="Product">
                             </figure>
-                        </div>
-                        <div class="card-content">
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <a href="productdetail.html">
                             <p class="title is-6">Pork Ribs</p>
-                            <p class="subtitle is-7">€ 100</p>
-                            <button class="button is-primary is-small add-to-cart" data-product="Product 5">
-                                <span class="icon"><i class="fas fa-heart"></i></span>
-                                <span>Add to cart</span>
+                        </a>
+                        <p class="subtitle is-7">€ 100</p>
+                        <div class="product-actions">
+                            <button class="button is-primary is-small" onclick="window.location.href='productlisting.html'">
+                                <span>Buy Now</span>
+                            </button>
+                            <button class="heart-icon" data-product="Product 5">
+                                <i class="fas fa-heart"></i>
                             </button>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
             <div class="column is-one-fifth">
-                <a href="product-detail.html">
-                    <div class="card">
-                        <div class="card-image">
+                <div class="card">
+                    <div class="card-image">
+                        <a href="productdetail.html">
                             <figure class="image is-4by3">
                                 <img src="static/Images/product image/img13.jpeg" alt="Product">
                             </figure>
-                        </div>
-                        <div class="card-content">
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <a href="productdetail.html">
                             <p class="title is-6">Baekon</p>
-                            <p class="subtitle is-7">€ 100</p>
-                            <button class="button is-primary is-small add-to-cart" data-product="Product 6">
-                                <span class="icon"><i class="fas fa-heart"></i></span>
-                                <span>Add to cart</span>
+                        </a>
+                        <p class="subtitle is-7">€ 100</p>
+                        <div class="product-actions">
+                            <button class="button is-primary is-small" onclick="window.location.href='productlisting.html'">
+                                <span>Buy Now</span>
+                            </button>
+                            <button class="heart-icon" data-product="Product 6">
+                                <i class="fas fa-heart"></i>
                             </button>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
             <div class="column is-one-fifth">
-                <a href="product-detail.html">
-                    <div class="card">
-                        <div class="card-image">
+                <div class="card">
+                    <div class="card-image">
+                        <a href="productdetail.html">
                             <figure class="image is-4by3">
                                 <img src="static/Images/product image/img1.jpeg" alt="Product">
                             </figure>
-                        </div>
-                        <div class="card-content">
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <a href="productdetail.html">
                             <p class="title is-6">Hake-Fish</p>
-                            <p class="subtitle is-7">€ 100</p>
-                            <button class="button is-primary is-small add-to-cart" data-product="Product 7">
-                                <span class="icon"><i class="fas fa-heart"></i></span>
-                                <span>Add to cart</span>
+                        </a>
+                        <p class="subtitle is-7">€ 100</p>
+                        <div class="product-actions">
+                            <button class="button is-primary is-small" onclick="window.location.href='productlisting.html'">
+                                <span>Buy Now</span>
+                            </button>
+                            <button class="heart-icon" data-product="Product 7">
+                                <i class="fas fa-heart"></i>
                             </button>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
             <div class="column is-one-fifth">
-                <a href="product-detail.html">
-                    <div class="card">
-                        <div class="card-image">
+                <div class="card">
+                    <div class="card-image">
+                        <a href="productdetail.html">
                             <figure class="image is-4by3">
                                 <img src="static/Images/product image/img2.jpeg" alt="Product">
                             </figure>
-                        </div>
-                        <div class="card-content">
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <a href="productdetail.html">
                             <p class="title is-6">Yak Cheese</p>
-                            <p class="subtitle is-7">€ 100</p>
-                            <button class="button is-primary is-small add-to-cart" data-product="Product 8">
-                                <span class="icon"><i class="fas fa-heart"></i></span>
-                                <span>Add to cart</span>
+                        </a>
+                        <p class="subtitle is-7">€ 100</p>
+                        <div class="product-actions">
+                            <button class="button is-primary is-small" onclick="window.location.href='productlisting.html'">
+                                <span>Buy Now</span>
+                            </button>
+                            <button class="heart-icon" data-product="Product 8">
+                                <i class="fas fa-heart"></i>
                             </button>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
             <!-- Carousel Arrow (Right) -->
             <div class="carousel-arrow">
@@ -372,60 +387,80 @@
             <div class="column is-one-fifth">
                 <div class="card">
                     <div class="card-image">
-                        <figure class="image is-4by3">
-                            <img src="static/Images/product image/trader1.jpg" alt="Trader">
-                        </figure>
+                        <a href="traderproductlisting.html">
+                            <figure class="image is-4by3">
+                                <img src="static/Images/product image/trader1.jpg" alt="Trader">
+                            </figure>
+                        </a>
                     </div>
                     <div class="card-content">
-                        <p class="title is-6">Trader 1</p>
+                        <a href="traderproductlisting.html">
+                            <p class="title is-6">Trader 1</p>
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="column is-one-fifth">
                 <div class="card">
                     <div class="card-image">
-                        <figure class="image is-4by3">
-                            <img src="static/Images/product image/trader2.jpg" alt="Trader">
-                        </figure>
+                        <a href="traderproductlisting.html">
+                            <figure class="image is-4by3">
+                                <img src="static/Images/product image/trader2.jpg" alt="Trader">
+                            </figure>
+                        </a>
                     </div>
                     <div class="card-content">
-                        <p class="title is-6">Trader 2</p>
+                        <a href="traderproductlisting.html">
+                            <p class="title is-6">Trader 2</p>
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="column is-one-fifth">
                 <div class="card">
                     <div class="card-image">
-                        <figure class="image is-4by3">
-                            <img src="static/Images/product image/trader3.jpg" alt="Trader">
-                        </figure>
+                        <a href="traderproductlisting.html">
+                            <figure class="image is-4by3">
+                                <img src="static/Images/product image/trader3.jpg" alt="Trader">
+                            </figure>
+                        </a>
                     </div>
                     <div class="card-content">
-                        <p class="title is-6">Trader 3</p>
+                        <a href="traderproductlisting.html">
+                            <p class="title is-6">Trader 3</p>
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="column is-one-fifth">
                 <div class="card">
                     <div class="card-image">
-                        <figure class="image is-4by3">
-                            <img src="static/Images/product image/trader4.jpg" alt="Trader">
-                        </figure>
+                        <a href="traderproductlisting.html">
+                            <figure class="image is-4by3">
+                                <img src="static/Images/product image/trader4.jpg" alt="Trader">
+                            </figure>
+                        </a>
                     </div>
                     <div class="card-content">
-                        <p class="title is-6">Trader 4</p>
+                        <a href="traderproductlisting.html">
+                            <p class="title is-6">Trader 4</p>
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="column is-one-fifth">
                 <div class="card">
                     <div class="card-image">
-                        <figure class="image is-4by3">
-                            <img src="static/Images/product image/trader5.jpg" alt="Trader">
-                        </figure>
+                        <a href="traderproductlisting.html">
+                            <figure class="image is-4by3">
+                                <img src="static/Images/product image/trader5.jpg" alt="Trader">
+                            </figure>
+                        </a>
                     </div>
                     <div class="card-content">
-                        <p class="title is-6">Trader 5</p>
+                        <a href="traderproductlisting.html">
+                            <p class="title is-6">Trader 5</p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -433,54 +468,79 @@
     </section>
 
     <!-- Footer Section -->
-    <footer class="footer">
-        <div class="columns">
-            <div class="column is-half">
-                <div class="footer-logo">
+<footer class="footer">
+    <div class="columns">
+        <!-- Company Info -->
+        <div class="column is-half">
+            <div class="footer-logo">
+                <a href="index.html">
                     <img src="logo.png" alt="Cleckfax Traders Logo" class="footer-logo-img">
-                </div>
-                <p class="title is-4">Cleckfax Traders</p>
-                <p>Email: info@cleckfaxtraders.com</p>
-                <p>Phone: 646-675-5074</p>
-                <p>3961 Smith Street, New York, United States</p>
-                <div class="social-icons mt-4">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
+                </a>
             </div>
-            <div class="column is-half">
-                <h2 class="title is-4">Contact Us</h2>
-                <form>
-                    <div class="field">
-                        <label class="label">Name</label>
-                        <div class="control">
-                            <input class="input" type="text" placeholder="Name">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Email</label>
-                        <div class="control">
-                            <input class="input" type="email" placeholder="Email">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Message</label>
-                        <div class="control">
-                            <textarea class="textarea" placeholder="Type your message here..."></textarea>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="control">
-                            <button class="button is-primary" type="submit">Send</button>
-                        </div>
-                    </div>
-                </form>
+            <p class="title is-4">Cleckfax Traders</p>
+            <p>Email: <a href="mailto:info@cleckfaxtraders.com">info@cleckfaxtraders.com</a></p>
+            <p>Phone: <a href="tel:+16466755074">646-675-5074</a></p>
+            <p>3961 Smith Street, New York, United States</p>
+            <div class="social-icons mt-4">
+                <a href="https://www.facebook.com" target="_blank" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.twitter.com" target="_blank" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
             </div>
         </div>
-    </footer>
+
+        <!-- Contact Form -->
+        <div class="column is-half">
+            <h2 class="title is-4">Contact Us</h2>
+            <form method="post" action="/contact">
+                <div class="field">
+                    <label class="label" for="name">Name</label>
+                    <div class="control">
+                        <input class="input" type="text" id="name" name="name" placeholder="Name" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="email">Email</label>
+                    <div class="control">
+                        <input class="input" type="email" id="email" name="email" placeholder="Email" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="message">Message</label>
+                    <div class="control">
+                        <textarea class="textarea" id="message" name="message" placeholder="Type your message here..." required></textarea>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</footer>
 
     <!-- JavaScript -->
     <script src="script.js"></script>
+    <script>
+      // Add click event listeners to all heart icons
+      document.addEventListener('DOMContentLoaded', function() {
+        const heartIcons = document.querySelectorAll('.heart-icon');
+        
+        heartIcons.forEach(icon => {
+          icon.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const productId = this.getAttribute('data-product');
+            console.log(`Toggled favorite status for ${productId}`);
+          });
+        });
+      });
+    </script>
 </body>
 </html>

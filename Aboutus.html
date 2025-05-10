@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clickax Traders</title>
+  <title>Clickax Traders - About Us</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <style>
     * {
       margin: 0;
@@ -13,7 +14,7 @@
       font-family: Arial, sans-serif;
     }
     body {
-      background-color: #fff;
+      background-color: rgb(234, 238, 239);
       color: #333;
     }
     .container {
@@ -22,9 +23,9 @@
       margin: 0 auto;
     }
     /* Navigation */
-    nav {
+    .navbar {
       background-color: #e5e7eb;
-      padding: 15px 0;
+      padding: 0.5rem 1rem;
     }
     .nav-container {
       display: flex;
@@ -36,9 +37,8 @@
       align-items: center;
       gap: 20px;
     }
-    .nav-left img {
-      width: 40px;
-      height: 40px;
+    .nav-left img.header-logo {
+      max-height: 50px;
     }
     .nav-left a, .nav-right a {
       text-decoration: none;
@@ -48,6 +48,26 @@
     .nav-left a.active {
       font-weight: bold;
       color: #374151;
+    }
+    .navbar-item.nav-link {
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    .navbar-item.nav-link:hover {
+      color: #48c774 !important;
+    }
+    .navbar-item.nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom:  Chorium;
+      left: 0;
+      background-color: #48c774;
+      transition: width 0.3s ease;
+    }
+    .navbar-item.nav-link:hover::after {
+      width: 100%;
     }
     .nav-right {
       display: flex;
@@ -91,6 +111,8 @@
     }
     .hero-image img {
       opacity: 0.5;
+      max-width: 100%;
+      height: auto;
     }
     .vision-mission {
       display: flex;
@@ -141,6 +163,12 @@
       align-items: center;
       justify-content: center;
       margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .trader-card .image-placeholder img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover;
     }
     .trader-card h3 {
       font-size: 16px;
@@ -157,8 +185,13 @@
       gap: 10px;
       margin-top: 10px;
     }
-    .trader-card .social-icons i {
+    .trader-card .social-icons a {
       color: #6b7280;
+      font-size: 1.2rem;
+      transition: color 0.3s ease;
+    }
+    .trader-card .social-icons a:hover {
+      color: #3273dc;
     }
     /* Be a Trader Section */
     .be-trader {
@@ -178,15 +211,16 @@
       justify-content: center;
       margin: 20px 0;
     }
-    .be-trader button {
+    .be-trader a.button {
       background-color: #374151;
       color: #fff;
       border: none;
       padding: 10px 20px;
       cursor: pointer;
       transition: background-color 0.2s;
+      text-decoration: none;
     }
-    .be-trader button:hover {
+    .be-trader a.button:hover {
       background-color: #4b5563;
     }
     /* Contact Us Section */
@@ -207,9 +241,8 @@
       font-weight: bold;
       margin-bottom: 20px;
     }
-    .contact-info img {
-      width: 40px;
-      height: 40px;
+    .contact-info img.footer-logo-img {
+      max-height: 50px;
       margin-bottom: 10px;
     }
     .contact-info p {
@@ -221,8 +254,13 @@
       gap: 15px;
       margin-top: 10px;
     }
-    .contact-info .social-icons i {
-      color: #6b7280;
+    .contact-info .social-icons a {
+      color: #363636;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+    .contact-info .social-icons a:hover {
+      color: #3273dc;
     }
     .contact-form input, .contact-form textarea {
       width: 100%;
@@ -247,112 +285,25 @@
     .contact-form button:hover {
       background-color: #4b5563;
     }
-    /* My Cart Section */
-    .my-cart {
-      padding: 50px 0;
+    /* Footer */
+    .footer {
+      background-color: #f5f5f5;
+      padding: 3rem 1.5rem;
     }
-    .my-cart h1 {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 20px;
+    .footer-logo img {
+      margin-bottom: 1rem;
     }
-    .cart-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
+    .footer ul li {
+      margin-bottom: 0.5rem;
     }
-    .cart-header a {
-      text-decoration: none;
-      color: #374151;
-      font-size: 16px;
+    .footer ul li a {
+      color: #333;
+      transition: color 0.3s ease;
     }
-    .cart-table {
-      width: 100%;
-      margin-bottom: 30px;
+    .footer ul li a:hover {
+      color: #48c774;
     }
-    .cart-table .header-row {
-      display: flex;
-      border-bottom: 1px solid #d1d5db;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-      font-weight: bold;
-    }
-    .cart-table .header-row div, .cart-table .cart-item div {
-      flex: 1;
-      text-align: center;
-    }
-    .cart-table .header-row div:first-child, .cart-table .cart-item div:first-child {
-      flex: 2;
-      text-align: left;
-    }
-    .cart-item {
-      display: flex;
-      align-items: center;
-      padding: 15px 0;
-      border-bottom: 1px solid #e5e7eb;
-    }
-    .cart-item img {
-      width: 50px;
-      height: 50px;
-      background-color: #f3f4f6;
-      margin-right: 15px;
-    }
-    .cart-item .product-info {
-      flex: 2;
-    }
-    .cart-item .product-info p {
-      color: #6b7280;
-      font-size: 14px;
-    }
-    .cart-item .price, .cart-item .total {
-      font-weight: bold;
-    }
-    .quantity-control {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-    .quantity-control button {
-      background-color: #e5e7eb;
-      border: 1px solid #d1d5db;
-      padding: 2px 8px;
-      cursor: pointer;
-    }
-    .quantity-control span {
-      font-weight: bold;
-    }
-    .pickup-info {
-      background-color: #fff;
-      border: 1px solid #d1d5db;
-      padding: 15px;
-      margin-bottom: 20px;
-      border-radius: 4px;
-    }
-    .pickup-info p {
-      color: #6b7280;
-      margin-bottom: 5px;
-    }
-    .totals {
-      text-align: right;
-    }
-    .totals p {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-    .checkout-btn {
-      background-color: #374151;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      float: right;
-      transition: background-color 0.2s;
-    }
-    .checkout-btn:hover {
-      background-color: #4b5563;
-    }
+    /* Responsive Adjustments */
     @media (max-width: 768px) {
       .vision-mission, .traders-grid, .contact-grid {
         flex-direction: column;
@@ -365,39 +316,59 @@
       .nav-right input {
         width: 120px;
       }
-      .cart-table .header-row, .cart-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
-      .cart-table .header-row div, .cart-table .cart-item div {
-        flex: none;
-        text-align: left;
-      }
-      .totals, .checkout-btn {
+      .navbar-menu {
         text-align: center;
-        float: none;
+      }
+      .footer .columns {
+        flex-direction: column;
+        text-align: center;
+      }
+      .footer .social-icons {
+        justify-content: center;
+        display: flex;
+      }
+      .footer-logo img {
+        margin: 0 auto;
+        display: block;
       }
     }
   </style>
 </head>
 <body>
   <!-- Navigation -->
-  <nav>
-    <div class="nav-container container">
-      <div class="nav-left">
-        <img src="https://via.placeholder.com/40" alt="Clickax Traders Logo">
-        <a href="#" class="active" data-page="about-us">Clickax Traders</a>
-        <a href="#" data-page="shop">Shop</a>
-        <a href="#" data-page="offers">Offers</a>
-        <a href="#" data-page="about-us">About Us</a>
-        <a href="#" data-page="products">Products</a>
+  <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item logo-container" href="index.html">
+        <img src="logo.png" alt="Cleckfax Traders Logo" class="header-logo">
+      </a>
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div id="navbarMenu" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item nav-link" href="productlisting.html">Shop</a>
+        <a class="navbar-item nav-link active" href="Aboutus.html">About Us</a>
+        <a class="navbar-item nav-link" href="productlisting.html">Products</a>
       </div>
-      <div class="nav-right">
-        <input type="text" placeholder="Search products...">
-        <a href="#" data-page="my-cart" id="cart-link">Cart (2)</a>
-        <a href="#" data-page="login">Login</a>
-        <a href="#" data-page="become-trader">Become a trader</a>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <input class="input" type="text" placeholder="Search products...">
+        </div>
+        <div class="navbar-item">
+          <a class="button is-light" href="#">
+            <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+            <span>Cart (0)</span>
+          </a>
+        </div>
+        <div class="navbar-item">
+          <a class="button is-primary" href="login.html">Login</a>
+        </div>
+        <div class="navbar-item">
+          <a class="button is-success" href="traderregestier.html">Become a trader</a>
+        </div>
       </div>
     </div>
   </nav>
@@ -409,7 +380,7 @@
         <h1>About us</h1>
         <p>Occaeat ipsum reprehenderit veniam anim laborum esse duis occaecat representend erat pariatur.</p>
         <div class="hero-image">
-          <img src="https://via.placeholder.com/600x300" alt="Hero Image">
+          <img src="" alt="Hero Image">
         </div>
         <div class="vision-mission">
           <div>
@@ -430,62 +401,82 @@
         <div class="traders-grid">
           <div class="trader-card">
             <div class="image-placeholder">
-              <img src="https://via.placeholder.com/100" alt="Trader Image">
+              <img src="static/Images/product image/trader1.jpg" alt="Trader Image">
             </div>
             <h3>Arron Hurst</h3>
             <p>Professional title</p>
             <p>Commodo nulla ipsum ea cupidatat sit aliquod.</p>
             <div class="social-icons">
-              <i class="fab fa-facebook"></i>
-              <i class="fab fa-twitter"></i>
+              <a href="https://www.facebook.com/arron.hurst" target="_blank" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/arron-hurst" target="_blank" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
             </div>
           </div>
           <div class="trader-card">
             <div class="image-placeholder">
-              <img src="https://via.placeholder.com/100" alt="Trader Image">
+              <img src="static/Images/product image/trader2.jpg" alt="Trader Image">
             </div>
             <h3>Vitalia Lies</h3>
             <p>Professional title</p>
             <p>Commodo nulla ipsum ea cupidatat sit aliquod.</p>
             <div class="social-icons">
-              <i class="fab fa-facebook"></i>
-              <i class="fab fa-twitter"></i>
+              <a href="https://www.facebook.com/vitalia.lies" target="_blank" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/vitalia-lies" target="_blank" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
             </div>
           </div>
           <div class="trader-card">
             <div class="image-placeholder">
-              <img src="https://via.placeholder.com/100" alt="Trader Image">
+              <img src="static/Images/product image/trader3.jpg" alt="Trader Image">
             </div>
             <h3>Alessandra Hoover</h3>
             <p>Professional title</p>
             <p>Commodo nulla ipsum ea cupidatat sit aliquod.</p>
             <div class="social-icons">
-              <i class="fab fa-facebook"></i>
-              <i class="fab fa-twitter"></i>
+              <a href="https://www.facebook.com/alessandra.hoover" target="_blank" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/alessandra-hoover" target="_blank" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
             </div>
           </div>
           <div class="trader-card">
             <div class="image-placeholder">
-              <img src="https://via.placeholder.com/100" alt="Trader Image">
+              <img src="static/Images/product image/trader4.jpg" alt="Trader Image">
             </div>
             <h3>Connie Fitzgerald</h3>
             <p>Professional title</p>
             <p>Commodo nulla ipsum ea cupidatat sit aliquod.</p>
             <div class="social-icons">
-              <i class="fab fa-facebook"></i>
-              <i class="fab fa-twitter"></i>
+              <a href="https://www.facebook.com/connie.fitzgerald" target="_blank" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/connie-fitzgerald" target="_blank" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
             </div>
           </div>
           <div class="trader-card">
             <div class="image-placeholder">
-              <img src="https://via.placeholder.com/100" alt="Trader Image">
+              <img src="static/Images/product image/trader5.jpg" alt="Trader Image">
             </div>
             <h3>Darryl Bennett</h3>
             <p>Professional title</p>
             <p>Commodo nulla ipsum ea cupidatat sit aliquod.</p>
             <div class="social-icons">
-              <i class="fab fa-facebook"></i>
-              <i class="fab fa-twitter"></i>
+              <a href="https://www.facebook.com/darryl.bennett" target="_blank" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/darryl-bennett" target="_blank" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
             </div>
           </div>
         </div>
@@ -495,103 +486,65 @@
       <div class="container">
         <h2>Be a Trader</h2>
         <p>Do consectetur proident id eiusmod deserunt consectetur pariatur ad ex velit do Lorem representend.</p>
-        <div class="image-placeholder">
-          <img src="https://via.placeholder.com/400x200" alt="Be a Trader Image">
-        </div>
-        <button>Join us</button>
+        <a href="traderregister.html" class="button">Join us</a>
       </div>
     </div>
-    <div class="contact-us">
-      <div class="container">
-        <div class="contact-grid">
-          <div class="contact-info">
-            <h2>Contact Us</h2>
-            <img src="https://via.placeholder.com/40" alt="Clickax Traders Logo">
-            <p>Clickax Traders</p>
-            <p>Email: info@yourdomain.com</p>
-            <p>Phone: 646-675-5074</p>
-            <p>3601 61st Street, New York, United States</p>
-            <div class="social-icons">
-              <i class="fab fa-facebook"></i>
-              <i class="fab fa-instagram"></i>
+    <footer class="footer">
+      <div class="columns">
+        <!-- Company Info -->
+        <div class="column is-half">
+          <div class="footer-logo">
+            <a href="index.html">
+              <img src="logo.png" alt="Cleckfax Traders Logo" class="footer-logo-img">
+            </a>
+          </div>
+          <p class="title is-4">Cleckfax Traders</p>
+          <p>Email: <a href="mailto:info@cleckfaxtraders.com">info@cleckfaxtraders.com</a></p>
+          <p>Phone: <a href="tel:+16466755074">646-675-5074</a></p>
+          <p>3961 Smith Street, New York, United States</p>
+          <div class="social-icons mt-4">
+            <a href="https://www.facebook.com/cleckfaxtraders" target="_blank" aria-label="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.twitter.com/cleckfaxtraders" target="_blank" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/cleckfaxtraders" target="_blank" aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+        </div>
+        <!-- Contact Form -->
+        <div class="column is-half">
+          <h2 class="title is-4">Contact Us</h2>
+          <form method="post" action="/contact">
+            <div class="field">
+              <label class="label" for="name">Name</label>
+              <div class="control">
+                <input class="input" type="text" id="name" name="name" placeholder="Name" required>
+              </div>
             </div>
-          </div>
-          <div class="contact-form">
-            <input type="text" placeholder="Name">
-            <input type="email" placeholder="Email">
-            <textarea placeholder="Type your message here"></textarea>
-            <button>Send</button>
-          </div>
+            <div class="field">
+              <label class="label" for="email">Email</label>
+              <div class="control">
+                <input class="input" type="email" id="email" name="email" placeholder="Email" required>
+              </div>
+            </div>
+            <div class="field">
+              <label class="label" for="message">Message</label>
+              <div class="control">
+                <textarea class="textarea" id="message" name="message" placeholder="Type your message here..." required></textarea>
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <button class="button is-primary" type="submit">Send</button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- My Cart Page -->
-  <section class="page my-cart-page" id="my-cart-page">
-    <div class="my-cart">
-      <div class="container">
-        <div class="cart-header">
-          <h1>My Cart</h1>
-          <a href="#" data-page="about-us"><i class="fas fa-arrow-left"></i> Continue shopping</a>
-        </div>
-        <div class="cart-table">
-          <div class="header-row">
-            <div>PRODUCT</div>
-            <div>PRICE</div>
-            <div>QTY</div>
-            <div>TOTAL</div>
-          </div>
-          <div class="cart-item">
-            <div class="product-info">
-              <img src="https://via.placeholder.com/50" alt="Product Image">
-              <p>Xiaomi365</p>
-              <p>#2143235343452</p>
-              <p>Color:White//Extra:Sport Tire + Battery High 100</p>
-            </div>
-            <div class="price">
-              <p>+50.99$Sport Tire</p>
-              <p>+35$ Battery H</p>
-              <p>484,999$</p>
-            </div>
-            <div class="quantity-control">
-              <button class="decrement">-</button>
-              <span>1</span>
-              <button class="increment">+</button>
-            </div>
-            <div class="total">484.99</div>
-          </div>
-          <div class="cart-item">
-            <div class="product-info">
-              <img src="https://via.placeholder.com/50" alt="Product Image">
-              <p>Ninebot ES2</p>
-              <p>#2143235246353</p>
-              <p>Color:Black//Extra:Full Tire</p>
-            </div>
-            <div class="price">
-              <p>+80.99$Full Tire</p>
-              <p>489,999$</p>
-            </div>
-            <div class="quantity-control">
-              <button class="decrement">-</button>
-              <span>3</span>
-              <button class="increment">+</button>
-            </div>
-            <div class="total">1469.97</div>
-          </div>
-        </div>
-        <div class="pickup-info">
-          <p>Pickup Info:</p>
-          <p>Store pickup after 24hrs</p>
-          <p>Store pickup ONLY on Wednesday Thursday and Friday</p>
-        </div>
-        <div class="totals">
-          <p>SUBTOTAL TTC 1954.97</p>
-          <p>TOTAL 1954.97</p>
-          <button class="checkout-btn">Checkout</button>
-        </div>
-      </div>
-    </div>
+    </footer>
   </section>
 
   <script>
@@ -609,60 +562,25 @@
       });
     });
 
-    // Cart Data and Functionality
-    let cartItems = [
-      { name: "Xiaomi365", id: "#2143235343452", details: "Color:White//Extra:Sport Tire + Battery High 100", extra: ["+50.99$Sport Tire", "+35$ Battery H"], basePrice: 484999, quantity: 1, total: 484.99 },
-      { name: "Ninebot ES2", id: "#2143235246353", details: "Color:Black//Extra:Full Tire", extra: ["+80.99$Full Tire"], basePrice: 489999, quantity: 3, total: 1469.97 }
-    ];
-
-    function updateCartDisplay() {
-      const cartLink = document.getElementById("cart-link");
-      const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-      cartLink.textContent = `Cart (${totalItems})`;
-
-      const subtotal = cartItems.reduce((sum, item) => sum + item.total, 0);
-      document.querySelector(".totals p:nth-child(1)").textContent = `SUBTOTAL TTC ${subtotal.toFixed(2)}`;
-      document.querySelector(".totals p:nth-child(2)").textContent = `TOTAL ${subtotal.toFixed(2)}`;
-    }
-
-    document.querySelectorAll(".cart-item").forEach((item, index) => {
-      const decrementBtn = item.querySelector(".decrement");
-      const incrementBtn = item.querySelector(".increment");
-      const quantitySpan = item.querySelector(".quantity-control span");
-      const totalSpan = item.querySelector(".total");
-
-      decrementBtn.addEventListener("click", () => {
-        if (cartItems[index].quantity > 1) {
-          cartItems[index].quantity--;
-          cartItems[index].total = (cartItems[index].basePrice / 1000 + (index === 0 ? 50.99 + 35 : 80.99)) * cartItems[index].quantity;
-          quantitySpan.textContent = cartItems[index].quantity;
-          totalSpan.textContent = cartItems[index].total.toFixed(2);
-          updateCartDisplay();
-        }
-      });
-
-      incrementBtn.addEventListener("click", () => {
-        cartItems[index].quantity++;
-        cartItems[index].total = (cartItems[index].basePrice / 1000 + (index === 0 ? 50.99 + 35 : 80.99)) * cartItems[index].quantity;
-        quantitySpan.textContent = cartItems[index].quantity;
-        totalSpan.textContent = cartItems[index].total.toFixed(2);
-        updateCartDisplay();
-      });
+    // Navbar Burger Toggle
+    document.addEventListener('DOMContentLoaded', () => {
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+      if ($navbarBurgers.length > 0) {
+        $navbarBurgers.forEach(el => {
+          el.addEventListener('click', () => {
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+          });
+        });
+      }
     });
 
-    // Other Interactivity
+    // Contact Form Submission
     document.querySelector(".contact-form button").addEventListener("click", () => {
       alert("Message sent successfully!");
     });
-    document.querySelector(".be-trader button").addEventListener("click", () => {
-      alert("Thank you for your interest! Please contact us to become a trader.");
-    });
-    document.querySelector(".checkout-btn").addEventListener("click", () => {
-      alert("Proceeding to checkout!");
-    });
-
-    // Initialize
-    updateCartDisplay();
   </script>
 </body>
 </html>
