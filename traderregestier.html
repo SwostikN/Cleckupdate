@@ -6,6 +6,7 @@
     <title>Cleckfax Traders - Register as Seller</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
     <style>
         * {
             margin: 0;
@@ -221,45 +222,8 @@
             max-height: 100%;
             opacity: 0.5;
         }
-        /* Footer */
-        .footer {
-            background-color: #f5f5f5;
-            padding: 3rem 1.5rem;
-        }
-        .footer-logo img {
-            margin-bottom: 1rem;
-        }
-        .footer ul li {
-            margin-bottom: 0.5rem;
-        }
-        .footer ul li a {
-            color: #333;
-            transition: color 0.3s ease;
-        }
-        .footer ul li a:hover {
-            color: #48c774;
-        }
-        .contact-info img.footer-logo-img {
-            max-height: 50px;
-            margin-bottom: 10px;
-        }
-        .contact-info p {
-            color: #6b7280;
-            margin-bottom: 5px;
-        }
-        .contact-info .social-icons {
-            display: flex;
-            gap: 15px;
-            margin-top: 10px;
-        }
-        .contact-info .social-icons a {
-            color: #363636;
-            font-size: 1.5rem;
-            transition: color 0.3s ease;
-        }
-        .contact-info .social-icons a:hover {
-            color: #3273dc;
-        }
+
+        
         /* Responsive Adjustments */
         @media (max-width: 768px) {
             .register-container {
@@ -396,60 +360,63 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="columns">
-            <div class="column is-half">
-                <div class="footer-logo">
-                    <a href="index.html">
-                        <img src="logo.png" alt="Cleckfax Traders Logo" class="footer-logo-img">
-                    </a>
-                </div>
-                <p class="title is-4">Cleckfax Traders</p>
-                <p>Email: <a href="mailto:info@cleckfaxtraders.com">info@cleckfaxtraders.com</a></p>
-                <p>Phone: <a href="tel:+16466755074">646-675-5074</a></p>
-                <p>3961 Smith Street, New York, United States</p>
-                <div class="social-icons mt-4">
-                    <a href="https://www.facebook.com/cleckfaxtraders" target="_blank" aria-label="Facebook">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://www.twitter.com/cleckfaxtraders" target="_blank" aria-label="Twitter">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/company/cleckfaxtraders" target="_blank" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                </div>
+<footer class="footer">
+    <div class="columns">
+        <!-- Company Info -->
+        <div class="column is-half">
+            <div class="footer-logo">
+                <a href="index.html">
+                    <img src="logo.png" alt="Cleckfax Traders Logo" class="footer-logo-img">
+                </a>
             </div>
-            <div class="column is-half">
-                <h2 class="title is-4">Contact Us</h2>
-                <form method="post" action="/contact">
-                    <div class="field">
-                        <label class="label" for="name">Name</label>
-                        <div class="control">
-                            <input class="input" type="text" id="name" name="name" placeholder="Name" required>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label" for="email">Email</label>
-                        <div class="control">
-                            <input class="input" type="email" id="email" name="email" placeholder="Email" required>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label" for="message">Message</label>
-                        <div class="control">
-                            <textarea class="textarea" id="message" name="message" placeholder="Type your message here..." required></textarea>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="control">
-                            <button class="button is-primary" type="submit">Send</button>
-                        </div>
-                    </div>
-                </form>
+            <p class="title is-4">Cleckfax Traders</p>
+            <p>Email: <a href="mailto:info@cleckfaxtraders.com">info@cleckfaxtraders.com</a></p>
+            <p>Phone: <a href="tel:+16466755074">646-675-5074</a></p>
+            <p>3961 Smith Street, New York, United States</p>
+            <div class="social-icons mt-4">
+                <a href="https://www.facebook.com" target="_blank" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.twitter.com" target="_blank" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
             </div>
         </div>
-    </footer>
+
+        <!-- Contact Form -->
+        <div class="column is-half">
+            <h2 class="title is-4">Contact Us</h2>
+            <form method="post" action="/contact">
+                <div class="field">
+                    <label class="label" for="name">Name</label>
+                    <div class="control">
+                        <input class="input" type="text" id="name" name="name" placeholder="Name" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="email">Email</label>
+                    <div class="control">
+                        <input class="input" type="email" id="email" name="email" placeholder="Email" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="message">Message</label>
+                    <div class="control">
+                        <textarea class="textarea" id="message" name="message" placeholder="Type your message here..." required></textarea>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</footer>
 
     <!-- JavaScript -->
     <script>
