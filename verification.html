@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clickax Traders - Verification</title>
+  <style>
+    body {
+      background-color: #1a202c;
+      color: #e2e8f0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: #2d3748;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+    .logo {
+      width: 80px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 14px;
+      color: #a0aec0;
+      margin-bottom: 20px;
+    }
+    .code-inputs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .code-inputs input {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      font-size: 18px;
+      border: 1px solid #4a5568;
+      border-radius: 5px;
+      background-color: #4a5568;
+      color: #e2e8f0;
+      outline: none;
+    }
+    .verify-btn {
+      background-color: #4a90e2;
+      border: none;
+      padding: 10px 20px;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .verify-btn:hover {
+      background-color: #357abd;
+    }
+    .timer {
+      color: #a0aec0;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+    .support-link, .login-link {
+      color: #4a90e2;
+      text-decoration: none;
+      font-size: 12px;
+      margin-top: 20px;
+      display: block;
+    }
+    .support-link:hover, .login-link:hover {
+      text-decoration: underline;
+    }
+    .terms {
+      color: #a0aec0;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      color: #e2e8f0;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <span class="close-btn">&times;</span>
+    <img src="https://via.placeholder.com/80" alt="Clickax Traders Logo" class="logo">
+    <h2>Almost done</h2>
+    <p>Please type the code we sent you in your email</p>
+    <div class="code-inputs">
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+    </div>
+    <button class="verify-btn">Verify</button>
+    <div class="timer">32:06</div>
+    <a href="#" class="support-link">Can't access to your email? Contact support</a>
+    <p class="terms">you agree to our Terms and Privacy Policy</p>
+    <a href="#" class="login-link">Already have an account? Log in</a>
+  </div>
+
+  <script>
+    const inputs = document.querySelectorAll('.code-inputs input');
+    inputs.forEach((input, index) => {
+      input.addEventListener('input', () => {
+        if (input.value.length === 1 && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !input.value && index > 0) {
+          inputs[index - 1].focus();
+        }
+      });
+    });
+
+    const verifyBtn = document.querySelector('.verify-btn');
+    verifyBtn.addEventListener('click', () => {
+      const code = Array.from(inputs).map(input => input.value).join('');
+      if (code.length === 6) {
+        alert('Verification successful!');
+      } else {
+        alert('Please enter a 6-digit code.');
+      }
+    });
+
+    let time = 32 * 60; // 32 minutes in seconds
+    const timer = document.querySelector('.timer');
+    const countdown = setInterval(() => {
+      let minutes = Math.floor(time / 60);
+      let seconds = time % 60;
+      timer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      time--;
+      if (time < 0) clearInterval(countdown);
+    }, 1000);
+  </script>
+</body>
+</html>
