@@ -92,7 +92,7 @@ if (isset($_POST["forgot"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClickFax Traders - Forgot Your Password</title>
+    <title>Cleckfax Traders - Forgot Your Password</title>
     <link rel="icon" href="logo_ico.png" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -121,7 +121,7 @@ if (isset($_POST["forgot"])) {
     <nav class="navbar is-light" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item logo-container" href="index.php">
-                <img src="logo.png" alt="ClickFax Traders Logo" class="header-logo">
+                <img src="logo.png" alt="Cleckfax Traders Logo" class="header-logo">
             </a>
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
                 <span aria-hidden="true"></span>
@@ -190,21 +190,21 @@ if (isset($_POST["forgot"])) {
                 <div class="column is-half">
                     <div class="footer-logo">
                         <a href="index.php">
-                            <img src="logo.png" alt="ClickFax Traders Logo" class="footer-logo-img">
+                            <img src="logo.png" alt="Cleckfax Traders Logo" class="footer-logo-img">
                         </a>
                     </div>
-                    <p class="title is-4">ClickFax Traders</p>
-                    <p>Email: <a href="mailto:info@clickfaxtraders.com">info@clickfaxtraders.com</a></p>
+                    <p class="title is-4">Cleckfax Traders</p>
+                    <p>Email: <a href="mailto:info@Cleckfaxtraders.com">info@Cleckfaxtraders.com</a></p>
                     <p>Phone: <a href="tel:+16466755074">646-675-5074</a></p>
                     <p>3961 Smith Street, New York, United States</p>
                     <div class="buttons mt-4">
-                        <a href="https://www.facebook.com/clickfaxtraders" class="button is-small" target="_blank">
+                        <a href="https://www.facebook.com/Cleckfaxtraders" class="button is-small" target="_blank">
                             <span class="icon"><i class="fab fa-facebook-f"></i></span>
                         </a>
-                        <a href="https://www.twitter.com/clickfaxtraders" class="button is-small" target="_blank">
+                        <a href="https://www.twitter.com/Cleckfaxtraders" class="button is-small" target="_blank">
                             <span class="icon"><i class="fab fa-twitter"></i></span>
                         </a>
-                        <a href="https://www.instagram.com/clickfaxtraders" class="button is-small" target="_blank">
+                        <a href="https://www.instagram.com/Cleckfaxtraders" class="button is-small" target="_blank">
                             <span class="icon"><i class="fab fa-instagram"></i></span>
                         </a>
                     </div>

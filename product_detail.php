@@ -241,7 +241,7 @@ oci_free_statement($stmt);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClickFax Traders - <?php echo htmlspecialchars($productName); ?></title>
+    <title>Cleckfax Traders - <?php echo htmlspecialchars($productName); ?></title>
     <link rel="icon" href="logo_ico.png" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

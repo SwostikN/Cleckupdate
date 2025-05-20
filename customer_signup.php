@@ -165,7 +165,7 @@ if (isset($_POST["submit_sign_up"]) && isset($_POST["terms"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClickFax Traders - Sign Up</title>
+    <title>CleckFax Traders - Sign Up</title>
     <link rel="icon" href="logo_ico.png" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -272,7 +272,7 @@ if (isset($_POST["submit_sign_up"]) && isset($_POST["terms"])) {
         <div class="signup-container">
             <div class="signup-form">
                 <div class="logo-container has-text-centered">
-                    <img src="logo.png" alt="ClickFax Traders Logo">
+                    <img src="logo.png" alt="CleckFax Traders Logo">
                 </div>
                 <h1 class="title has-text-centered">Get started now</h1>
                 <button class="button social google">

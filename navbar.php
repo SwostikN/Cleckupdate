@@ -12,6 +12,7 @@
 include("connection/connection.php");
 require("PHPMailer-master/trader_verify_email.php");
 
+
 // Fetch shops for dropdown
 $shopArray = [];
 $sql = "SELECT u.user_id AS USER_ID, s.shop_name AS SHOP_NAME 
@@ -219,7 +220,7 @@ if ($stid) {
                     </a>
                     <div class="navbar-dropdown">
                         <?php if ($_SESSION['USER_TYPE'] === 'customer'): ?>
-                            <a class="navbar-item" href="customer_profile.php">Profile</a>
+                            <a class="navbar-item" href="customer.php">Profile</a>
                         <?php elseif ($_SESSION['USER_TYPE'] === 'trader'): ?>
                             <a class="navbar-item" href="trader_dashboard.php">Dashboard</a>
                         <?php elseif ($_SESSION['USER_TYPE'] === 'admin'): ?>

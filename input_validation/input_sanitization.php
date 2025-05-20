@@ -108,4 +108,34 @@ function sanitizeUserRole($role) {
     $allowed_roles = ['customer', 'trader', 'admin'];
     return in_array($role, $allowed_roles) ? $role : '';
 }
+function sanitizeAddress($address) {
+    // Trim whitespace from beginning and end
+    $address = trim($address);
+
+    // Remove any HTML tags to prevent XSS
+    $address = strip_tags($address);
+
+    // Convert special characters to HTML entities
+    $address = htmlspecialchars($address, ENT_QUOTES, 'UTF-8');
+
+    // Optionally, remove any characters that are not letters, numbers, spaces, commas, dots, or hyphens
+    $address = preg_replace("/[^a-zA-Z0-9\s,.\-]/", "", $address);
+
+    return $address;
+}
+function sanitizeDOB($dob) {
+    // Trim whitespace
+    $dob = trim($dob);
+
+    // Remove HTML tags and encode special characters
+    $dob = strip_tags($dob);
+    $dob = htmlspecialchars($dob, ENT_QUOTES, 'UTF-8');
+
+    // Optional: Validate the format (e.g., YYYY-MM-DD)
+    if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $dob)) {
+        return ""; // Invalid format, return empty or handle as needed
+    }
+
+    return $dob;
+}
 ?>

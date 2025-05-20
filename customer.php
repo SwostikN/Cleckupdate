@@ -4,7 +4,7 @@ include("connection/connection.php");
 
         // Variable for Input_validation 
         $input_validation_passed = true;
-        $user_id = $_SESSION["userid"];
+        $user_id = $_SESSION["USER_ID"];
 
         // Prepare the SQL statement
         $sql = "SELECT FIRST_NAME, LAST_NAME, USER_ADDRESS, USER_EMAIL, USER_AGE, USER_GENDER, USER_PASSWORD, USER_PROFILE_PICTURE, USER_TYPE, USER_CONTACT_NO, USER_DOB
@@ -124,57 +124,62 @@ include("connection/connection.php");
                             }
 
                                 if ($input_validation_passed) {
-                                    // Prepare the SQL statement for updating user information
-                                    $sql_update_user = "UPDATE CLECK_USER SET 
-                                    FIRST_NAME = :first_name, 
-                                    LAST_NAME = :last_name, 
-                                    USER_ADDRESS = :user_address, 
-                                    USER_GENDER = :user_gender,  
-                                    USER_PROFILE_PICTURE = :user_profile_picture, 
-                                    USER_CONTACT_NO = :user_contact_no,
-                                    USER_DOB = TO_DATE(:user_dob, 'YYYY-MM-DD')
-                                    WHERE USER_ID = :user_id";
+    // Prepare the SQL statement for updating user information
+    $sql_update_user = "UPDATE CLECK_USER SET 
+        FIRST_NAME = :first_name, 
+        LAST_NAME = :last_name, 
+        USER_ADDRESS = :user_address, 
+        USER_GENDER = :user_gender,  
+        USER_PROFILE_PICTURE = :user_profile_picture, 
+        USER_CONTACT_NO = :user_contact_no,
+        USER_DOB = TO_DATE(:user_dob, 'YYYY-MM-DD')
+        WHERE USER_ID = :user_id";
 
-                                    // Prepare the OCI statement
-                                    $stmt_update_user = oci_parse($conn, $sql_update_user);
+    // Prepare the OCI statement
+    $stmt_update_user = oci_parse($conn, $sql_update_user);
 
-                                    // Bind parameters
-                                    oci_bind_by_name($stmt_update_user, ':first_name', $first_name);
-                                    oci_bind_by_name($stmt_update_user, ':last_name', $last_name);
-                                    oci_bind_by_name($stmt_update_user, ':user_address', $address);
-                                    oci_bind_by_name($stmt_update_user, ':user_gender', $gender);
-                                    oci_bind_by_name($stmt_update_user, ':user_profile_picture', $newFileName);
-                                    oci_bind_by_name($stmt_update_user, ':user_contact_no', $contact_number);
-                                    oci_bind_by_name($stmt_update_user, ':user_dob', $dob);
-                                    oci_bind_by_name($stmt_update_user, ':user_id', $user_id);
+    // Bind parameters
+    oci_bind_by_name($stmt_update_user, ':first_name', $first_name);
+    oci_bind_by_name($stmt_update_user, ':last_name', $last_name);
+    oci_bind_by_name($stmt_update_user, ':user_address', $address);
+    oci_bind_by_name($stmt_update_user, ':user_gender', $gender);
+    oci_bind_by_name($stmt_update_user, ':user_profile_picture', $newFileName);
+    oci_bind_by_name($stmt_update_user, ':user_contact_no', $contact_number);
+    oci_bind_by_name($stmt_update_user, ':user_dob', $dob);
+    oci_bind_by_name($stmt_update_user, ':user_id', $user_id);
 
-                                    // Execute the SQL statement
-                                    if (oci_execute($stmt_update_user)) {
-                                        // Prepare the SQL statement for updating the DATE_UPDATED column
-                                        $sql_update_date = "UPDATE CUSTOMER 
-                                        SET DATE_UPDATED = CURRENT_DATE
-                                        WHERE USER_ID = :user_id";
+    // Execute the SQL statement
+    if (oci_execute($stmt_update_user)) {
+        // Update session variables with new values
+        $_SESSION['FIRST_NAME'] = $first_name;
+        $_SESSION['LAST_NAME'] = $last_name; // Optional: update last name if you're storing it in session
+        $_SESSION['picture'] = $newFileName; // Update profile picture in session if needed
 
-                                        // Prepare the OCI statement
-                                        $stmt_update_date = oci_parse($conn, $sql_update_date);
+        // Prepare the SQL statement for updating the DATE_UPDATED column
+        $sql_update_date = "UPDATE CUSTOMER 
+            SET DATE_UPDATED = CURRENT_DATE
+            WHERE USER_ID = :user_id";
 
-                                        // Bind the user_id parameter
-                                        oci_bind_by_name($stmt_update_date, ':user_id', $user_id);
+        // Prepare the OCI statement
+        $stmt_update_date = oci_parse($conn, $sql_update_date);
 
-                                        // Execute the SQL statement
-                                        if (oci_execute($stmt_update_date)) {
-                                        // Reload the page
-                                        header("Location: ".$_SERVER['PHP_SELF']);
-                                        exit();
-                                        } else {
-                                        $error = oci_error($stmt_update_date);
-                                        echo "Error updating DATE_UPDATED column: " . $error['message'];
-                                        }
-                                    } else {
-                                    $error = oci_error($stmt_update_user);
-                                    echo "Error updating user information: " . $error['message'];
-                                    }
-                }
+        // Bind the user_id parameter
+        oci_bind_by_name($stmt_update_date, ':user_id', $user_id);
+
+        // Execute the SQL statement
+        if (oci_execute($stmt_update_date)) {
+            // Reload the page
+            header("Location: ".$_SERVER['PHP_SELF']);
+            exit();
+        } else {
+            $error = oci_error($stmt_update_date);
+            echo "Error updating DATE_UPDATED column: " . $error['message'];
+        }
+    } else {
+        $error = oci_error($stmt_update_user);
+        echo "Error updating user information: " . $error['message'];
+    }
+}
 
                 } 
         } else {

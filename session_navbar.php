@@ -48,7 +48,7 @@ while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
 oci_free_statement($stid);
 
 
-$user_id =  $_SESSION["userid"] ;
+$user_id =  $_SESSION["USER_ID"]; ;
 // SQL query
 $query = 'SELECT CUSTOMER_ID FROM CUSTOMER WHERE USER_ID = :user_id';
 
@@ -163,7 +163,7 @@ $total_wishlist_items = isset($total_wishlist_items) ? $total_wishlist_items : 0
  <header>
         <nav>
             <div class="container">
-                <div class="logo"><img src="logo.png"></div>
+                <div class="logo"><img src="CleckFax_Traders_Hub_Logo_group6-removebg-preview.png"></div>
                 <div class="nav-links">
                     <ul>
                         <li class="highlight"><a href="index.php">Home</a></li>
@@ -186,21 +186,19 @@ $total_wishlist_items = isset($total_wishlist_items) ? $total_wishlist_items : 0
                         
                     </ul>
                 </div>
-                <div class="icons">
-                    <a href="wishlist.php" class="icon"><i class="fas fa-heart" ></i><span style="background-color: red; color: white; border-radius: 50%; font-size: 15px;"><?php echo $total_wishlist_items; ?></span></a>
-                    <a href="cart.php" class="icon"><i class="fas fa-shopping-cart"></i><span style="background-color: red; color: white; border-radius: 50%; font-size: 15px;"><?php echo $total_products; ?></span></a>
-                    <div class="profile-icon">
-                        <div class="profile-image">
-                            <img src="profile_image/<?php echo $_SESSION["picture"]; ?>" alt="<?php echo $_SESSION["name"] ; ?>">
-                        </div>
-                        <div class="submenu-profile">
-                            <ul>
-                                <li><a href="customer.php">Profile</a></li>
-                                <li><a href="change_password.php">Change Password</a></li>
-                                <li><a href="session/logout.php">Logout</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="profile-icon">
+    <div class="profile-image">
+        <img src="profile_image/<?php echo isset($_SESSION["picture"]) ? htmlspecialchars($_SESSION["picture"]) : '666151264c513.jpg'; ?>" 
+             alt="<?php echo isset($_SESSION["FIRST_NAME"]) ? htmlspecialchars($_SESSION["FIRST_NAME"]) : 'Profile'; ?>">
+    </div>
+    <div class="submenu-profile">
+        <ul>
+            <li><a href="customer.php">Profile</a></li>
+            <li><a href="change_password.php">Change Password</a></li>
+            <li><a href="session/logout.php">Logout</a></li>
+        </ul>
+    </div>
+</div>
                     
             </div>
         </nav>

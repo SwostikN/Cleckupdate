@@ -65,48 +65,52 @@ if (isset($_POST["sign_in"])) {
             $error = oci_error($stmt);
             error_log("Signin query error: " . $error['message'], 3, 'error.log');
             $error_message = "An error occurred. Please try again.";
-        } elseif ($row = oci_fetch_assoc($stmt)) {
-    if (password_verify($password, $row["USER_PASSWORD"])) {
-        // Remove verification checks for already verified accounts
-        if ($user_role === 'customer' && !isset($row["VERIFIED_CUSTOMER"])) {
-            $account_error = "Please verify your customer account!";
-            $_SESSION['USER_ID'] = $row["USER_ID"];
-            error_log("Customer not verified, redirecting to verification. USER_ID: " . $row["USER_ID"], 3, 'debug.log');
-            header("Location: customer_verification.php");
-            exit;
-        } elseif ($user_role === 'trader' && !isset($row["VERIFICATION_STATUS"])) {
-            $account_error = "Please verify your trader account!";
-            $_SESSION['USER_ID'] = $row["USER_ID"];
-            error_log("Trader not verified, redirecting to verification. USER_ID: " . $row["USER_ID"], 3, 'debug.log');
-            header("Location: trader_verification.php");
-            exit;
         } else {
-            // Set session variables
-            $_SESSION["USER_ID"] = $row["USER_ID"];
-            $_SESSION["USER_TYPE"] = $row["USER_TYPE"];
-            $_SESSION["FIRST_NAME"] = $row["FIRST_NAME"];
-            $_SESSION["LAST_NAME"] = $row["LAST_NAME"];
-            $_SESSION["USER_PROFILE_PICTURE"] = $row["USER_PROFILE_PICTURE"];
-            
-            // Handle "Remember me" and redirect
-            if (isset($_POST["remember"])) {
-                $token = bin2hex(random_bytes(32));
-                setcookie("remember_token", $token, time() + (86400 * 30), "/", "", false, true);
-            }
-            
-            // Redirect based on role
-            if ($user_role === 'admin') {
-                header("Location: admin_dashboard.php");
-            } elseif ($user_role === 'trader') {
-                header("Location: trader_dashboard.php");
+            if ($row = oci_fetch_assoc($stmt)) {
+                if (password_verify($password, $row["USER_PASSWORD"])) {
+                    // Remove verification checks for already verified accounts
+                    if ($user_role === 'customer' && !isset($row["VERIFIED_CUSTOMER"])) {
+                        $account_error = "Please verify your customer account!";
+                        $_SESSION['USER_ID'] = $row["USER_ID"];
+                        error_log("Customer not verified, redirecting to verification. USER_ID: " . $row["USER_ID"], 3, 'debug.log');
+                        header("Location: customer_verification.php");
+                        exit;
+                    } elseif ($user_role === 'trader' && !isset($row["VERIFICATION_STATUS"])) {
+                        $account_error = "Please verify your trader account!";
+                        $_SESSION['USER_ID'] = $row["USER_ID"];
+                        error_log("Trader not verified, redirecting to verification. USER_ID: " . $row["USER_ID"], 3, 'debug.log');
+                        header("Location: trader_verification.php");
+                        exit;
+                    } else {
+                        // Set session variables
+                        $_SESSION["USER_ID"] = $row["USER_ID"];
+                        $_SESSION["USER_TYPE"] = $row["USER_TYPE"];
+                        $_SESSION["FIRST_NAME"] = $row["FIRST_NAME"];
+                        $_SESSION["LAST_NAME"] = $row["LAST_NAME"];
+                        $_SESSION["USER_PROFILE_PICTURE"] = $row["USER_PROFILE_PICTURE"];
+                        
+                        // Handle "Remember me" and redirect
+                        if (isset($_POST["remember"])) {
+                            $token = bin2hex(random_bytes(32));
+                            setcookie("remember_token", $token, time() + (86400 * 30), "/", "", false, true);
+                        }
+                        
+                        // Redirect based on role
+                        if ($user_role === 'admin') {
+                            header("Location: admin_dashboard.php");
+                        } elseif ($user_role === 'trader') {
+                            header("Location: trader_dashboard.php");
+                        } else {
+                            header("Location: index.php");  // Default redirect for customers
+                        }
+                        exit;
+                    }
+                } else {
+                    $error_message = "Incorrect email or password!";
+                }
             } else {
-                header("Location: index.php");  // Default redirect for customers
+                $error_message = "Incorrect email or password!";
             }
-            exit;
-        }
-    } else {
-        $error_message = "Incorrect email or password!";
-    }
         }
         oci_free_statement($stmt);
     }
@@ -118,7 +122,7 @@ if (isset($_POST["sign_in"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClickFax Traders - Sign In</title>
+    <title>Cleckfax Traders - Sign In</title>
     <link rel="icon" href="logo_ico.png" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

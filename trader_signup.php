@@ -338,7 +338,7 @@ if (isset($_POST["submit_sign_up"]) && isset($_POST["terms"])) {
         <div class="signup-container">
             <div class="signup-form">
                 <div class="logo-container has-text-centered">
-                    <img src="logo.png" alt="ClickFax Traders Logo">
+                    <img src="logo.png" alt="Cleckfax Traders Logo">
                 </div>
                 <h1 class="title has-text-centered">Trader Sign Up</h1>
                 <button class="button social google">
