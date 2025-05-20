@@ -2,7 +2,7 @@
 // Ensure no whitespace before opening tag
 try {
     // Attempt to connect to Oracle database
-    $conn = oci_connect('swostik', 'swostik', '//localhost/xe');
+    $conn = oci_connect('test', 'test', '//localhost/xe');
     
     if (!$conn) {
         $error = oci_error();

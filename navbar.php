@@ -134,7 +134,8 @@ if ($stid) {
 <nav class="navbar is-light" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item logo-container" href="index.php">
-            <img src="logo.png" alt="Cleckfax Traders Logo" class="header-logo">
+            <img src="CleckFax_Traders_Hub_Logo_group6-removebg-preview.png" alt="Cleckfax Traders Logo" class="header-logo" >
+
         </a>
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
             <span aria-hidden="true"></span>
@@ -161,7 +162,7 @@ if ($stid) {
         <div class="navbar-end">
             <div class="navbar-item">
                 <form action="search_page.php" method="GET">
-                    <input class="input" type="text" name="value" placeholder="Search products..." style="width: 500px;" value="<?php echo isset($_GET['value']) ? htmlspecialchars($_GET['value']) : ''; ?>">
+                    <input class="input" type="text" name="value" placeholder="Search..." style="width: 300px;" value="<?php echo isset($_GET['value']) ? htmlspecialchars($_GET['value']) : ''; ?>">
                 </form>
             </div>
             <?php if (!isset($_SESSION['USER_ID']) || empty($_SESSION['USER_ID']) || $_SESSION['USER_TYPE'] !== 'customer'): ?>
@@ -228,6 +229,12 @@ if ($stid) {
 </nav>
 
 <style>
+.header-logo {
+    /* Remove width and max-height if you want to scale freely */
+    transform: scale(1.5); /* 1.5 = 150% size */
+    display: block;
+    transition: transform 0.2s;
+}   
 .navbar {
     background-color: #f5f5f5;
     padding: 0.5rem 1rem;
@@ -309,6 +316,9 @@ if ($stid) {
     font-size: 1rem;
     color: #4a4a4a;
 }
+
+
+
 @media (max-width: 768px) {
     .navbar-start, .navbar-end {
         flex-direction: column;

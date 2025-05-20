@@ -1,0 +1,1 @@
+Error inserting user: ORA-00001: unique constraint (TEST.PK_USER_ID) violated
