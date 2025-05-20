@@ -1,6 +1,6 @@
 <?php
-require("session/session.php");
-$user_id = $_SESSION["userid"];
+session_start();
+$user_id = $_SESSION["USER_ID"];
 // Include the database connection
 include("connection/connection.php");
 

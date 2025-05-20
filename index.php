@@ -108,11 +108,11 @@ try {
     }
     oci_free_statement($stmt);
 
-    // Sort products by AVG_REVIEW_SCORE and select top 8 for Bestsellers
+    // Sort products by AVG_REVIEW_SCORE and select top 5 for Bestsellers
     usort($products_review, function($a, $b) {
         return $b['AVG_REVIEW_SCORE'] <=> $a['AVG_REVIEW_SCORE'];
     });
-    $selected_indices = array_slice(array_keys($products_review), 0, min(8, count($products_review)));
+    $selected_indices = array_slice(array_keys($products_review), 0, min(5, count($products_review)));
 
     // Select top 4 for Build Your Basket (different from Bestsellers)
     $build_basket_indices = array_slice(array_keys($products_review), 0, min(4, count($products_review)));

@@ -1,11 +1,12 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Correct the logical operator to logical AND (&&)
-// Correct the assignment operator to comparison operator (!=) for checking the role
-if (!isset($_SESSION["email"]) || !isset($_SESSION["accesstime"]) || !isset($_SESSION["role"]) || $_SESSION["role"] != "customer") {
+// Check for required session variables
+if (!isset($_SESSION["USER_ID"]) || !isset($_SESSION["USER_TYPE"]) || $_SESSION["USER_TYPE"] !== "customer") {
     header("Location: customer_signin.php");
-    exit(); // Always exit after sending a header to prevent further code execution
+    exit();
 }
 ?>
 

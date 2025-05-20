@@ -1,8 +1,14 @@
 <?php
-// navbar.php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+// if (session_status() === PHP_SESSION_NONE) {
+//     session_start();
+// }
+
+// echo '<div style="background:#ffe;border:1px solid #ccc;padding:8px;margin:8px 0;font-size:14px;">
+//     <b>Session ID:</b> ' . session_id() . '<br>
+//     <b>USER_ID:</b> ' . (isset($_SESSION['USER_ID']) ? htmlspecialchars($_SESSION['USER_ID']) : 'NOT SET') . '<br>
+    
+//     <b>User Type:</b> ' . (isset($_SESSION['USER_TYPE']) ? htmlspecialchars($_SESSION['USER_TYPE']) : 'NOT SET') . '
+// </div>';
 include("connection/connection.php");
 require("PHPMailer-master/trader_verify_email.php");
 
@@ -36,7 +42,7 @@ if (!$conn || !is_resource($conn)) {
 // Cart and wishlist counts for customers
 $total_products = 0;
 $total_wishlist_items = 0;
-if (isset($_SESSION['USER_ID']) && !empty($_SESSION['USER_ID']) && isset($_SESSION['USER_TYPE']) && $_SESSION['USER_TYPE'] === 'customer') {
+if (isset($_SESSION['USER_ID']) && !empty($_SESSION['USER_ID'])) {
     $user_id = $_SESSION['USER_ID'];
     $query = 'SELECT CUSTOMER_ID FROM CUSTOMER WHERE USER_ID = :user_id';
     $stid = oci_parse($conn, $query);
@@ -165,7 +171,7 @@ if ($stid) {
                     <input class="input" type="text" name="value" placeholder="Search..." style="width: 300px;" value="<?php echo isset($_GET['value']) ? htmlspecialchars($_GET['value']) : ''; ?>">
                 </form>
             </div>
-            <?php if (!isset($_SESSION['USER_ID']) || empty($_SESSION['USER_ID']) || $_SESSION['USER_TYPE'] !== 'customer'): ?>
+            <?php if (!isset($_SESSION['USER_ID']) || empty($_SESSION['USER_ID'])): ?>
                 <div class="navbar-item icon-container">
                     <a href="customer_signin.php?return_url=<?php echo urlencode('wishlist.php'); ?>" class="icon">
                         <i class="fas fa-heart"></i>

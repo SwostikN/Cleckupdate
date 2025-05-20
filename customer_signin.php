@@ -66,54 +66,47 @@ if (isset($_POST["sign_in"])) {
             error_log("Signin query error: " . $error['message'], 3, 'error.log');
             $error_message = "An error occurred. Please try again.";
         } elseif ($row = oci_fetch_assoc($stmt)) {
-            if (password_verify($password, $row["USER_PASSWORD"])) {
-                if ($user_role === 'customer' && $row["VERIFIED_CUSTOMER"] != 1) {
-                    $account_error = "Please verify your customer account!";
-                    $_SESSION['USER_ID'] = $row["USER_ID"];
-                    error_log("Customer not verified, redirecting to verification. USER_ID: " . $row["USER_ID"], 3, 'debug.log');
-                    header("Location: customer_verification.php");
-                    exit;
-                } elseif ($user_role === 'trader' && $row["VERIFICATION_STATUS"] != 1) {
-                    $account_error = "Please verify your trader account!";
-                    $_SESSION['USER_ID'] = $row["USER_ID"];
-                    error_log("Trader not verified, redirecting to verification. USER_ID: " . $row["USER_ID"], 3, 'debug.log');
-                    header("Location: trader_verification.php");
-                    exit;
-                } else {
-                    // Set session variables
-                    $_SESSION["USER_ID"] = $row["USER_ID"];
-                    $_SESSION["USER_TYPE"] = $row["USER_TYPE"];
-                    $_SESSION["FIRST_NAME"] = $row["FIRST_NAME"];
-                    $_SESSION["LAST_NAME"] = $row["LAST_NAME"];
-                    $_SESSION["USER_PROFILE_PICTURE"] = $row["USER_PROFILE_PICTURE"];
-                    error_log("Login successful. USER_ID: " . $row["USER_ID"] . ", USER_TYPE: " . $row["USER_TYPE"], 3, 'debug.log');
-
-                    // Handle "Remember me"
-                    if (isset($_POST["remember"])) {
-                        $token = bin2hex(random_bytes(32));
-                        setcookie("remember_token", $token, time() + (86400 * 30), "/", "", false, true); // Secure cookie
-                        // TODO: Store token in database
-                    } else {
-                        if (isset($_COOKIE["remember_token"])) {
-                            setcookie("remember_token", "", time() - 3600, "/");
-                        }
-                    }
-
-                    // Redirect based on role
-                    if ($user_role === 'admin') {
-                        header("Location: admin_dashboard.php");
-                    } elseif ($user_role === 'trader') {
-                        header("Location: trader_dashboard.php");
-                    } else {
-                        header("Location: $posted_return_url");
-                    }
-                    exit;
-                }
-            } else {
-                $error_message = "Incorrect email or password!";
-            }
+    if (password_verify($password, $row["USER_PASSWORD"])) {
+        // Remove verification checks for already verified accounts
+        if ($user_role === 'customer' && !isset($row["VERIFIED_CUSTOMER"])) {
+            $account_error = "Please verify your customer account!";
+            $_SESSION['USER_ID'] = $row["USER_ID"];
+            error_log("Customer not verified, redirecting to verification. USER_ID: " . $row["USER_ID"], 3, 'debug.log');
+            header("Location: customer_verification.php");
+            exit;
+        } elseif ($user_role === 'trader' && !isset($row["VERIFICATION_STATUS"])) {
+            $account_error = "Please verify your trader account!";
+            $_SESSION['USER_ID'] = $row["USER_ID"];
+            error_log("Trader not verified, redirecting to verification. USER_ID: " . $row["USER_ID"], 3, 'debug.log');
+            header("Location: trader_verification.php");
+            exit;
         } else {
-            $error_message = "Incorrect email or password!";
+            // Set session variables
+            $_SESSION["USER_ID"] = $row["USER_ID"];
+            $_SESSION["USER_TYPE"] = $row["USER_TYPE"];
+            $_SESSION["FIRST_NAME"] = $row["FIRST_NAME"];
+            $_SESSION["LAST_NAME"] = $row["LAST_NAME"];
+            $_SESSION["USER_PROFILE_PICTURE"] = $row["USER_PROFILE_PICTURE"];
+            
+            // Handle "Remember me" and redirect
+            if (isset($_POST["remember"])) {
+                $token = bin2hex(random_bytes(32));
+                setcookie("remember_token", $token, time() + (86400 * 30), "/", "", false, true);
+            }
+            
+            // Redirect based on role
+            if ($user_role === 'admin') {
+                header("Location: admin_dashboard.php");
+            } elseif ($user_role === 'trader') {
+                header("Location: trader_dashboard.php");
+            } else {
+                header("Location: index.php");  // Default redirect for customers
+            }
+            exit;
+        }
+    } else {
+        $error_message = "Incorrect email or password!";
+    }
         }
         oci_free_statement($stmt);
     }

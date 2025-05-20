@@ -81,8 +81,35 @@ function sendOTP($email, $user_id, $conn) {
             $mail->addAddress($email);
             $mail->isHTML(true);
             $mail->Subject = 'Your Verification Code';
-            $mail->Body = "Your verification code is: <b>$otp</b>. It expires in 10 minutes.";
-            $mail->AltBody = "Your verification code is: $otp. It expires in 10 minutes.";
+            $mail->Body = '
+<div style="max-width:480px;margin:0 auto;background:#f9f9f9;border-radius:10px;padding:32px 24px;font-family:sans-serif;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+    <div style="text-align:center;">
+        <img src="CleckFax_Traders_Hub_Logo_group6-removebg-preview.png" alt="CleckFax Traders" style="width:64px;height:64px;margin-bottom:16px;">
+        <h2 style="color:#3273dc;margin-bottom:8px;">Verify Your Email</h2>
+        <p style="color:#444;font-size:16px;margin-bottom:24px;">
+            Thank you for signing up with <b>CleckFax Traders</b>!<br>
+            Please use the code below to verify your email address.
+        </p>
+        <div style="margin:24px 0;">
+            <span id="otp" style="display:inline-block;font-size:32px;letter-spacing:8px;background:#fff;border:2px dashed #3273dc;padding:16px 32px;border-radius:8px;color:#222;font-weight:bold;">
+                ' . htmlspecialchars($otp) . '
+            </span>
+        </div>
+        <a href="#" onclick="navigator.clipboard.writeText(\'' . htmlspecialchars($otp) . '\');return false;" style="display:inline-block;margin-bottom:16px;padding:8px 20px;background:#3273dc;color:#fff;border-radius:5px;text-decoration:none;font-size:15px;font-weight:500;">
+            &#128203; Copy OTP
+        </a>
+        <p style="color:#888;font-size:14px;margin-top:16px;">
+            This code will expire in <b>10 minutes</b>.<br>
+            If you did not request this, please ignore this email.
+        </p>
+        <hr style="margin:32px 0 16px 0;border:none;border-top:1px solid #eee;">
+        <p style="color:#aaa;font-size:12px;">
+            &copy; ' . date('Y') . ' CleckFax Traders. All rights reserved.
+        </p>
+    </div>
+</div>
+';
+            $mail->AltBody = "Your verification code is: $otp\n\nCopy and paste this code into the website to verify your email. This code expires in 10 minutes.";
 
             // Retry mechanism for sending email (up to 2 attempts)
             $max_attempts = 2;

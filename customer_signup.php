@@ -83,9 +83,11 @@ if (isset($_POST["submit_sign_up"]) && isset($_POST["terms"])) {
         $success = true;
 
         // Insert into CLECK_USER
-        $sql_insert_user = "INSERT INTO CLECK_USER (first_name, last_name, user_email, user_gender, user_password, user_type, user_contact_no)
-                            VALUES (:first_name, :last_name, :user_email, :user_gender, :user_password, 'customer', :user_contact_no)
-                            RETURNING user_id INTO :user_id";
+        $sql_insert_user = "INSERT INTO CLECK_USER (
+    first_name, last_name, user_email, user_gender, user_password, user_type, user_contact_no
+) VALUES (
+    :first_name, :last_name, :user_email, :user_gender, :user_password, 'customer', :user_contact_no
+) RETURNING user_id INTO :user_id";
         $stmt_insert_user = oci_parse($conn, $sql_insert_user);
 
         // Bind input parameters
