@@ -63,7 +63,7 @@ try {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Us - HudderFoods</title>
+  <title>About Us - CleckFax Traders</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <style>
@@ -299,22 +299,31 @@ try {
       <?php endif; ?>
 
       <div class="about-us">
-        <h1 class="title has-text-centered">About Us</h1>
-        <p class="has-text-centered">Occaeat ipsum reprehenderit veniam anim laborum esse duis occaecat representend erat pariatur.</p>
-        <div class="hero-image">
-          <img src="static/images.jpg" alt="Hero Image">
-        </div>
-        <div class="vision-mission">
-          <div class="box">
+    <h1 class="title has-text-centered">About Us</h1>
+    <p class="has-text-centered">
+        We are a local online marketplace dedicated to connecting small businesses and artisans with customers who value quality, community, and convenience. Our platform empowers local sellers and brings diverse, homegrown products to your fingertips.
+    </p>
+ 
+    <div class="hero-image">
+        <img src="about.jpg" alt="Local Marketplace">
+    </div>
+
+    <div class="vision-mission">
+        <div class="box">
             <h3 class="title is-4">Vision</h3>
-            <p>Ex nisi in minim ad lorem ad nostril illum. Fugiat veniam adipiscing nulla amet cupidatat sunt dolore nisi ulamco exercitation exercitation Mollit occaecat tempus.</p>
-          </div>
-          <div class="box">
-            <h3 class="title is-4">Mission</h3>
-            <p>Ex nisi in minim ad lorem ad nostril illum. Fugiat veniam adipiscing nulla amet cupidatat sunt dolore nisi ulamco exercitation exercitation Mollit occaecat tempus.</p>
-          </div>
+            <p>
+                To become the most trusted and vibrant online hub for local commerce, where every community business has the opportunity to thrive and every shopper finds authentic, meaningful products with ease.
+            </p>
         </div>
-      </div>
+        <div class="box">
+            <h3 class="title is-4">Mission</h3>
+            <p>
+                Our mission is to support local entrepreneurs by providing a user-friendly, secure platform that showcases their products, while delivering exceptional service and value to customers who believe in shopping local.
+            </p>
+        </div>
+    </div>
+</div>
+
 
       <div class="our-traders">
         <h2 class="title has-text-centered">Our Traders</h2>

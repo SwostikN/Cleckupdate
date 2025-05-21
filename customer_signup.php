@@ -22,10 +22,10 @@ if (isset($_POST["submit_sign_up"]) && isset($_POST["terms"])) {
     // Input Validation
     require("input_validation/input_validation.php");
     $email_error = "";
-    if (emailExists($email) === "true") {
-        $email_error = "Email Already Exists!!!";
-        $input_validation_passed = false;
-    }
+    if (emailExists($email)) {
+    $email_error = "Email Already Exists!!!";
+    $input_validation_passed = false;
+}
 
     $first_name_error = "";
     if (validateFirstName($first_name) === "false") {
