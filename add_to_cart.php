@@ -24,9 +24,9 @@ try {
     logMessage("Parameters - user_id: $user_id, product_id: $product_id, quantity: $quantity, search_text: $search_text", $logFile);
 
     // Validate user
-    if (!$user_id) {
-        logMessage("Error: User not logged in.", $logFile);
-        echo json_encode(['status' => 'error', 'message' => 'User not logged in.']);
+    if (!$user_id || $user_id !== (int)$_SESSION["USER_ID"]) {
+        logMessage("Error: User not logged in or invalid user ID.", $logFile);
+        echo json_encode(['status' => 'error', 'message' => 'User not logged in or invalid user ID.']);
         exit;
     }
 
@@ -57,8 +57,85 @@ try {
     oci_free_statement($stmt);
     logMessage("Customer ID retrieved: " . ($customer_id ?? 'null'), $logFile);
 
-    if ($customer_id && $product_id) {
-        // Get product price and discount with safe numeric conversion
+    if (!$customer_id) {
+        logMessage("Error: Customer not found for user_id: $user_id", $logFile);
+        echo json_encode(['status' => 'error', 'message' => 'Customer not found.']);
+        exit;
+    }
+
+    // Check for existing cart in session or database
+    $cart_id = isset($_SESSION['cart_id']) ? (int)$_SESSION['cart_id'] : null;
+    if ($cart_id) {
+        // Verify the cart exists and is active (not linked to an order)
+        $cart_sql = "SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+                     AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)";
+        $cart_stmt = oci_parse($conn, $cart_sql);
+        if (!$cart_stmt) {
+            $e = oci_error($conn);
+            logMessage("Error preparing cart query: " . $e['message'], $logFile);
+            throw new Exception("Failed to prepare cart query: " . $e['message']);
+        }
+        oci_bind_by_name($cart_stmt, ':cart_id', $cart_id);
+        oci_bind_by_name($cart_stmt, ':customer_id', $customer_id);
+        if (!oci_execute($cart_stmt)) {
+            $e = oci_error($cart_stmt);
+            logMessage("Error executing cart query: " . $e['message'], $logFile);
+            throw new Exception("Failed to execute cart query: " . $e['message']);
+        }
+        $cart_row = oci_fetch_assoc($cart_stmt);
+        if (!$cart_row) {
+            $cart_id = null; // Invalidate session cart_id if it doesn't exist
+            unset($_SESSION['cart_id']);
+        }
+        oci_free_statement($cart_stmt);
+    }
+
+    if (!$cart_id) {
+        // Check for an existing active cart in the database
+        $cart_sql = "SELECT cart_id FROM CART WHERE customer_id = :customer_id 
+                     AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)";
+        $cart_stmt = oci_parse($conn, $cart_sql);
+        if (!$cart_stmt) {
+            $e = oci_error($conn);
+            logMessage("Error preparing cart query: " . $e['message'], $logFile);
+            throw new Exception("Failed to prepare cart query: " . $e['message']);
+        }
+        oci_bind_by_name($cart_stmt, ':customer_id', $customer_id);
+        if (!oci_execute($cart_stmt)) {
+            $e = oci_error($cart_stmt);
+            logMessage("Error executing cart query: " . $e['message'], $logFile);
+            throw new Exception("Failed to execute cart query: " . $e['message']);
+        }
+        $cart_row = oci_fetch_assoc($cart_stmt);
+        $cart_id = $cart_row ? $cart_row['CART_ID'] : null;
+        oci_free_statement($cart_stmt);
+        logMessage("Cart ID from DB: " . ($cart_id ?? 'null'), $logFile);
+    }
+
+    if (!$cart_id) {
+        // Create new cart with ORDER_PRODUCT_SEQ.NEXTVAL
+        $cart_sql = "INSERT INTO CART (customer_id, order_product_id) 
+                     VALUES (:customer_id, ORDER_PRODUCT_SEQ.NEXTVAL) RETURNING cart_id INTO :cart_id";
+        $cart_stmt = oci_parse($conn, $cart_sql);
+        if (!$cart_stmt) {
+            $e = oci_error($conn);
+            logMessage("Error preparing insert cart query: " . $e['message'], $logFile);
+            throw new Exception("Failed to prepare insert cart query: " . $e['message']);
+        }
+        oci_bind_by_name($cart_stmt, ':customer_id', $customer_id);
+        oci_bind_by_name($cart_stmt, ':cart_id', $cart_id, -1, OCI_B_INT);
+        if (!oci_execute($cart_stmt)) {
+            $e = oci_error($cart_stmt);
+            logMessage("Error executing insert cart query: " . $e['message'], $logFile);
+            throw new Exception("Failed to execute insert cart query: " . $e['message']);
+        }
+        oci_free_statement($cart_stmt);
+        $_SESSION['cart_id'] = $cart_id; // Store cart_id in session
+        logMessage("New cart created with ID: $cart_id", $logFile);
+    }
+
+    if ($product_id) {
+        // Get product price and discount
         $product_sql = "SELECT p.product_price, 
                                COALESCE(TO_NUMBER(NULLIF(d.discount_percent, '')), 0) AS discount_percent 
                         FROM PRODUCT p 
@@ -84,46 +161,6 @@ try {
         logMessage("Product price: $product_price, Discount: $discount_percent%, Discounted price: $discounted_price", $logFile);
 
         if ($product_price) {
-            // Check for existing cart
-            $cart_sql = "SELECT cart_id FROM CART WHERE customer_id = :customer_id AND order_product_id IS NULL";
-            $cart_stmt = oci_parse($conn, $cart_sql);
-            if (!$cart_stmt) {
-                $e = oci_error($conn);
-                logMessage("Error preparing cart query: " . $e['message'], $logFile);
-                throw new Exception("Failed to prepare cart query: " . $e['message']);
-            }
-            oci_bind_by_name($cart_stmt, ':customer_id', $customer_id);
-            if (!oci_execute($cart_stmt)) {
-                $e = oci_error($cart_stmt);
-                logMessage("Error executing cart query: " . $e['message'], $logFile);
-                throw new Exception("Failed to execute cart query: " . $e['message']);
-            }
-            $cart_row = oci_fetch_assoc($cart_stmt);
-            $cart_id = $cart_row ? $cart_row['CART_ID'] : null;
-            oci_free_statement($cart_stmt);
-            logMessage("Cart ID retrieved: " . ($cart_id ?? 'null'), $logFile);
-
-            if (!$cart_id) {
-                // Create new cart
-                $cart_sql = "INSERT INTO CART (customer_id, order_product_id) 
-                             VALUES (:customer_id,ORDER_PRODUCT_SEQ.NEXTVAL) RETURNING cart_id INTO :cart_id";
-                $cart_stmt = oci_parse($conn, $cart_sql);
-                if (!$cart_stmt) {
-                    $e = oci_error($conn);
-                    logMessage("Error preparing insert cart query: " . $e['message'], $logFile);
-                    throw new Exception("Failed to prepare insert cart query: " . $e['message']);
-                }
-                oci_bind_by_name($cart_stmt, ':customer_id', $customer_id);
-                oci_bind_by_name($cart_stmt, ':cart_id', $cart_id, -1, OCI_B_INT);
-                if (!oci_execute($cart_stmt)) {
-                    $e = oci_error($cart_stmt);
-                    logMessage("Error executing insert cart query: " . $e['message'], $logFile);
-                    throw new Exception("Failed to execute insert cart query: " . $e['message']);
-                }
-                oci_free_statement($cart_stmt);
-                logMessage("New cart created with ID: $cart_id", $logFile);
-            }
-
             // Check total products in cart
             $count_sql = "SELECT SUM(no_of_products) AS total_products 
                           FROM CART_ITEM WHERE cart_id = :cart_id";
@@ -189,7 +226,7 @@ try {
                     }
                     oci_free_statement($update_stmt);
                     logMessage("Updated quantity of product $product_id to $new_quantity", $logFile);
-                    echo json_encode(['status' => 'success', 'message' => 'Product quantity updated in cart.']);
+                    echo json_encode(['status' => 'success', 'message' => 'Product quantity updated in cart.', 'cart_id' => $cart_id]);
                 } else {
                     // Insert new item
                     $insert_sql = "INSERT INTO CART_ITEM (cart_id, product_id, no_of_products, product_price) 
@@ -211,7 +248,7 @@ try {
                     }
                     oci_free_statement($insert_stmt);
                     logMessage("Inserted product $product_id into cart with quantity $quantity", $logFile);
-                    echo json_encode(['status' => 'success', 'message' => 'Product added to cart.']);
+                    echo json_encode(['status' => 'success', 'message' => 'Product added to cart.', 'cart_id' => $cart_id]);
                 }
             } else {
                 logMessage("Error: Cart is full.", $logFile);
@@ -222,8 +259,8 @@ try {
             echo json_encode(['status' => 'error', 'message' => 'Product not found.']);
         }
     } else {
-        logMessage("Error: Invalid customer or product.", $logFile);
-        echo json_encode(['status' => 'error', 'message' => 'Invalid customer or product.']);
+        logMessage("Error: Invalid product ID.", $logFile);
+        echo json_encode(['status' => 'error', 'message' => 'Invalid product ID.']);
     }
 } catch (Exception $e) {
     logMessage("Exception: " . $e->getMessage(), $logFile);
@@ -235,3 +272,4 @@ try {
     }
 }
 exit;
+?>

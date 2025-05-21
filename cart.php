@@ -54,12 +54,29 @@ $total_amount = 0;
 $discount_amount = 0;
 $actual_price = 0;
 
-// Get or create cart
-$sql = "SELECT cart_id FROM CART WHERE customer_id = :customer_id AND ROWNUM <= 1 ORDER BY cart_id DESC";
-$stmt = executeQuery($conn, $sql, [':customer_id' => $customer_id]);
-$row = oci_fetch_assoc($stmt);
-$cart_id = $row ? $row['CART_ID'] : null;
-oci_free_statement($stmt);
+// Get cart_id from session or database
+if (isset($_SESSION['cart_id'])) {
+    $cart_id = (int)$_SESSION['cart_id'];
+    $sql = "SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)";
+    $stmt = executeQuery($conn, $sql, [':cart_id' => $cart_id, ':customer_id' => $customer_id]);
+    $row = oci_fetch_assoc($stmt);
+    if (!$row) {
+        unset($_SESSION['cart_id']); // Invalidate session cart_id if it doesn't exist
+        $cart_id = null;
+    }
+    oci_free_statement($stmt);
+}
+
+if (!$cart_id) {
+    // Get existing active cart from database
+    $sql = "SELECT cart_id FROM CART WHERE customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)";
+    $stmt = executeQuery($conn, $sql, [':customer_id' => $customer_id]);
+    $row = oci_fetch_assoc($stmt);
+    $cart_id = $row ? $row['CART_ID'] : null;
+    oci_free_statement($stmt);
+}
 
 if (!$cart_id) {
     // Create new cart
@@ -73,6 +90,7 @@ if (!$cart_id) {
         die(htmlentities($e['message']));
     }
     oci_free_statement($stmt);
+    $_SESSION['cart_id'] = $cart_id; // Store cart_id in session
     error_log("Cart: Created new cart with ID: $cart_id", 3, 'debug.log');
 }
 
@@ -202,7 +220,8 @@ $csrf_token = $_SESSION['csrf_token'];
                         <input type="hidden" name="number_product" value="<?php echo $total_products; ?>">
                         <input type="hidden" name="total_price" value="<?php echo $total_amount; ?>">
                         <input type="hidden" name="discount" value="<?php echo $discount_amount; ?>">
-                        <button type="submit" name="checkout" class="checkout">Checkout</button>
+                        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
+                        <button type="submit" name="checkout" class="checkout" <?php echo $total_products == 0 ? 'disabled' : ''; ?>>Checkout</button>
                     </form>
                 </section>
             <?php } ?>
