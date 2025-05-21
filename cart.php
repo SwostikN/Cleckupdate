@@ -62,14 +62,13 @@ if (isset($_SESSION['cart_id'])) {
     $stmt = executeQuery($conn, $sql, [':cart_id' => $cart_id, ':customer_id' => $customer_id]);
     $row = oci_fetch_assoc($stmt);
     if (!$row) {
-        unset($_SESSION['cart_id']); // Invalidate session cart_id if it doesn't exist
+        unset($_SESSION['cart_id']);
         $cart_id = null;
     }
     oci_free_statement($stmt);
 }
 
 if (!$cart_id) {
-    // Get existing active cart from database
     $sql = "SELECT cart_id FROM CART WHERE customer_id = :customer_id 
             AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)";
     $stmt = executeQuery($conn, $sql, [':customer_id' => $customer_id]);
@@ -79,7 +78,6 @@ if (!$cart_id) {
 }
 
 if (!$cart_id) {
-    // Create new cart
     $sql = "INSERT INTO CART (customer_id, order_product_id) VALUES (:customer_id, ORDER_PRODUCT_SEQ.NEXTVAL) RETURNING cart_id INTO :cart_id";
     $stmt = oci_parse($conn, $sql);
     oci_bind_by_name($stmt, ':customer_id', $customer_id);
@@ -90,7 +88,7 @@ if (!$cart_id) {
         die(htmlentities($e['message']));
     }
     oci_free_statement($stmt);
-    $_SESSION['cart_id'] = $cart_id; // Store cart_id in session
+    $_SESSION['cart_id'] = $cart_id;
     error_log("Cart: Created new cart with ID: $cart_id", 3, 'debug.log');
 }
 
@@ -166,63 +164,72 @@ $csrf_token = $_SESSION['csrf_token'];
                 <section class="cart-section">
                     <div class="cart-container">
                         <h3>Cart</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Product Name</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($results as $row): ?>
+                        <form method="POST" action="check_out.php" id="checkout-form">
+                            <table>
+                                <thead>
                                     <tr>
-                                        <td><img src="product_image/<?php echo htmlspecialchars($row['PRODUCT_PICTURE']); ?>" alt="<?php echo htmlspecialchars($row['PRODUCT_NAME']); ?>" style="max-width: 50px; border-radius: 5px;"></td>
-                                        <td><?php echo htmlspecialchars($row['PRODUCT_NAME']); ?></td>
-                                        <td>
-                                            <form method="POST" action="add_qty_to_cart.php">
-                                                <input type="hidden" name="product_id" value="<?php echo $row['PRODUCT_ID']; ?>">
-                                                <input type="hidden" name="cart_id" value="<?php echo $row['CART_ID']; ?>">
-                                                <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
-                                                <button type="submit" name="action" value="decrease" class="decrement">-</button>
-                                                <input type="number" min="1" value="<?php echo $row['NO_OF_PRODUCTS']; ?>" readonly style="width: 50px; text-align: center; border: none; background: transparent;">
-                                                <button type="submit" name="action" value="increase" class="increment" <?php echo $total_products >= 20 ? 'disabled' : ''; ?>>+</button>
-                                            </form>
-                                        </td>
-                                        <td>€<?php echo number_format($row['PRODUCT_PRICE'], 2); ?></td>
-                                        <td>
-                                            <form method="POST" action="delete_cart_item.php">
-                                                <input type="hidden" name="cart_id" value="<?php echo $row['CART_ID']; ?>">
-                                                <input type="hidden" name="product_id" value="<?php echo $row['PRODUCT_ID']; ?>">
-                                                <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
-                                                <button type="submit" class="delete">Remove</button>
-                                            </form>
-                                        </td>
+                                        <th>Select</th>
+                                        <th>Image</th>
+                                        <th>Product Name</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Actions</th>
                                     </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($results as $row): ?>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="selected_products[]" 
+                                                       value="<?php echo $row['PRODUCT_ID']; ?>" 
+                                                       class="product-checkbox"
+                                                       data-quantity="<?php echo $row['NO_OF_PRODUCTS']; ?>"
+                                                       data-price="<?php echo $row['PRODUCT_PRICE']; ?>"
+                                                       data-original-price="<?php echo $row['ORIGINAL_PRICE']; ?>">
+                                            </td>
+                                            <td><img src="product_image/<?php echo htmlspecialchars($row['PRODUCT_PICTURE']); ?>" alt="<?php echo htmlspecialchars($row['PRODUCT_NAME']); ?>" style="max-width: 50px; border-radius: 5px;"></td>
+                                            <td><?php echo htmlspecialchars($row['PRODUCT_NAME']); ?></td>
+                                            <td>
+                                                <form method="POST" action="add_qty_to_cart.php">
+                                                    <input type="hidden" name="product_id" value="<?php echo $row['PRODUCT_ID']; ?>">
+                                                    <input type="hidden" name="cart_id" value="<?php echo $row['CART_ID']; ?>">
+                                                    <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
+                                                    <button type="submit" name="action" value="decrease" class="decrement">-</button>
+                                                    <input type="number" min="1" value="<?php echo $row['NO_OF_PRODUCTS']; ?>" readonly style="width: 50px; text-align: center; border: none; background: transparent;">
+                                                    <button type="submit" name="action" value="increase" class="increment" <?php echo $total_products >= 20 ? 'disabled' : ''; ?>>+</button>
+                                                </form>
+                                            </td>
+                                            <td>€<?php echo number_format($row['PRODUCT_PRICE'], 2); ?></td>
+                                            <td>
+                                                <form method="POST" action="delete_cart_item.php">
+                                                    <input type="hidden" name="cart_id" value="<?php echo $row['CART_ID']; ?>">
+                                                    <input type="hidden" name="product_id" value="<?php echo $row['PRODUCT_ID']; ?>">
+                                                    <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
+                                                    <button type="submit" class="delete">Remove</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                            <section class="summary-section">
+                                <div class="summary">
+                                    <h3>Summary</h3>
+                                    <p>Number of items: <span id="selected-items">0</span></p>
+                                    <p>Total price: €<span id="selected-total-price">0.00</span></p>
+                                    <p>Discount: €<span id="selected-discount">0.00</span></p>
+                                    <p>Final total: €<span id="selected-final-total">0.00</span></p>
+                                </div>
+                                <input type="hidden" name="customerid" value="<?php echo $customer_id; ?>">
+                                <input type="hidden" name="cartid" value="<?php echo $cart_id; ?>">
+                                <input type="hidden" name="number_product" id="number-product" value="0">
+                                <input type="hidden" name="total_price" id="total-price" value="0">
+                                <input type="hidden" name="discount" id="discount" value="0">
+                                <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
+                                <button type="submit" name="checkout" class="checkout" id="checkout-button" disabled>Checkout</button>
+                            </section>
+                        </form>
                     </div>
-                </section>
-                <section class="summary-section">
-                    <div class="summary">
-                        <h3>Summary</h3>
-                        <p>Number of items: <?php echo $total_products; ?></p>
-                        <p>Total price: €<?php echo number_format($actual_price, 2); ?></p>
-                        <p>Discount: €<?php echo number_format($discount_amount, 2); ?></p>
-                        <p>Final total: €<?php echo number_format($total_amount, 2); ?></p>
-                    </div>
-                    <form method="POST" action="check_out.php">
-                        <input type="hidden" name="customerid" value="<?php echo $customer_id; ?>">
-                        <input type="hidden" name="cartid" value="<?php echo $cart_id; ?>">
-                        <input type="hidden" name="number_product" value="<?php echo $total_products; ?>">
-                        <input type="hidden" name="total_price" value="<?php echo $total_amount; ?>">
-                        <input type="hidden" name="discount" value="<?php echo $discount_amount; ?>">
-                        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
-                        <button type="submit" name="checkout" class="checkout" <?php echo $total_products == 0 ? 'disabled' : ''; ?>>Checkout</button>
-                    </form>
                 </section>
             <?php } ?>
         </div>
@@ -230,5 +237,66 @@ $csrf_token = $_SESSION['csrf_token'];
     </div>
     <script src="js/script.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkoutForm = document.getElementById('checkout-form');
+            const checkboxes = document.querySelectorAll('.product-checkbox');
+            const checkoutButton = document.getElementById('checkout-button');
+            const selectedItemsSpan = document.getElementById('selected-items');
+            const totalPriceSpan = document.getElementById('selected-total-price');
+            const discountSpan = document.getElementById('selected-discount');
+            const finalTotalSpan = document.getElementById('selected-final-total');
+            const numberProductInput = document.getElementById('number-product');
+            const totalPriceInput = document.getElementById('total-price');
+            const discountInput = document.getElementById('discount');
+
+            function updateSummary() {
+                let selectedItems = 0;
+                let totalPrice = 0;
+                let discount = 0;
+                let finalTotal = 0;
+
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        const quantity = parseInt(checkbox.dataset.quantity);
+                        const price = parseFloat(checkbox.dataset.price);
+                        const originalPrice = parseFloat(checkbox.dataset.originalPrice);
+
+                        selectedItems += quantity;
+                        totalPrice += quantity * originalPrice;
+                        finalTotal += quantity * price;
+                        discount += quantity * (originalPrice - price);
+                    }
+                });
+
+                selectedItemsSpan.textContent = selectedItems;
+                totalPriceSpan.textContent = totalPrice.toFixed(2);
+                discountSpan.textContent = discount.toFixed(2);
+                finalTotalSpan.textContent = finalTotal.toFixed(2);
+
+                numberProductInput.value = selectedItems;
+                totalPriceInput.value = finalTotal;
+                discountInput.value = discount;
+
+                checkoutButton.disabled = selectedItems === 0;
+            }
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateSummary);
+            });
+
+            // Prevent checkout if no products are selected
+            checkoutForm.addEventListener('submit', function(e) {
+                const checked = document.querySelectorAll('input[name="selected_products[]"]:checked');
+                if (checked.length === 0) {
+                    alert('Please select at least one product to checkout.');
+                    e.preventDefault();
+                }
+            });
+
+            // Initial update
+            updateSummary();
+        });
+    </script>
 </body>
 </html>
