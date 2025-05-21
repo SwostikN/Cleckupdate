@@ -1,0 +1,138 @@
+2025-05-21 07:15:11 - Session started. USER_ID: 9, USER_TYPE: customer
+2025-05-21 07:15:11 - Parameters - user_id: 9, product_id: 619, quantity: 1, search_text: p
+2025-05-21 07:15:11 - Database connection established.
+2025-05-21 07:15:11 - Customer ID retrieved: 302
+2025-05-21 07:15:11 - Product price: 17, Discount: 0%, Discounted price: 17
+2025-05-21 07:15:11 - Cart ID retrieved: null
+2025-05-21 07:15:11 - Error executing insert cart query: ORA-01400: cannot insert NULL into ("SWOSTIK"."CART"."ORDER_PRODUCT_ID")
+2025-05-21 07:15:11 - Exception: Failed to execute insert cart query: ORA-01400: cannot insert NULL into ("SWOSTIK"."CART"."ORDER_PRODUCT_ID")
+2025-05-21 07:15:11 - Database connection closed.
+2025-05-21 07:19:54 - Session started. USER_ID: 9, USER_TYPE: customer
+2025-05-21 07:19:54 - Parameters - user_id: 9, product_id: 623, quantity: 1, search_text: 
+2025-05-21 07:19:54 - Database connection established.
+2025-05-21 07:19:54 - Customer ID retrieved: 302
+2025-05-21 07:19:54 - Product price: 1, Discount: 0%, Discounted price: 1
+2025-05-21 07:19:54 - Cart ID retrieved: null
+2025-05-21 07:19:54 - Error executing insert cart query: ORA-01400: cannot insert NULL into ("SWOSTIK"."CART"."ORDER_PRODUCT_ID")
+2025-05-21 07:19:54 - Exception: Failed to execute insert cart query: ORA-01400: cannot insert NULL into ("SWOSTIK"."CART"."ORDER_PRODUCT_ID")
+2025-05-21 07:19:54 - Database connection closed.
+2025-05-21 08:19:57 - Session started. USER_ID: 30, USER_TYPE: customer
+2025-05-21 08:19:57 - Parameters - user_id: 30, product_id: 623, quantity: 1, search_text: 
+2025-05-21 08:19:57 - Database connection established.
+2025-05-21 08:19:57 - Customer ID retrieved: 320
+2025-05-21 08:19:57 - Product price: 1, Discount: 0%, Discounted price: 1
+2025-05-21 08:19:57 - Cart ID retrieved: null
+2025-05-21 08:19:57 - Error executing insert cart query: ORA-01400: cannot insert NULL into ("TEST"."CART"."ORDER_PRODUCT_ID")
+2025-05-21 08:19:57 - Exception: Failed to execute insert cart query: ORA-01400: cannot insert NULL into ("TEST"."CART"."ORDER_PRODUCT_ID")
+2025-05-21 08:19:58 - Database connection closed.
+2025-05-21 08:22:44 - Session started. USER_ID: 30, USER_TYPE: customer
+2025-05-21 08:22:44 - Parameters - user_id: 30, product_id: 604, quantity: 1, search_text: 
+2025-05-21 08:22:44 - Database connection established.
+2025-05-21 08:22:44 - Customer ID retrieved: 320
+2025-05-21 08:22:44 - Product price: 9, Discount: 10%, Discounted price: 8.1
+2025-05-21 08:22:44 - Cart ID retrieved: null
+2025-05-21 08:22:44 - Error executing insert cart query: ORA-01400: cannot insert NULL into ("TEST"."CART"."ORDER_PRODUCT_ID")
+2025-05-21 08:22:44 - Exception: Failed to execute insert cart query: ORA-01400: cannot insert NULL into ("TEST"."CART"."ORDER_PRODUCT_ID")
+2025-05-21 08:22:44 - Database connection closed.
+2025-05-21 08:33:24 - Session started. USER_ID: 30, USER_TYPE: customer
+2025-05-21 08:33:24 - Parameters - user_id: 30, product_id: 604, quantity: 1, search_text: 
+2025-05-21 08:33:24 - Database connection established.
+2025-05-21 08:33:24 - Customer ID retrieved: 320
+2025-05-21 08:33:24 - Product price: 9, Discount: 10%, Discounted price: 8.1
+2025-05-21 08:33:24 - Cart ID retrieved: null
+2025-05-21 08:33:24 - Error executing insert cart query: ORA-02289: sequence does not exist
+2025-05-21 08:33:24 - Exception: Failed to execute insert cart query: ORA-02289: sequence does not exist
+2025-05-21 08:33:24 - Database connection closed.
+2025-05-21 08:33:47 - Session started. USER_ID: 30, USER_TYPE: customer
+2025-05-21 08:33:47 - Parameters - user_id: 30, product_id: 604, quantity: 1, search_text: 
+2025-05-21 08:33:47 - Database connection established.
+2025-05-21 08:33:47 - Customer ID retrieved: 320
+2025-05-21 08:33:47 - Product price: 9, Discount: 10%, Discounted price: 8.1
+2025-05-21 08:33:47 - Cart ID retrieved: null
+2025-05-21 08:33:47 - Error executing insert cart query: ORA-02289: sequence does not exist
+2025-05-21 08:33:47 - Exception: Failed to execute insert cart query: ORA-02289: sequence does not exist
+2025-05-21 08:33:47 - Database connection closed.
+2025-05-21 08:34:48 - Session started. USER_ID: 30, USER_TYPE: customer
+2025-05-21 08:34:48 - Parameters - user_id: 30, product_id: 604, quantity: 1, search_text: 
+2025-05-21 08:34:49 - Database connection established.
+2025-05-21 08:34:49 - Customer ID retrieved: 320
+2025-05-21 08:34:49 - Product price: 9, Discount: 10%, Discounted price: 8.1
+2025-05-21 08:34:49 - Cart ID retrieved: null
+2025-05-21 08:34:49 - Error executing insert cart query: ORA-02289: sequence does not exist
+2025-05-21 08:34:49 - Exception: Failed to execute insert cart query: ORA-02289: sequence does not exist
+2025-05-21 08:34:49 - Database connection closed.
+2025-05-21 08:36:38 - Session started. USER_ID: 30, USER_TYPE: customer
+2025-05-21 08:36:38 - Parameters - user_id: 30, product_id: 604, quantity: 1, search_text: 
+2025-05-21 08:36:38 - Database connection established.
+2025-05-21 08:36:38 - Customer ID retrieved: 320
+2025-05-21 08:36:38 - Product price: 9, Discount: 10%, Discounted price: 8.1
+2025-05-21 08:36:38 - Cart ID retrieved: null
+2025-05-21 08:36:38 - Error executing insert cart query: ORA-02289: sequence does not exist
+2025-05-21 08:36:38 - Exception: Failed to execute insert cart query: ORA-02289: sequence does not exist
+2025-05-21 08:36:38 - Database connection closed.
+2025-05-21 08:39:10 - Session started. USER_ID: 30, USER_TYPE: customer
+2025-05-21 08:39:10 - Parameters - user_id: 30, product_id: 604, quantity: 1, search_text: 
+2025-05-21 08:39:10 - Database connection established.
+2025-05-21 08:39:10 - Customer ID retrieved: 320
+2025-05-21 08:39:10 - Product price: 9, Discount: 10%, Discounted price: 8.1
+2025-05-21 08:39:10 - Cart ID retrieved: null
+2025-05-21 08:39:10 - New cart created with ID: 902
+2025-05-21 08:39:10 - Total products in cart: 0
+2025-05-21 08:39:10 - Existing quantity of product 604 in cart: 0
+2025-05-21 08:39:10 - Inserted product 604 into cart with quantity 1
+2025-05-21 08:39:10 - Database connection closed.
+2025-05-21 08:40:44 - Session started. USER_ID: 30, USER_TYPE: customer
+2025-05-21 08:40:44 - Parameters - user_id: 30, product_id: 623, quantity: 1, search_text: 
+2025-05-21 08:40:44 - Database connection established.
+2025-05-21 08:40:44 - Customer ID retrieved: 320
+2025-05-21 08:40:44 - Product price: 1, Discount: 0%, Discounted price: 1
+2025-05-21 08:40:44 - Cart ID retrieved: null
+2025-05-21 08:40:44 - New cart created with ID: 903
+2025-05-21 08:40:44 - Total products in cart: 0
+2025-05-21 08:40:44 - Existing quantity of product 623 in cart: 0
+2025-05-21 08:40:44 - Inserted product 623 into cart with quantity 1
+2025-05-21 08:40:44 - Database connection closed.
+2025-05-21 09:04:53 - Session started. USER_ID: 50, USER_TYPE: customer
+2025-05-21 09:04:53 - Parameters - user_id: 50, product_id: 604, quantity: 1, search_text: 
+2025-05-21 09:04:53 - Database connection established.
+2025-05-21 09:04:53 - Customer ID retrieved: 340
+2025-05-21 09:04:53 - Product price: 9, Discount: 10%, Discounted price: 8.1
+2025-05-21 09:04:53 - Cart ID retrieved: null
+2025-05-21 09:04:53 - New cart created with ID: 904
+2025-05-21 09:04:53 - Total products in cart: 0
+2025-05-21 09:04:53 - Existing quantity of product 604 in cart: 0
+2025-05-21 09:04:53 - Inserted product 604 into cart with quantity 1
+2025-05-21 09:04:53 - Database connection closed.
+2025-05-21 09:08:23 - Session started. USER_ID: 50, USER_TYPE: customer
+2025-05-21 09:08:23 - Parameters - user_id: 50, product_id: 604, quantity: 1, search_text: 
+2025-05-21 09:08:23 - Database connection established.
+2025-05-21 09:08:23 - Customer ID retrieved: 340
+2025-05-21 09:08:23 - Product price: 9, Discount: 10%, Discounted price: 8.1
+2025-05-21 09:08:23 - Cart ID retrieved: null
+2025-05-21 09:08:23 - New cart created with ID: 905
+2025-05-21 09:08:23 - Total products in cart: 0
+2025-05-21 09:08:23 - Existing quantity of product 604 in cart: 0
+2025-05-21 09:08:23 - Inserted product 604 into cart with quantity 1
+2025-05-21 09:08:23 - Database connection closed.
+2025-05-21 09:18:07 - Session started. USER_ID: 50, USER_TYPE: customer
+2025-05-21 09:18:07 - Parameters - user_id: 50, product_id: 624, quantity: 1, search_text: 
+2025-05-21 09:18:07 - Database connection established.
+2025-05-21 09:18:07 - Customer ID retrieved: 340
+2025-05-21 09:18:07 - Product price: 3, Discount: 0%, Discounted price: 3
+2025-05-21 09:18:07 - Cart ID retrieved: null
+2025-05-21 09:18:08 - New cart created with ID: 906
+2025-05-21 09:18:08 - Total products in cart: 0
+2025-05-21 09:18:08 - Existing quantity of product 624 in cart: 0
+2025-05-21 09:18:08 - Inserted product 624 into cart with quantity 1
+2025-05-21 09:18:08 - Database connection closed.
+2025-05-21 09:20:35 - Session started. USER_ID: 50, USER_TYPE: customer
+2025-05-21 09:20:35 - Parameters - user_id: 50, product_id: 624, quantity: 1, search_text: 
+2025-05-21 09:20:35 - Database connection established.
+2025-05-21 09:20:35 - Customer ID retrieved: 340
+2025-05-21 09:20:35 - Product price: 3, Discount: 0%, Discounted price: 3
+2025-05-21 09:20:35 - Cart ID retrieved: null
+2025-05-21 09:20:35 - New cart created with ID: 907
+2025-05-21 09:20:35 - Total products in cart: 0
+2025-05-21 09:20:35 - Existing quantity of product 624 in cart: 0
+2025-05-21 09:20:35 - Inserted product 624 into cart with quantity 1
+2025-05-21 09:20:35 - Database connection closed.

@@ -1,8 +1,9 @@
+```php
 <?php
 session_start();
 $product_id = isset($_GET["productId"]) ? (int)$_GET["productId"] : 0;
 $user_id = isset($_SESSION["USER_ID"]) ? (int)$_SESSION["USER_ID"] : 0;
-$searchText = "p";
+$searchText = isset($_GET["searchtext"]) ? trim($_GET["searchtext"]) : "p";
 
 // Include database connection
 include("connection/connection.php");
@@ -329,14 +330,7 @@ oci_free_statement($stmt);
             <div class="column is-half">
                 <div class="box product-info">
                     <h1 class="title is-2"><?php echo htmlspecialchars($productName); ?></h1>
-                    <p class="subtitle is-5">
-                        By <a href="#"><?php echo htmlspecialchars($traderName); ?></a>
-                        <?php if ($user_id): ?>
-                            <button class="heart-icon <?php echo $is_in_wishlist ? 'active' : ''; ?>" onclick="toggleWishlist(<?php echo $productId; ?>, <?php echo $user_id; ?>, '<?php echo $searchText; ?>')">
-                                <i class="fas fa-heart"></i>
-                            </button>
-                        <?php endif; ?>
-                    </p>
+                    <p class="subtitle is-5">By <a href="#"><?php echo htmlspecialchars($traderName); ?></a></p>
                     <p class="mb-4"><?php echo htmlspecialchars($productDescription); ?></p>
                     <?php
                     $discount_percent = number_format($discount_percent, 2);
@@ -362,12 +356,12 @@ oci_free_statement($stmt);
                         </p>
                     </div>
                     <div class="buttons">
-                        <button class="button is-primary" id="buy_now">BUY NOW</button>
-                        <button class="button is-success add-to-cart" onclick="addToCart(<?php echo $productId; ?>, <?php echo $user_id; ?>, '<?php echo $searchText; ?>')">
+                        <button class="button is-primary" id="buy_now" onclick="buyNow(<?php echo $productId; ?>, <?php echo $user_id; ?>, '<?php echo addslashes($searchText); ?>', document.getElementById('quantity_input').value)">BUY NOW</button>
+                        <button class="button is-success add-to-cart" onclick="addToCart(<?php echo $productId; ?>, <?php echo $user_id; ?>, '<?php echo addslashes($searchText); ?>', document.getElementById('quantity_input').value)">
                             <span class="icon"><i class="fas fa-shopping-cart"></i></span>
                             <span>Add to Cart</span>
                         </button>
-                        <button class="button is-light" onclick="addToWishlist(<?php echo $productId; ?>, <?php echo $user_id; ?>, '<?php echo $searchText; ?>')">
+                        <button class="button is-light <?php echo $is_in_wishlist ? 'active' : ''; ?>" onclick="toggleWishlist(<?php echo $productId; ?>, <?php echo $user_id; ?>, '<?php echo addslashes($searchText); ?>')">
                             <span class="icon"><i class="fas fa-heart"></i></span>
                         </button>
                     </div>
@@ -571,11 +565,11 @@ oci_free_statement($stmt);
                                 </span>
                             </div>
                             <div class="product-actions">
-                                <a href="add_to_cart.php?productid=<?php echo $product['PRODUCT_ID']; ?>&userid=<?php echo $user_id; ?>&searchtext=<?php echo $searchText; ?>" class="button is-primary is-small">
+                                <a href="add_to_cart.php?productid=<?php echo $product['PRODUCT_ID']; ?>&userid=<?php echo $user_id; ?>&searchtext=<?php echo addslashes($searchText); ?>&quantity=1" class="button is-primary is-small">
                                     <span class="icon"><i class="fas fa-shopping-cart"></i></span>
                                     <span>Add to Cart</span>
                                 </a>
-                                <a href="add_to_wishlist.php?product_id=<?php echo $product['PRODUCT_ID']; ?>&user_id=<?php echo $user_id; ?>&searchtext=<?php echo $searchText; ?>" class="heart-icon">
+                                <a href="add_to_wishlist.php?product_id=<?php echo $product['PRODUCT_ID']; ?>&user_id=<?php echo $user_id; ?>&searchtext=<?php echo addslashes($searchText); ?>" class="heart-icon">
                                     <i class="fas fa-heart"></i>
                                 </a>
                             </div>
@@ -674,38 +668,73 @@ oci_free_statement($stmt);
                     mainImage.src = thumbnail.src;
                 }
             });
-
-            document.querySelectorAll('.heart-icon').forEach(icon => {
-                icon.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    this.classList.toggle('active');
-                });
-            });
         });
 
-        function addToCart(productId, userId, searchText) {
-            const quantity = document.getElementById('quantity_input').value;
-            window.location.href = 'add_to_cart.php?productid=' + productId + '&userid=' + userId + '&searchtext=' + searchText + '&quantity=' + quantity;
+        function buyNow(productId, userId, searchText, quantity) {
+            if (!userId || userId === 0) {
+                alert('Please log in to proceed to checkout.');
+                window.location.href = 'customer_signin.php?return_url=' + encodeURIComponent(window.location.href);
+                return;
+            }
+            window.location.href = 'checkout.php?productid=' + productId + '&userid=' + userId + 
+                                  '&searchtext=' + encodeURIComponent(searchText) + '&quantity=' + quantity;
         }
 
-        function addToWishlist(productId, userId, searchText) {
-            window.location.href = 'add_to_wishlist.php?product_id=' + productId + '&user_id=' + userId + '&searchtext=' + searchText;
+        function addToCart(productId, userId, searchText, quantity) {
+            if (!userId || userId === 0) {
+                alert('Please log in to add items to your cart.');
+                window.location.href = 'customer_signin.php?return_url=' + encodeURIComponent(window.location.href);
+                return;
+            }
+            fetch(`add_to_cart.php?productid=${productId}&userid=${userId}&searchtext=${encodeURIComponent(searchText)}&quantity=${quantity}`)
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Product added to cart!');
+                        if (confirm('Do you want to view your cart?')) {
+                            window.location.href = 'cart.php';
+                        }
+                    } else {
+                        alert('Failed to add product to cart: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Cart Error:', error);
+                    alert('An error occurred while adding to cart: ' + error.message);
+                });
         }
 
         function toggleWishlist(productId, userId, searchText) {
+            if (!userId || userId === 0) {
+                alert('Please log in to add items to your wishlist.');
+                window.location.href = 'customer_signin.php?return_url=' + encodeURIComponent(window.location.href);
+                return;
+            }
             const heartIcon = event.currentTarget;
             const isActive = heartIcon.classList.contains('active');
             const url = isActive
-                ? 'remove_from_wishlist.php?product_id=' + productId + '&user_id=' + userId + '&searchtext=' + searchText
-                : 'add_to_wishlist.php?product_id=' + productId + '&user_id=' + userId + '&searchtext=' + searchText;
+                ? `remove_from_wishlist.php?product_id=${productId}&user_id=${userId}&searchtext=${encodeURIComponent(searchText)}`
+                : `add_to_wishlist.php?product_id=${productId}&user_id=${userId}&searchtext=${encodeURIComponent(searchText)}`;
             fetch(url)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                    return response.json();
+                })
                 .then(data => {
-                    if (data.success) {
+                    if (data.status === 'success') {
                         heartIcon.classList.toggle('active');
+                        alert(isActive ? 'Product removed from wishlist!' : 'Product added to wishlist!');
+                    } else {
+                        alert('Failed to update wishlist: ' + data.message);
                     }
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    console.error('Wishlist Error:', error);
+                    alert('An error occurred while updating wishlist: ' + error.message);
+                });
         }
 
         function redirectToProductPage(productId) {
@@ -714,3 +743,5 @@ oci_free_statement($stmt);
     </script>
 </body>
 </html>
+<?php oci_close($conn); ?>
+```

@@ -1,6 +1,3 @@
-<?php
-// footer.php
-?>
 <footer class="footer">
     <div class="container">
         <div class="columns">
@@ -56,62 +53,99 @@
             </div>
         </div>
     </div>
+    <style>
+        /* Footer container */
+        .footer {
+            background-color: #f0f0f0;
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            width: 100%;
+            margin: 0; /* Remove any default margin */
+        }
+
+        /* Override Bulma container constraints */
+        .footer .container {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            max-width: 100%; /* Explicitly override Bulma's max-width */
+            box-sizing: border-box; /* Ensure padding doesn't add to width */
+        }
+
+        .footer .columns {
+            margin-left: 0;
+            margin-right: 0;
+            width: 100%;
+            padding: 0 1rem; /* Add internal padding for content spacing */
+        }
+
+        .footer .column {
+            padding: 0.5rem;
+        }
+
+        /* Logo size */
+        .footer-logo-img {
+            width: 250px;
+            height: auto;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Social media buttons */
+        .footer .buttons {
+            margin-top: 0.75rem;
+        }
+
+        .footer .button {
+            padding: 0.3rem 0.5rem;
+            font-size: 0.8rem;
+            margin-right: 0.25rem;
+        }
+
+        /* Form spacing */
+        .footer form .field {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer input.input,
+        .footer textarea.textarea {
+            font-size: 0.85rem;
+            padding: 0.5rem;
+        }
+
+        .column.is-half1 {
+            margin-left: 0;
+        }
+
+        /* Adjust the form button to match the image */
+        .footer .button.is-primary {
+            background-color: #00c4b4;
+            border: none;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .footer .button.is-primary:hover {
+            background-color: #00b3a4;
+        }
+
+        /* Responsive adjustments for footer */
+        @media (max-width: 768px) {
+            .footer .columns {
+                flex-direction: column;
+            }
+
+            .footer .column.is-half,
+            .footer .column.is-half1 {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .footer h2.title {
+                margin-left: 0 !important;
+            }
+        }
+    </style>
 </footer>
-
-<style>
-/* Footer container */
-.footer {
-    background-color: #f0f0f0;
-    padding: 1rem 0;
-    font-size: 0.9rem;
-}
-
-/* Container and columns spacing */
-.footer .container {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.footer .columns {
-    margin-left: 0;
-    margin-right: 0;
-}
-
-.footer .column {
-    padding: 0.5rem;
-}
-
-/* Logo size */
-.footer-logo-img {
-    width: 250px;
-    height: auto;
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
-/* Social media buttons */
-.footer .buttons {
-    margin-top: 0.75rem;
-}
-
-.footer .button {
-    padding: 0.3rem 0.5rem;
-    font-size: 0.8rem;
-    margin-right: 0.25rem;
-}
-
-/* Form spacing */
-.footer form .field {
-    margin-bottom: 0.75rem;
-}
-
-.footer input.input,
-.footer textarea.textarea {
-    font-size: 0.85rem;
-    padding: 0.5rem;
-}
-
-.column.is-half1 {
-    margin-left: -50px;
-}
-</style>

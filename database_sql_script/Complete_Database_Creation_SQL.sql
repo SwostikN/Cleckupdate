@@ -213,7 +213,7 @@ CREATE TABLE PRODUCT(
     stock_available VARCHAR2(100),
     is_disabled NUMBER,
     max_order INTEGER,
-    allergy_information VARCHAR2(100),
+    allergy_information VARCHAR2(300),
     product_picture VARCHAR2(255),
     product_added_date DATE,
     product_update_date DATE,
