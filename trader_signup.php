@@ -1,9 +1,14 @@
 <?php
-// Error Reporting
+session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', 'C:/xampp/htdocs/newpull/error.log');
 
-// Variable for Input Validation
+require 'vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 $input_validation_passed = true;
 
 function calculateAge($dob) {
@@ -13,6 +18,60 @@ function calculateAge($dob) {
     return $age->y;
 }
 
+function sendVerificationEmail($email, $verification_code, $full_name) {
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'adhikariroshankumar7@gmail.com'; // Replace with your Gmail address
+        $mail->Password = 'nbei mnqe qgvp lpcy'; // Replace with your Gmail App Password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+
+        $mail->setFrom('your_email@gmail.com', 'CleckFax Traders');
+        $mail->addAddress($email);
+        $mail->isHTML(true);
+        $mail->Subject = 'Your Trader Verification Code';
+        $mail->Body = '
+<div style="max-width:480px;margin:0 auto;background:#f9f9f9;border-radius:10px;padding:32px 24px;font-family:sans-serif;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+    <div style="text-align:center;">
+        <img src="CleckFax_Traders_Hub_Logo_group6-removebg-preview.png" alt="CleckFax Traders" style="width:64px;height:64px;margin-bottom:16px;">
+        <h2 style="color:#3273dc;margin-bottom:8px;">Verify Your Email</h2>
+        <p style="color:#444;font-size:16px;margin-bottom:24px;">
+            Hello ' . htmlspecialchars($full_name) . ',<br>
+            Thank you for signing up with <b>CleckFax Traders</b> as a trader!<br>
+            Please use the code below to verify your email address.
+        </p>
+        <div style="margin:24px 0;">
+            <span id="otp" style="display:inline-block;font-size:32px;letter-spacing:8px;background:#fff;border:2px dashed #3273dc;padding:16px 32px;border-radius:8px;color:#222;font-weight:bold;">
+                ' . htmlspecialchars($verification_code) . '
+            </span>
+        </div>
+        <a href="#" onclick="navigator.clipboard.writeText(\'' . htmlspecialchars($verification_code) . '\');return false;" style="display:inline-block;margin-bottom:16px;padding:8px 20px;background:#3273dc;color:#fff;border-radius:5px;text-decoration:none;font-size:15px;font-weight:500;">
+            📋 Copy OTP
+        </a>
+        <p style="color:#888;font-size:14px;margin-top:16px;">
+            This code will expire in <b>10 minutes</b>.<br>
+            If you did not request this, please ignore this email.
+        </p>
+        <hr style="margin:32px 0 16px 0;border:none;border-top:1px solid #eee;">
+        <p style="color:#aaa;font-size:12px;">
+            © ' . date('Y') . ' CleckFax Traders. All rights reserved.
+        </p>
+    </div>
+</div>
+';
+        $mail->AltBody = "Hello $full_name,\n\nYour trader verification code is: $verification_code\n\nCopy and paste this code into the website to verify your email. This code expires in 10 minutes.";
+
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        error_log("Failed to send verification email: " . $e->getMessage());
+        return false;
+    }
+}
+
 include("connection/connection.php");
 $categoryArray = [];
 
@@ -20,101 +79,105 @@ $sql = "SELECT CATEGORY_ID, CATEGORY_TYPE FROM PRODUCT_CATEGORY";
 $result = oci_parse($conn, $sql);
 oci_execute($result);
 
-while ($row =
-
-oci_fetch_assoc($result)) {
+while ($row = oci_fetch_assoc($result)) {
     $categoryArray[] = $row;
 }
 oci_free_statement($result);
 
 if (isset($_POST["submit_sign_up"]) && isset($_POST["terms"])) {
     require("input_validation/input_sanitization.php");
+    require("input_validation/input_validation.php");
+
     $first_name = isset($_POST["first-name"]) ? sanitizeFirstName($_POST["first-name"]) : "";
     $last_name = isset($_POST["last-name"]) ? sanitizeLastName($_POST["last-name"]) : "";
     $email = isset($_POST["email"]) ? sanitizeEmail($_POST["email"]) : "";
-    $password = isset($_POST["password"]) ? sanitizePassword($_POST["password"]) : "";
-    $confirm_password = isset($_POST["confirm-password"]) ? sanitizePassword($_POST["confirm-password"]) : "";
+    $password = isset($_POST["password"]) ? trim($_POST["password"]) : "";
+    $confirm_password = isset($_POST["confirm-password"]) ? trim($_POST["confirm-password"]) : "";
     $dob = isset($_POST["dob"]) ? sanitizeDOB($_POST["dob"]) : "";
     $gender = isset($_POST["gender"]) ? sanitizeGender($_POST["gender"]) : "";
     $address = isset($_POST["address"]) ? sanitizeAddress($_POST["address"]) : "";
     $contact_number = isset($_POST["contact"]) ? sanitizeContactNumber($_POST["contact"]) : "";
     $shop_name = isset($_POST["shop-name"]) ? sanitizeShopName($_POST["shop-name"]) : "";
-    $company_no = isset($_POST["company-registration-no"]) ? sanitizeCompanyRegNo($_POST["company-registration-no"]) : "";
+    $company_no = isset($_POST["company-registration-no"]) ? sanitizeCompanyRegistrationNo($_POST["company-registration-no"]) : "";
     $shop_description = isset($_POST["shop-description"]) ? sanitizeShopDescription($_POST["shop-description"]) : "";
     $category = isset($_POST["category"]) ? sanitizeCategory($_POST["category"]) : "";
     $age = calculateAge($dob);
 
-    require("input_validation/input_validation.php");
     $email_error = "";
-    if (emailExists($email) === "true") {
+    if (emailExists($email)) {
         $email_error = "Email Already Exists!!!";
         $input_validation_passed = false;
     }
 
     $first_name_error = "";
-    if (validateFirstName($first_name) === "false") {
+    if (validateFirstName($first_name) === false) {
         $first_name_error = "Please Enter a Correct First Name";
         $input_validation_passed = false;
     }
 
-    $category_error = "";
     $last_name_error = "";
-    if (validateLastName($last_name) === "false") {
+    if (validateLastName($last_name) === false) {
         $last_name_error = "Please Enter a Correct Last Name";
         $input_validation_passed = false;
     }
 
     $address_error = "";
-    if (validateAddress($address) === "false") {
+    if (validateAddress($address) === false) {
         $address_error = "Please Enter Your Address";
         $input_validation_passed = false;
     }
 
     $contact_no_error = "";
-    if (validateContactNumber($contact_number) === "false") {
+    if (validateContactNumber($contact_number) === false) {
         $contact_no_error = "Please Provide a Contact number";
         $input_validation_passed = false;
     }
 
     $password_error = "";
-    if (validatePassword($_POST["password"]) === "false") {
+    if (validatePassword($password) === false) {
         $password_error = "Password must contain at least six characters including one lowercase letter, one uppercase letter, and one digit.";
         $input_validation_passed = false;
     }
 
     $reenter_password_error = "";
-    if (validateConfirmPassword($_POST["password"], $_POST["confirm-password"]) === "false") {
-        $reenter_password_error = "Password Didn't matched";
+    if (validateConfirmPassword($password, $confirm_password) === false) {
+        $reenter_password_error = "Passwords do not match";
         $input_validation_passed = false;
     }
 
     $dob_error = "";
-    if (validateDateOfBirth($dob) === "false") {
+    if (validateDateOfBirth($dob) === false) {
         $dob_error = "Please Enter Your Date Of Birth.";
         $input_validation_passed = false;
     }
 
     $gender_error = "";
-    if (validateGender($gender) === "false") {
+    if (validateGender($gender) === false) {
         $gender_error = "Please Select Your Gender.";
         $input_validation_passed = false;
     }
 
     $shop_name_error = "";
-    if (validateShopName($shop_name) === "false") {
+    if (validateShopName($shop_name) === false) {
         $shop_name_error = "Please Enter Your Shop Name Correctly.";
         $input_validation_passed = false;
     }
 
     $company_no_error = "";
-    if (validateCompanyRegistrationNo($company_no) === "false") {
+    if (validateCompanyRegistrationNo($company_no) === false) {
         $company_no_error = "Please Enter Your Company Registration Number Correctly.";
         $input_validation_passed = false;
     }
 
     $shop_description_error = "";
-    if (validateShopDescription($shop_description) === "false") {
+    if (validateShopDescription($shop_description) === false) {
         $shop_description_error = "Please Enter Your Shop Description Correctly.";
+        $input_validation_passed = false;
+    }
+
+    $category_error = "";
+    if (validateCategory($category) === false) {
+        $category_error = "Please Select a Valid Category.";
         $input_validation_passed = false;
     }
 
@@ -141,26 +204,29 @@ if (isset($_POST["submit_sign_up"]) && isset($_POST["terms"])) {
     $todayDate = date('Y-m-d');
     $update_date = date('Y-m-d');
     require("otp/otp_generator.php");
-    $verification_code = generateRandomCode();
+    $verification_code = generateRandomCode($conn, 6, 'TRADER');
 
     if ($input_validation_passed) {
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
         $sql_insert_user = "INSERT INTO CLECK_USER (first_name, last_name, user_address, user_email, user_gender, user_password, USER_PROFILE_PICTURE, user_type, user_contact_no, USER_AGE, USER_DOB)
-                            VALUES (:first_name, :last_name, :user_address, :user_email, :user_gender, :user_password, :USER_PROFILE_PICTURE, 'trader', :user_contact_no, :user_age, TO_DATE(:dob, 'YYYY-MM-DD'))";
+                           VALUES (:first_name, :last_name, :user_address, :user_email, :user_gender, :user_password, :USER_PROFILE_PICTURE, 'trader', :user_contact_no, :user_age, TO_DATE(:dob, 'YYYY-MM-DD'))";
         $stmt_insert_user = oci_parse($conn, $sql_insert_user);
 
-        oci_bind_by_name($stmt_insert_user, ':first_name', $first_name, -1, SQLT_CHR);
-        oci_bind_by_name($stmt_insert_user, ':last_name', $last_name, -1, SQLT_CHR);
-        oci_bind_by_name($stmt_insert_user, ':user_address', $address, -1, SQLT_CHR);
-        oci_bind_by_name($stmt_insert_user, ':user_email', $email, -1, SQLT_CHR);
-        oci_bind_by_name($stmt_insert_user, ':user_gender', $gender, -1, SQLT_CHR);
-        oci_bind_by_name($stmt_insert_user, ':user_password', $password);
+        oci_bind_by_name($stmt_insert_user, ':first_name', $first_name);
+        oci_bind_by_name($stmt_insert_user, ':last_name', $last_name);
+        oci_bind_by_name($stmt_insert_user, ':user_address', $address);
+        oci_bind_by_name($stmt_insert_user, ':user_email', $email);
+        oci_bind_by_name($stmt_insert_user, ':user_gender', $gender);
+        oci_bind_by_name($stmt_insert_user, ':user_password', $hashed_password);
         oci_bind_by_name($stmt_insert_user, ':USER_PROFILE_PICTURE', $newFileName);
         oci_bind_by_name($stmt_insert_user, ':user_contact_no', $contact_number);
         oci_bind_by_name($stmt_insert_user, ':user_age', $age);
         oci_bind_by_name($stmt_insert_user, ':dob', $dob);
 
         if (!oci_execute($stmt_insert_user)) {
-            die("Error inserting user: " . oci_error()['message']);
+            $error = oci_error($stmt_insert_user);
+            die("Error inserting user: " . $error['message']);
         }
 
         $sql = "SELECT user_id FROM CLECK_USER WHERE user_email = :email";
@@ -170,17 +236,20 @@ if (isset($_POST["submit_sign_up"]) && isset($_POST["terms"])) {
 
         if ($row = oci_fetch_assoc($stmt)) {
             $user_id = $row['USER_ID'];
+        } else {
+            die("Error retrieving user_id");
         }
+        oci_free_statement($stmt);
 
         $trader_admin_ver = 0;
         $trader_mail_sen = 0;
+        $verified_customer = 0;
 
         $sql = "INSERT INTO TRADER 
                 (SHOP_NAME, VERIFICATION_CODE, TRADER_TYPE, VERIFICATION_STATUS, USER_ID, PROFILE_PICTURE, VERFIED_ADMIN, VERIFICATION_SEND) 
                 VALUES 
                 (:shop_name, :verification_code, :trader_type, :verified_customer, :user_id, :profile_picture, :ver_ad, :ver_sed)";
         $stmt = oci_parse($conn, $sql);
-        $verified_customer = 0;
 
         oci_bind_by_name($stmt, ':shop_name', $shop_name);
         oci_bind_by_name($stmt, ':verification_code', $verification_code);
@@ -206,32 +275,38 @@ if (isset($_POST["submit_sign_up"]) && isset($_POST["terms"])) {
             oci_bind_by_name($stmt_insert_shop, ':cat', $category);
 
             if (!oci_execute($stmt_insert_shop)) {
-                die("Error inserting shop: " . oci_error()['message']);
+                $error = oci_error($stmt_insert_shop);
+                die("Error inserting shop: " . $error['message']);
             } else {
-                require("PHPMailer-master/email.php");
                 $full_name = $first_name . " " . $last_name;
-                sendVerificationEmail($email, $verification_code, $full_name);
-                header("Location:trader_email_verify.php?user_id=$user_id&email=$email");
+                if (sendVerificationEmail($email, $verification_code, $full_name)) {
+                    header("Location: trader_email_verify.php?user_id=$user_id&email=$email");
+                    exit();
+                } else {
+                    die("Error sending verification email. Check error logs for details.");
+                }
             }
         } else {
             $error = oci_error($stmt);
-            echo "Error inserting row: " . $error['message'];
+            echo "Error inserting trader: " . $error['message'];
         }
         oci_free_statement($stmt);
+        oci_free_statement($stmt_insert_user);
         oci_close($conn);
     } else {
         $general_error_message = "Validation failed. Please check the form for errors.";
     }
 } else {
-    $checkbox_error = "Please Agree to Our Terms and conditions?";
+    $checkbox_error = "Please agree to our Terms and Conditions.";
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CleckFax Traders - Trader Sign Up</title>
+    <title>ClickFax Traders - Trader Sign Up</title>
     <link rel="icon" href="logo_ico.png" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -331,14 +406,14 @@ if (isset($_POST["submit_sign_up"]) && isset($_POST["terms"])) {
 </head>
 <body>
     <!-- Navbar Section -->
-    <?php include('navbar.php'); ?>
+    <?php include("navbar.php"); ?>
 
     <!-- Signup Section -->
     <section class="section">
         <div class="signup-container">
             <div class="signup-form">
                 <div class="logo-container has-text-centered">
-                    <img src="logo.png" alt="Cleckfax Traders Logo">
+                    <img src="logo.png" alt="ClickFax Traders Logo">
                 </div>
                 <h1 class="title has-text-centered">Trader Sign Up</h1>
                 <button class="button social google">
@@ -514,7 +589,7 @@ if (isset($_POST["submit_sign_up"]) && isset($_POST["terms"])) {
                     </div>
                 </form>
                 <div class="links">
-                    <p>Already a Trader? <a href="trader_signin.php">Sign In</a></p>
+                    <p>Already a Trader? <a href="customer_signin.php">Sign In</a></p>
                     <p>Want to shop? <a href="customer_signup.php">Sign up as a customer</a></p>
                 </div>
             </div>
@@ -523,7 +598,7 @@ if (isset($_POST["submit_sign_up"]) && isset($_POST["terms"])) {
     </section>
 
     <!-- Footer Section -->
-    <?php include('footer.php'); ?>
+    <?php include("footer.php"); ?>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -532,7 +607,7 @@ if (isset($_POST["submit_sign_up"]) && isset($_POST["terms"])) {
                 $navbarBurgers.forEach(el => {
                     el.addEventListener('click', () => {
                         const target = el.dataset.target;
-                        const $target = document.getElementById(target); // Fixed getId to getElementById
+                        const $target = document.getElementById(target);
                         el.classList.toggle('is-active');
                         $target.classList.toggle('is-active');
                     });
