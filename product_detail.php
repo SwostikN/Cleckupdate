@@ -1,4 +1,3 @@
-```php
 <?php
 session_start();
 $product_id = isset($_GET["productId"]) ? (int)$_GET["productId"] : 0;
@@ -51,45 +50,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_comment"])) {
         oci_free_statement($check_stmt);
 
         if ($review_count == 0) {
-            // Get order_product_id (assuming user has ordered the product)
-            $order_sql = "SELECT order_product_id 
-                          FROM ORDER_PRODUCT op 
-                          JOIN CART c ON op.cart_id = c.cart_id 
-                          JOIN CUSTOMER cu ON c.customer_id = cu.customer_id 
-                          WHERE cu.user_id = :user_id AND EXISTS (
-                              SELECT 1 FROM ORDER_DETAILS od 
-                              WHERE od.order_product_id = op.order_product_id 
-                              AND od.product_id = :product_id
-                          )";
-            $order_stmt = oci_parse($conn, $order_sql);
-            oci_bind_by_name($order_stmt, ':user_id', $user_id);
-            oci_bind_by_name($order_stmt, ':product_id', $product_id);
-            oci_execute($order_stmt);
-            oci_fetch($order_stmt);
-            $order_product_id = oci_result($order_stmt, 'ORDER_PRODUCT_ID');
-            oci_free_statement($order_stmt);
-
-            if ($order_product_id) {
-                $sql = "INSERT INTO REVIEW (product_id, user_id, review_score, feedback, review_date, order_id, customer_id, REVIEW_PROCIDED) 
-                        VALUES (:product_id, :user_id, :review_score, :feedback, SYSDATE, :order_id, :customer_id, 1)";
-                $stmt = oci_parse($conn, $sql);
-                oci_bind_by_name($stmt, ':product_id', $product_id);
-                oci_bind_by_name($stmt, ':user_id', $user_id);
-                oci_bind_by_name($stmt, ':review_score', $review_score);
-                oci_bind_by_name($stmt, ':feedback', $feedback);
-                oci_bind_by_name($stmt, ':order_id', $order_product_id);
-                oci_bind_by_name($stmt, ':customer_id', $customer_id);
-                if (oci_execute($stmt)) {
-                    oci_free_statement($stmt);
-                    header("Location: product_detail.php?productId=" . $product_id);
-                    exit;
-                } else {
-                    $error = oci_error($stmt);
-                    echo "Error submitting review: " . htmlspecialchars($error['message']);
-                    oci_free_statement($stmt);
-                }
+            // Insert review without requiring purchase
+            $sql = "INSERT INTO REVIEW (product_id, user_id, review_score, feedback, review_date, customer_id, REVIEW_PROCIDED,ORDER_ID) 
+                    VALUES (:product_id, :user_id, :review_score, :feedback, SYSDATE, :customer_id, 1,0)";
+            $stmt = oci_parse($conn, $sql);
+            oci_bind_by_name($stmt, ':product_id', $product_id);
+            oci_bind_by_name($stmt, ':user_id', $user_id);
+            oci_bind_by_name($stmt, ':review_score', $review_score);
+            oci_bind_by_name($stmt, ':feedback', $feedback);
+            oci_bind_by_name($stmt, ':customer_id', $customer_id);
+            if (oci_execute($stmt)) {
+                oci_free_statement($stmt);
+                header("Location: product_detail.php?productId=" . $product_id);
+                exit;
             } else {
-                echo "You must purchase this product to submit a review.";
+                $error = oci_error($stmt);
+                echo "Error submitting review: " . htmlspecialchars($error['message']);
+                oci_free_statement($stmt);
             }
         } else {
             echo "You have already submitted a review for this product.";
@@ -349,7 +326,7 @@ oci_free_statement($stmt);
                             <button class="button quantity-btn" id="decrease_qty">-</button>
                         </p>
                         <p class="control">
-                            <input class="input quantity-input" id="quantity_input" type="number" value="1" min="1">
+                            <input class="input quantity-input" id="quantity_input" type="number" value="1" min="1" style="width: 50px";>
                         </p>
                         <p class="control">
                             <button class="button quantity-btn" id="increase_qty">+</button>
@@ -490,11 +467,11 @@ oci_free_statement($stmt);
                             <div class="field">
                                 <label class="label">Rating</label>
                                 <div class="control star-rating">
-                                    <span class="icon has-text-warning"><i class="fas fa-star-o" data-value="1"></i></span>
-                                    <span class="icon has-text-warning"><i class="fas fa-star-o" data-value="2"></i></span>
-                                    <span class="icon has-text-warning"><i class="fas fa-star-o" data-value="3"></i></span>
-                                    <span class="icon has-text-warning"><i class="fas fa-star-o" data-value="4"></i></span>
-                                    <span class="icon has-text-warning"><i class="fas fa-star-o" data-value="5"></i></span>
+                                    <span class="icon has-text-warning"><i class="far fa-star" data-value="1"></i></span>
+                                    <span class="icon has-text-warning"><i class="far fa-star" data-value="2"></i></span>
+                                    <span class="icon has-text-warning"><i class="far fa-star" data-value="3"></i></span>
+                                    <span class="icon has-text-warning"><i class="far fa-star" data-value="4"></i></span>
+                                    <span class="icon has-text-warning"><i class="far fa-star" data-value="5"></i></span>
                                     <input type="hidden" name="rating" id="rating" value="0">
                                 </div>
                             </div>
@@ -744,4 +721,3 @@ oci_free_statement($stmt);
 </body>
 </html>
 <?php oci_close($conn); ?>
-```

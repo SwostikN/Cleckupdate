@@ -444,7 +444,7 @@ try {
     <!-- Hero Section -->
     <section class="hero is-fullheight is-primary slider-hero">
         <div class="hero-body">
-            <div class="container has-text-left">
+            <div class="container has-text-left" style="margin-left: -280px";>
                 <h1 class="title is-1 has-text-white">
                     FRESH - SUPPORT YOUR LOCAL TRADERS
                 </h1>
