@@ -272,27 +272,27 @@ try {
         .product-actions {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 0.5rem;
             margin-top: 1rem;
         }
-        .product-actions .button.is-primary.is-small {
+        .product-actions .button {
             padding: 0.5rem 1rem;
             font-size: 0.9rem;
-            margin-right: 0.5rem;
         }
-        .heart-icon {
+        .product-actions .icon-btn {
             background: none;
             border: none;
             color: #4a4a4a;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.2rem;
             padding: 0.5rem;
             transition: transform 0.2s ease, color 0.2s ease;
         }
-        .heart-icon:hover {
+        .product-actions .icon-btn:hover {
             transform: scale(1.2);
+            color: #3273dc;
         }
-        .heart-icon.active {
+        .product-actions .heart-icon.active {
             color: #ff3860;
         }
 
@@ -526,11 +526,15 @@ try {
                                 </span>
                             </p>
                             <div class="product-actions">
-                                <a href="add_to_cart.php?productid=<?php echo $product['PRODUCT_ID']; ?>&userid=<?php echo $user_id; ?>&searchtext=<?php echo $searchText; ?>" class="button is-primary is-small">
-                                    <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+                                <a href="checkout.php?productid=<?php echo $product['PRODUCT_ID']; ?>&userid=<?php echo $user_id; ?>&searchtext=<?php echo $searchText; ?>" class="button is-success is-small">
                                     <span>Buy Now</span>
                                 </a>
-                                <a href="add_to_wishlist.php?product_id=<?php echo $product['PRODUCT_ID']; ?>&user_id=<?php echo $user_id; ?>&searchtext=<?php echo $searchText; ?>" class="heart-icon"><i class="fas fa-heart"></i></a>
+                                <button class="icon-btn cart-icon" data-product="<?php echo $product['PRODUCT_ID']; ?>" data-user="<?php echo $user_id; ?>" data-search="<?php echo $searchText; ?>">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                                <button class="icon-btn heart-icon" data-product="<?php echo $product['PRODUCT_ID']; ?>" data-user="<?php echo $user_id; ?>" data-search="<?php echo $searchText; ?>">
+                                    <i class="fas fa-heart"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -582,7 +586,6 @@ try {
                                 <p class="title is-6"><?php echo $product_name; ?></p>
                             </a>
                             
-
                             <p class="subtitle is-7">
                                 <span class="price-container">
                                     €<?php echo $discount_percent ? $discount_price : $original_price; ?>
@@ -593,11 +596,15 @@ try {
                                 </span>
                             </p>
                             <div class="product-actions">
-                                <a href="add_to_cart.php?productid=<?php echo $product['PRODUCT_ID']; ?>&userid=<?php echo $user_id; ?>&searchtext=<?php echo $searchText; ?>" class="button is-primary is-small">
-                                    <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+                                <a href="checkout.php?productid=<?php echo $product['PRODUCT_ID']; ?>&userid=<?php echo $user_id; ?>&searchtext=<?php echo $searchText; ?>" class="button is-success is-small">
                                     <span>Buy Now</span>
                                 </a>
-                                <a href="add_to_wishlist.php?product_id=<?php echo $product['PRODUCT_ID']; ?>&user_id=<?php echo $user_id; ?>&searchtext=<?php echo $searchText; ?>" class="heart-icon"><i class="fas fa-heart"></i></a>
+                                <button class="icon-btn cart-icon" data-product="<?php echo $product['PRODUCT_ID']; ?>" data-user="<?php echo $user_id; ?>" data-search="<?php echo $searchText; ?>">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                                <button class="icon-btn heart-icon" data-product="<?php echo $product['PRODUCT_ID']; ?>" data-user="<?php echo $user_id; ?>" data-search="<?php echo $searchText; ?>">
+                                    <i class="fas fa-heart"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -660,13 +667,54 @@ try {
             });
         <?php endif; ?>
 
-        // Heart Icon Toggle
+        // Heart Icon Toggle and Wishlist Action
         document.querySelectorAll('.heart-icon').forEach(icon => {
             icon.addEventListener('click', function(e) {
                 e.preventDefault();
-                this.classList.toggle('active');
                 const productId = this.getAttribute('data-product');
-                console.log(`Toggled favorite status for ${productId}`);
+                const userId = this.getAttribute('data-user');
+                const searchText = this.getAttribute('data-search');
+                this.classList.toggle('active');
+                fetch(`add_to_wishlist.php?product_id=${productId}&user_id=${userId}&searchtext=${searchText}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            alert('Product added to wishlist!');
+                        } else {
+                            alert('Failed to add product to wishlist: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while adding to wishlist.');
+                    });
+            });
+        });
+
+        // Cart Icon Action
+        document.querySelectorAll('.cart-icon').forEach(icon => {
+            icon.addEventListener('click', function(e) {
+                e.preventDefault();
+                const productId = this.getAttribute('data-product');
+                const userId = this.getAttribute('data-user');
+                const searchText = this.getAttribute('data-search');
+                fetch(`add_to_cart.php?productid=${productId}&userid=${userId}&searchtext=${searchText}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            alert('Product added to cart!');
+                            // Optionally redirect to cart page
+                            if (confirm('Do you want to view your cart?')) {
+                                window.location.href = 'cart.php';
+                            }
+                        } else {
+                            alert('Failed to add product to cart: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while adding to cart.');
+                    });
             });
         });
 

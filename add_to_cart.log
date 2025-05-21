@@ -1,0 +1,18 @@
+2025-05-21 07:15:11 - Session started. USER_ID: 9, USER_TYPE: customer
+2025-05-21 07:15:11 - Parameters - user_id: 9, product_id: 619, quantity: 1, search_text: p
+2025-05-21 07:15:11 - Database connection established.
+2025-05-21 07:15:11 - Customer ID retrieved: 302
+2025-05-21 07:15:11 - Product price: 17, Discount: 0%, Discounted price: 17
+2025-05-21 07:15:11 - Cart ID retrieved: null
+2025-05-21 07:15:11 - Error executing insert cart query: ORA-01400: cannot insert NULL into ("SWOSTIK"."CART"."ORDER_PRODUCT_ID")
+2025-05-21 07:15:11 - Exception: Failed to execute insert cart query: ORA-01400: cannot insert NULL into ("SWOSTIK"."CART"."ORDER_PRODUCT_ID")
+2025-05-21 07:15:11 - Database connection closed.
+2025-05-21 07:19:54 - Session started. USER_ID: 9, USER_TYPE: customer
+2025-05-21 07:19:54 - Parameters - user_id: 9, product_id: 623, quantity: 1, search_text: 
+2025-05-21 07:19:54 - Database connection established.
+2025-05-21 07:19:54 - Customer ID retrieved: 302
+2025-05-21 07:19:54 - Product price: 1, Discount: 0%, Discounted price: 1
+2025-05-21 07:19:54 - Cart ID retrieved: null
+2025-05-21 07:19:54 - Error executing insert cart query: ORA-01400: cannot insert NULL into ("SWOSTIK"."CART"."ORDER_PRODUCT_ID")
+2025-05-21 07:19:54 - Exception: Failed to execute insert cart query: ORA-01400: cannot insert NULL into ("SWOSTIK"."CART"."ORDER_PRODUCT_ID")
+2025-05-21 07:19:54 - Database connection closed.
