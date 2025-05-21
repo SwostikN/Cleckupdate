@@ -266,3 +266,54 @@
 2025-05-21 13:40:36 - Error executing insert cart query: ORA-00001: unique constraint (TEST.PK_CART_ID) violated
 2025-05-21 13:40:36 - Exception: Failed to execute insert cart query: ORA-00001: unique constraint (TEST.PK_CART_ID) violated
 2025-05-21 13:40:36 - Database connection closed.
+2025-05-21 18:40:10 - Session started. USER_ID: 56, USER_TYPE: customer
+2025-05-21 18:40:10 - Parameters - user_id: 56, product_id: 614, quantity: 1, search_text: 
+2025-05-21 18:40:10 - Database connection established.
+2025-05-21 18:40:10 - Customer ID retrieved: 350
+2025-05-21 18:40:10 - Product price: 100, Discount: 0%, Discounted price: 100
+2025-05-21 18:40:10 - Cart ID retrieved: null
+2025-05-21 18:40:10 - Error executing insert cart query: ORA-00001: unique constraint (TEST.PK_CART_ID) violated
+2025-05-21 18:40:10 - Exception: Failed to execute insert cart query: ORA-00001: unique constraint (TEST.PK_CART_ID) violated
+2025-05-21 18:40:10 - Database connection closed.
+2025-05-21 18:40:20 - Session started. USER_ID: 56, USER_TYPE: customer
+2025-05-21 18:40:20 - Parameters - user_id: 56, product_id: 614, quantity: 1, search_text: 
+2025-05-21 18:40:20 - Database connection established.
+2025-05-21 18:40:20 - Customer ID retrieved: 350
+2025-05-21 18:40:20 - Product price: 100, Discount: 0%, Discounted price: 100
+2025-05-21 18:40:20 - Cart ID retrieved: null
+2025-05-21 18:40:20 - Error executing insert cart query: ORA-00001: unique constraint (TEST.PK_CART_ID) violated
+2025-05-21 18:40:20 - Exception: Failed to execute insert cart query: ORA-00001: unique constraint (TEST.PK_CART_ID) violated
+2025-05-21 18:40:20 - Database connection closed.
+2025-05-21 18:40:54 - Session started. USER_ID: 56, USER_TYPE: customer
+2025-05-21 18:40:54 - Parameters - user_id: 56, product_id: 614, quantity: 1, search_text: 
+2025-05-21 18:40:54 - Database connection established.
+2025-05-21 18:40:54 - Customer ID retrieved: 350
+2025-05-21 18:40:54 - Product price: 100, Discount: 0%, Discounted price: 100
+2025-05-21 18:40:54 - Cart ID retrieved: null
+2025-05-21 18:40:54 - New cart created with ID: 905
+2025-05-21 18:40:54 - Total products in cart: 0
+2025-05-21 18:40:54 - Existing quantity of product 614 in cart: 0
+2025-05-21 18:40:54 - Inserted product 614 into cart with quantity 1
+2025-05-21 18:40:54 - Database connection closed.
+2025-05-21 18:40:58 - Session started. USER_ID: 56, USER_TYPE: customer
+2025-05-21 18:40:58 - Parameters - user_id: 56, product_id: 604, quantity: 1, search_text: 
+2025-05-21 18:40:58 - Database connection established.
+2025-05-21 18:40:58 - Customer ID retrieved: 350
+2025-05-21 18:40:58 - Product price: 9, Discount: 10%, Discounted price: 8.1
+2025-05-21 18:40:58 - Cart ID retrieved: null
+2025-05-21 18:40:58 - New cart created with ID: 906
+2025-05-21 18:40:58 - Total products in cart: 0
+2025-05-21 18:40:58 - Existing quantity of product 604 in cart: 0
+2025-05-21 18:40:58 - Inserted product 604 into cart with quantity 1
+2025-05-21 18:40:58 - Database connection closed.
+2025-05-21 18:41:57 - Session started. USER_ID: 56, USER_TYPE: customer
+2025-05-21 18:41:57 - Parameters - user_id: 56, product_id: 623, quantity: 1, search_text: 
+2025-05-21 18:41:57 - Database connection established.
+2025-05-21 18:41:57 - Customer ID retrieved: 350
+2025-05-21 18:41:57 - Product price: 1, Discount: 0%, Discounted price: 1
+2025-05-21 18:41:57 - Cart ID retrieved: null
+2025-05-21 18:41:57 - New cart created with ID: 907
+2025-05-21 18:41:57 - Total products in cart: 0
+2025-05-21 18:41:57 - Existing quantity of product 623 in cart: 0
+2025-05-21 18:41:57 - Inserted product 623 into cart with quantity 1
+2025-05-21 18:41:57 - Database connection closed.

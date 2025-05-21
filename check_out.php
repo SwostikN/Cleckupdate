@@ -2,16 +2,18 @@
 // Include the database connection
 include("connection/connection.php");
 
-// Check if cartid is set in the URL
-if (isset($_GET['cartid'])) {
-    $cart_id = $_GET['cartid'];
-    $total_price = $_GET["total_price"];
-    $total_products = $_GET["nuber_product"];
-    $customer_id = $_GET["customerid"];
+// Check if required POST parameters are set
+if (isset($_POST['cartid'], $_POST['total_price'], $_POST['number_product'], $_POST['customerid'])) {
+    $cart_id = $_POST['cartid'];
+    $total_price = $_POST['total_price'];
+    $total_products = $_POST['number_product'];
+    $customer_id = $_POST['customerid'];
 
-    // Begin transaction
-    $stmtBeginTransaction = oci_parse($conn, "BEGIN");
-    oci_execute($stmtBeginTransaction);
+    // Validate inputs
+    if (empty($cart_id) || empty($total_price) || empty($total_products) || empty($customer_id)) {
+        header("Location: error_page.php?error=Invalid input parameters");
+        exit();
+    }
 
     // Insert into ORDER_PRODUCT
     $sqlInsertOrderProduct = "
@@ -26,16 +28,17 @@ if (isset($_GET['cartid'])) {
     oci_bind_by_name($stmtInsertOrderProduct, ":customer_id", $customer_id);
     oci_bind_by_name($stmtInsertOrderProduct, ":cart_id", $cart_id);
     oci_bind_by_name($stmtInsertOrderProduct, ":order_product_id", $order_product_id, -1, OCI_B_INT);
-    oci_execute($stmtInsertOrderProduct);
 
-    // Check if ORDER_PRODUCT_ID was returned
-    oci_fetch($stmtInsertOrderProduct);
-    if (!$order_product_id) {
-        // Rollback transaction and display error message
-        oci_execute(oci_parse($conn, "ROLLBACK"));
+    if (!oci_execute($stmtInsertOrderProduct)) {
+        oci_rollback($conn);
         echo "Failed to insert data into ORDER_PRODUCT table.";
+        oci_free_statement($stmtInsertOrderProduct);
+        oci_close($conn);
         exit();
     }
+
+    // Free the statement
+    oci_free_statement($stmtInsertOrderProduct);
 
     // Debug statement
     echo "Data inserted into ORDER_PRODUCT table. ORDER_PRODUCT_ID: $order_product_id";
@@ -47,64 +50,86 @@ if (isset($_GET['cartid'])) {
             WHERE ci.CART_ID = :cart_id";
     $stmtSelectProducts = oci_parse($conn, $sql);
     oci_bind_by_name($stmtSelectProducts, ":cart_id", $cart_id);
-    oci_execute($stmtSelectProducts);
+    if (!oci_execute($stmtSelectProducts)) {
+        oci_rollback($conn);
+        echo "Failed to fetch cart items.";
+        oci_free_statement($stmtSelectProducts);
+        oci_close($conn);
+        exit();
+    }
 
     while ($row = oci_fetch_assoc($stmtSelectProducts)) {
         $product_qty = $row['NO_OF_PRODUCTS'];
         $product_id = $row['PRODUCT_ID'];
         $product_price = $row['PRODUCT_PRICE'];
 
+        // Fetch discount
         $selectDiscountSql = "SELECT DISCOUNT_PERCENT FROM DISCOUNT WHERE PRODUCT_ID = :productId";
         $selectDiscountStmt = oci_parse($conn, $selectDiscountSql);
         oci_bind_by_name($selectDiscountStmt, ':productId', $product_id);
         oci_execute($selectDiscountStmt);
-
         $discount_row = oci_fetch_assoc($selectDiscountStmt);
         $discountPercent = $discount_row ? $discount_row['DISCOUNT_PERCENT'] : 0;
+        oci_free_statement($selectDiscountStmt);
 
         $discountAmount = ($product_price * $discountPercent) / 100;
         $discountedPrice = $product_price - $discountAmount;
 
         // Insert into ORDER_DETAILS
-        $sqlInsertOrderDetails = "INSERT INTO ORDER_DETAILS (ORDER_PRODUCT_ID, PRODUCT_ID, PRODUCT_QTY, PRODUCT_PRICE, TRADER_USER_ID) 
-                                  VALUES (:order_product_id, :product_id, :product_qty, :product_price, (SELECT USER_ID FROM PRODUCT WHERE PRODUCT_ID = :product_id))";
+        $sqlInsertOrderDetails = "
+            INSERT INTO ORDER_DETAILS (ORDER_PRODUCT_ID, PRODUCT_ID, PRODUCT_QTY, PRODUCT_PRICE, TRADER_USER_ID) 
+            VALUES (:order_product_id, :product_id, :product_qty, :product_price, 
+                    (SELECT USER_ID FROM PRODUCT WHERE PRODUCT_ID = :product_id))";
         $stmtInsertOrderDetails = oci_parse($conn, $sqlInsertOrderDetails);
         oci_bind_by_name($stmtInsertOrderDetails, ":order_product_id", $order_product_id);
         oci_bind_by_name($stmtInsertOrderDetails, ":product_id", $product_id);
         oci_bind_by_name($stmtInsertOrderDetails, ":product_qty", $product_qty);
         oci_bind_by_name($stmtInsertOrderDetails, ":product_price", $discountedPrice);
-        oci_execute($stmtInsertOrderDetails);
+        if (!oci_execute($stmtInsertOrderDetails)) {
+            oci_rollback($conn);
+            echo "Failed to insert into ORDER_DETAILS.";
+            oci_free_statement($stmtInsertOrderDetails);
+            oci_free_statement($stmtSelectProducts);
+            oci_close($conn);
+            exit();
+        }
+        oci_free_statement($stmtInsertOrderDetails);
 
-        // Delete the product from CART_ITEM
+        // Delete from CART_ITEM
         $sqlDeleteCartItem = "DELETE FROM CART_ITEM WHERE CART_ID = :cart_id AND PRODUCT_ID = :product_id";
         $stmtDeleteCartItem = oci_parse($conn, $sqlDeleteCartItem);
         oci_bind_by_name($stmtDeleteCartItem, ":cart_id", $cart_id);
         oci_bind_by_name($stmtDeleteCartItem, ":product_id", $product_id);
-        oci_execute($stmtDeleteCartItem);
+        if (!oci_execute($stmtDeleteCartItem)) {
+            oci_rollback($conn);
+            echo "Failed to delete from CART_ITEM.";
+            oci_free_statement($stmtDeleteCartItem);
+            oci_free_statement($stmtSelectProducts);
+            oci_close($conn);
+            exit();
+        }
+        oci_free_statement($stmtDeleteCartItem);
 
-        // Prepare the SQL statement to update PRODUCT_QUANTITY
+        // Update PRODUCT_QUANTITY
         $updateSql = "
-            UPDATE 
-                PRODUCT 
-            SET 
-                PRODUCT_QUANTITY = PRODUCT_QUANTITY - :no_of_products
-            WHERE 
-                PRODUCT_ID = :product_id
-        ";
+            UPDATE PRODUCT 
+            SET PRODUCT_QUANTITY = PRODUCT_QUANTITY - :no_of_products
+            WHERE PRODUCT_ID = :product_id";
         $updateStmt = oci_parse($conn, $updateSql);
         oci_bind_by_name($updateStmt, ':no_of_products', $product_qty);
         oci_bind_by_name($updateStmt, ':product_id', $product_id);
-        oci_execute($updateStmt);
-
-        // Free the statement resources
+        if (!oci_execute($updateStmt)) {
+            oci_rollback($conn);
+            echo "Failed to update PRODUCT_QUANTITY.";
+            oci_free_statement($updateStmt);
+            oci_free_statement($stmtSelectProducts);
+            oci_close($conn);
+            exit();
+        }
         oci_free_statement($updateStmt);
     }
 
     oci_free_statement($stmtSelectProducts);
-
-    // Commit transaction
-    $stmtCommit = oci_parse($conn, "COMMIT");
-    oci_execute($stmtCommit);
 
     // Fetch order details to calculate total amount and discount amount
     $sql = "
@@ -118,11 +143,16 @@ if (isset($_GET['cartid'])) {
         JOIN 
             PRODUCT P ON OP.PRODUCT_ID = P.PRODUCT_ID
         WHERE 
-            OP.ORDER_PRODUCT_ID = :order_id
-    ";
+            OP.ORDER_PRODUCT_ID = :order_id";
     $stmt = oci_parse($conn, $sql);
     oci_bind_by_name($stmt, ':order_id', $order_product_id);
-    oci_execute($stmt);
+    if (!oci_execute($stmt)) {
+        oci_rollback($conn);
+        echo "Failed to fetch order details.";
+        oci_free_statement($stmt);
+        oci_close($conn);
+        exit();
+    }
 
     $totalAmount = 0;
     $discountAmount = 0;
@@ -131,24 +161,25 @@ if (isset($_GET['cartid'])) {
         $totalAmount += $row['PRODUCT_QTY'] * $row['PRODUCT_PRICE'];
         $discountAmount += ($row['ACTUAL_PRICE'] - $row['PRODUCT_PRICE']) * $row['PRODUCT_QTY'];
     }
+    oci_free_statement($stmt);
 
     // Update ORDER_PRODUCT with total amount and discount amount
     $updateSql = "
-        UPDATE 
-            ORDER_PRODUCT 
-        SET 
-            TOTAL_PRICE = :total_amount,
+        UPDATE ORDER_PRODUCT 
+        SET TOTAL_PRICE = :total_amount,
             DISCOUNT_AMOUNT = :discount_amount
-        WHERE 
-            ORDER_PRODUCT_ID = :order_id
-    ";
+        WHERE ORDER_PRODUCT_ID = :order_id";
     $updateStmt = oci_parse($conn, $updateSql);
     oci_bind_by_name($updateStmt, ':total_amount', $totalAmount);
     oci_bind_by_name($updateStmt, ':discount_amount', $discountAmount);
     oci_bind_by_name($updateStmt, ':order_id', $order_product_id);
-    oci_execute($updateStmt);
-
-    oci_free_statement($stmt);
+    if (!oci_execute($updateStmt)) {
+        oci_rollback($conn);
+        echo "Failed to update ORDER_PRODUCT.";
+        oci_free_statement($updateStmt);
+        oci_close($conn);
+        exit();
+    }
     oci_free_statement($updateStmt);
 
     // Update PRODUCT table for out-of-stock items
@@ -156,19 +187,28 @@ if (isset($_GET['cartid'])) {
             SET STOCK_AVAILABLE = 'no', IS_DISABLED = 0 
             WHERE PRODUCT_QUANTITY < 1";
     $stmt = oci_parse($conn, $sql);
-    oci_execute($stmt);
+    if (!oci_execute($stmt)) {
+        oci_rollback($conn);
+        echo "Failed to update PRODUCT stock.";
+        oci_free_statement($stmt);
+        oci_close($conn);
+        exit();
+    }
     oci_free_statement($stmt);
+
+    // Commit transaction
+    oci_commit($conn);
 
     // Close the connection
     oci_close($conn);
 
     // Redirect to checkout page
-    $url = "slot_time.php?customerid=$customer_id&order_id=$order_product_id&cartid=$cart_id&nuber_product=$total_products&total_price=$total_price&discount=$discountAmount";
+    $url = "slot_time.php?customerid=$customer_id&order_id=$order_product_id&cartid=$cart_id&number_product=$total_products&total_price=$total_price&discount=$discountAmount";
     header("Location: $url");
     exit();
 } else {
-    // Redirect if cartid is not set
-    header("Location: error_page.php");
+    // Redirect if required parameters are not set
+    header("Location: error_page.php?error=Missing required parameters");
     exit();
 }
 ?>
