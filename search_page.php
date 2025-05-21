@@ -3,7 +3,7 @@ session_start();
 include("connection/connection.php");
 
 // Define user_id consistently
-$user_id = isset($_SESSION["userid"]) ? $_SESSION["userid"] : 0;
+$user_id = isset($_SESSION["USER_ID"]) ? $_SESSION["USER_ID"] : 0;
 $Search_text = isset($_GET["value"]) ? $_GET["value"] : '';
 
 // Fetch trader information for navbar
