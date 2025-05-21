@@ -4,7 +4,7 @@ require("trader_session.php");
 include("../connection/connection.php");
 
 // Initialize variables for placeholders
-$trader_user_id = $_SESSION["userid"];
+$trader_user_id = $_SESSION["USER_ID"];
 
 // Construct the SQL statement to select ORDER_TIME from ORDER_PRODUCT table
 $sql_order_time = "SELECT DISTINCT TO_CHAR(OP.ORDER_TIME, 'YYYY-MM-DD\"T\"HH24:MI:SS') AS ORDER_TIME

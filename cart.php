@@ -135,13 +135,14 @@ $csrf_token = $_SESSION['csrf_token'];
                   color: black; border-radius: 5px; cursor: pointer; }
         .checkout { padding: 10px; background-color: #28a745; color: white; border: none; 
                     border-radius: 5px; cursor: pointer; }
+        .checkout:disabled { background-color: #6c757d; cursor: not-allowed; }
     </style>
 </head>
 <body>
     <?php include("navbar.php"); ?>
     <div class="container_cat">
         <div class="content">
-            <?php if (empty($results)) { ?>
+            <?php if (empty($results) || $total_products == 0) { ?>
                 <div class="empty-cart-message">Your Cart is Empty!</div>
             <?php } else { ?>
                 <section class="cart-section">
