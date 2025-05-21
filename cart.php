@@ -15,9 +15,11 @@ error_log("Cart: After session.php, USER_ID: " . $user_id . ", USER_TYPE: " . ($
 include("connection/connection.php");
 
 function executeQuery($conn, $sql, $params = []) {
+    error_log("Executing Query: " . $sql, 3, 'debug.log');
     $stmt = oci_parse($conn, $sql);
     if (!$stmt) {
         $e = oci_error($conn);
+        error_log("Query Parse Error: " . $e['message'] . " for SQL: " . $sql, 3, 'debug.log');
         die(htmlentities($e['message']));
     }
     foreach ($params as $key => &$val) {
@@ -25,11 +27,13 @@ function executeQuery($conn, $sql, $params = []) {
     }
     if (!oci_execute($stmt)) {
         $e = oci_error($stmt);
+        error_log("Query Execute Error: " . $e['message'] . " for SQL: " . $sql, 3, 'debug.log');
         die(htmlentities($e['message']));
     }
     return $stmt;
 }
 
+// Get customer_id
 $sql = "SELECT customer_id FROM CUSTOMER WHERE user_id = :user_id";
 $stmt = executeQuery($conn, $sql, [':user_id' => $user_id]);
 $row = oci_fetch_assoc($stmt);
@@ -42,6 +46,7 @@ if (!$customer_id) {
     exit;
 }
 
+// Initialize variables
 $cart_id = null;
 $results = [];
 $total_products = 0;
@@ -49,30 +54,44 @@ $total_amount = 0;
 $discount_amount = 0;
 $actual_price = 0;
 
-if ($customer_id) {
-    $sql = "SELECT cart_id FROM CART WHERE customer_id = :customer_id AND order_product_id IS NULL";
-    $stmt = executeQuery($conn, $sql, [':customer_id' => $customer_id]);
-    $row = oci_fetch_assoc($stmt);
-    $cart_id = $row ? $row['CART_ID'] : null;
-    oci_free_statement($stmt);
+// Get or create cart
+$sql = "SELECT cart_id FROM CART WHERE customer_id = :customer_id AND ROWNUM <= 1 ORDER BY cart_id DESC";
+$stmt = executeQuery($conn, $sql, [':customer_id' => $customer_id]);
+$row = oci_fetch_assoc($stmt);
+$cart_id = $row ? $row['CART_ID'] : null;
+oci_free_statement($stmt);
 
-    if ($cart_id) {
-        $sql = "SELECT ci.no_of_products, ci.product_id, ci.product_price, 
-                       p.product_name, p.product_picture, p.product_price AS original_price,
-                       SUM(ci.no_of_products) OVER() AS total_products
-                FROM CART_ITEM ci
-                JOIN PRODUCT p ON ci.product_id = p.product_id
-                WHERE ci.cart_id = :cart_id";
-        $stmt = executeQuery($conn, $sql, [':cart_id' => $cart_id]);
-        while ($row = oci_fetch_assoc($stmt)) {
-            $results[] = $row;
-            $total_products = $row['TOTAL_PRODUCTS'];
-            $total_amount += $row['NO_OF_PRODUCTS'] * $row['PRODUCT_PRICE'];
-            $actual_price += $row['NO_OF_PRODUCTS'] * $row['ORIGINAL_PRICE'];
-            $discount_amount += $row['NO_OF_PRODUCTS'] * ($row['ORIGINAL_PRICE'] - $row['PRODUCT_PRICE']);
-        }
-        oci_free_statement($stmt);
+if (!$cart_id) {
+    // Create new cart
+    $sql = "INSERT INTO CART (customer_id, order_product_id) VALUES (:customer_id, ORDER_PRODUCT_SEQ.NEXTVAL) RETURNING cart_id INTO :cart_id";
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':customer_id', $customer_id);
+    oci_bind_by_name($stmt, ':cart_id', $cart_id, -1, OCI_B_INT);
+    if (!oci_execute($stmt)) {
+        $e = oci_error($stmt);
+        error_log("Cart Creation Error: " . $e['message'] . " for SQL: " . $sql, 3, 'debug.log');
+        die(htmlentities($e['message']));
     }
+    oci_free_statement($stmt);
+    error_log("Cart: Created new cart with ID: $cart_id", 3, 'debug.log');
+}
+
+// Fetch cart items
+if ($cart_id) {
+    $sql = "SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_id";
+    $stmt = executeQuery($conn, $sql, [':cart_id' => $cart_id]);
+    while ($row = oci_fetch_assoc($stmt)) {
+        $results[] = $row;
+        $total_products += $row['NO_OF_PRODUCTS'];
+        $total_amount += $row['NO_OF_PRODUCTS'] * $row['PRODUCT_PRICE'];
+        $actual_price += $row['NO_OF_PRODUCTS'] * $row['ORIGINAL_PRICE'];
+        $discount_amount += $row['NO_OF_PRODUCTS'] * ($row['ORIGINAL_PRICE'] - $row['PRODUCT_PRICE']);
+    }
+    oci_free_statement($stmt);
 }
 
 if (is_resource($conn)) {
@@ -146,7 +165,7 @@ $csrf_token = $_SESSION['csrf_token'];
                                         <td>
                                             <form method="POST" action="add_qty_to_cart.php">
                                                 <input type="hidden" name="product_id" value="<?php echo $row['PRODUCT_ID']; ?>">
-                                                <input type="hidden" name="cart_id" value="<?php echo $cart_id; ?>">
+                                                <input type="hidden" name="cart_id" value="<?php echo $row['CART_ID']; ?>">
                                                 <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
                                                 <button type="submit" name="action" value="decrease" class="decrement">-</button>
                                                 <input type="number" min="1" value="<?php echo $row['NO_OF_PRODUCTS']; ?>" readonly style="width: 50px; text-align: center; border: none; background: transparent;">
@@ -156,7 +175,7 @@ $csrf_token = $_SESSION['csrf_token'];
                                         <td>€<?php echo number_format($row['PRODUCT_PRICE'], 2); ?></td>
                                         <td>
                                             <form method="POST" action="delete_cart_item.php">
-                                                <input type="hidden" name="cart_id" value="<?php echo $cart_id; ?>">
+                                                <input type="hidden" name="cart_id" value="<?php echo $row['CART_ID']; ?>">
                                                 <input type="hidden" name="product_id" value="<?php echo $row['PRODUCT_ID']; ?>">
                                                 <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
                                                 <button type="submit" class="delete">Remove</button>

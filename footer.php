@@ -1,3 +1,76 @@
+<?php
+// Include database connection
+include("connection/connection.php");
+
+// Initialize variables for form data and messages
+$name = $email = $message = "";
+$errors = [];
+$success_message = "";
+$redirect = false;
+
+// Handle form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["contact_submit"])) {
+    // Sanitize and validate input
+    $name = isset($_POST["name"]) ? trim($_POST["name"]) : "";
+    $email = isset($_POST["email"]) ? trim($_POST["email"]) : "";
+    $message = isset($_POST["message"]) ? trim($_POST["message"]) : "";
+
+    // Validate name
+    if (empty($name)) {
+        $errors[] = "Name is required.";
+    } elseif (strlen($name) > 100) {
+        $errors[] = "Name must be 100 characters or less.";
+    }
+
+    // Validate email
+    if (empty($email)) {
+        $errors[] = "Email is required.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Invalid email format.";
+    } elseif (strlen($email) > 100) {
+        $errors[] = "Email must be 100 characters or less.";
+    }
+
+    // Validate message
+    if (empty($message)) {
+        $errors[] = "Message is required.";
+    } elseif (strlen($message) > 1000) {
+        $errors[] = "Message must be 1000 characters or less.";
+    }
+
+    // If no errors, insert data into the database
+    if (empty($errors)) {
+        $sql = "INSERT INTO CONTACT_MESSAGES (message_id, name, email, message, submission_date) 
+                VALUES (CONTACT_MESSAGES_SEQ.NEXTVAL, :name, :email, :message, SYSDATE)";
+        $stmt = oci_parse($conn, $sql);
+        
+        // Bind parameters
+        oci_bind_by_name($stmt, ':name', $name);
+        oci_bind_by_name($stmt, ':email', $email);
+        oci_bind_by_name($stmt, ':message', $message);
+
+        // Execute the query
+        if (oci_execute($stmt)) {
+            $success_message = "Your message has been sent successfully!";
+            $redirect = true; // Flag to trigger JavaScript redirect
+            // Clear form inputs
+            $name = $email = $message = "";
+        } else {
+            $error = oci_error($stmt);
+            $errors[] = "Error saving message: " . htmlspecialchars($error['message']);
+        }
+        
+        oci_free_statement($stmt);
+    }
+    // If there are errors, retain the submitted values for display
+    else {
+        $name = htmlspecialchars($name);
+        $email = htmlspecialchars($email);
+        $message = htmlspecialchars($message);
+    }
+}
+?>
+
 <footer class="footer">
     <div class="container">
         <div class="columns">
@@ -25,31 +98,51 @@
             </div>
             <div class="column is-half">
                 <h2 class="title is-4" style="margin-left: -70px;">Contact Us</h2>
-                <form method="post" action="/contact">
+                <?php if (!empty($success_message)): ?>
+                    <div class="notification is-success">
+                        <?php echo htmlspecialchars($success_message); ?>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty($errors)): ?>
+                    <div class="notification is-danger">
+                        <ul>
+                            <?php foreach ($errors as $error): ?>
+                                <li><?php echo htmlspecialchars($error); ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" id="contact-form">
                     <div class="field">
                         <label class="label" for="name">Name</label>
                         <div class="control">
-                            <input class="input" type="text" id="name" name="name" placeholder="Name" required>
+                            <input class="input" type="text" id="name" name="name" placeholder="Name" value="<?php echo isset($name) ? $name : ''; ?>" required>
                         </div>
                     </div>
                     <div class="field">
                         <label class="label" for="email">Email</label>
                         <div class="control">
-                            <input class="input" type="email" id="email" name="email" placeholder="Email" required>
+                            <input class="input" type="email" id="email" name="email" placeholder="Email" value="<?php echo isset($email) ? $email : ''; ?>" required>
                         </div>
                     </div>
                     <div class="field">
                         <label class="label" for="message">Message</label>
                         <div class="control">
-                            <textarea class="textarea" id="message" name="message" placeholder="Type your message here..." required></textarea>
+                            <textarea class="textarea" id="message" name="message" placeholder="Type your message here..." required><?php echo isset($message) ? $message : ''; ?></textarea>
                         </div>
                     </div>
                     <div class="field">
                         <div class="control">
-                            <button class="button is-primary" type="submit">Send</button>
+                            <button class="button is-primary" type="submit" name="contact_submit">Send</button>
                         </div>
                     </div>
                 </form>
+                <?php if ($redirect): ?>
+                    <script>
+                        // Redirect to the same page to prevent form resubmission
+                        window.location.href = '<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>';
+                    </script>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -147,5 +240,29 @@
                 margin-left: 0 !important;
             }
         }
+
+        /* Notification styling */
+        .notification {
+            margin-bottom: 1rem;
+        }
+
+        .notification.is-success {
+            background-color: #48c774;
+            color: #fff;
+        }
+
+        .notification.is-danger {
+            background-color: #f14668;
+            color: #fff;
+        }
+
+        .notification ul {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
     </style>
 </footer>
+<?php
+// Close database connection
+oci_close($conn);
+?>
