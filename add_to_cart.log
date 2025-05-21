@@ -257,3 +257,12 @@
 2025-05-21 12:06:33 - Existing quantity of product 623 in cart: 0
 2025-05-21 12:06:33 - Inserted product 623 into cart with quantity 1
 2025-05-21 12:06:33 - Database connection closed.
+2025-05-21 13:40:35 - Session started. USER_ID: 30, USER_TYPE: customer
+2025-05-21 13:40:36 - Parameters - user_id: 30, product_id: 600, quantity: 1, search_text: 
+2025-05-21 13:40:36 - Database connection established.
+2025-05-21 13:40:36 - Customer ID retrieved: 320
+2025-05-21 13:40:36 - Product price: 10, Discount: 0%, Discounted price: 10
+2025-05-21 13:40:36 - Cart ID retrieved: null
+2025-05-21 13:40:36 - Error executing insert cart query: ORA-00001: unique constraint (TEST.PK_CART_ID) violated
+2025-05-21 13:40:36 - Exception: Failed to execute insert cart query: ORA-00001: unique constraint (TEST.PK_CART_ID) violated
+2025-05-21 13:40:36 - Database connection closed.

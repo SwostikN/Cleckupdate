@@ -177,13 +177,13 @@ if ($stid) {
                     <a href="customer_signin.php?return_url=<?php echo urlencode('wishlist.php'); ?>" class="icon">
                         <i class="fas fa-heart"></i>
                     </a>
-                    <span>Wishlist</span>
+                    <!-- <span>Wishlist</span> -->
                 </div>
                 <div class="navbar-item icon-container">
                     <a href="customer_signin.php?return_url=<?php echo urlencode('cart.php'); ?>" class="icon">
                         <i class="fas fa-shopping-cart"></i>
                     </a>
-                    <span>Cart</span>
+                    <!-- <span>Cart</span> -->
                 </div>
             <?php else: ?>
                 <div class="navbar-item icon-container">
@@ -244,7 +244,7 @@ if ($stid) {
 }   
 .navbar {
     background-color: #f5f5f5;
-    padding: 0.5rem 1rem;
+    padding: 0.2rem 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .navbar-brand {
@@ -289,7 +289,9 @@ if ($stid) {
     padding: 0 0.75rem;
     text-align: center;
     position: relative;
+    margin-top: 7px; /* This moves the whole container down */
 }
+
 .navbar-item.icon-container i {
     font-size: 1.5rem;
     color: #4a4a4a;

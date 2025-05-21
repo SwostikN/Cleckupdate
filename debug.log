@@ -22,4 +22,12 @@ Cart: Session ID: o360lchg9bmnao07pp69ksorth, USER_ID: 9, USER_TYPE: customerCar
                    p.product_name, p.product_picture, p.product_price AS original_price
             FROM CART_ITEM ci
             JOIN PRODUCT p ON ci.product_id = p.product_id
-            WHERE ci.cart_id = :cart_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: kvr7tv2ds0n6lkdlaen3u50q8i, USER_ID: 30, USER_TYPE: customerCart: After session.php, USER_ID: 30, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE customer_id = :customer_id AND ROWNUM <= 1 ORDER BY cart_id DESCExecuting Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: kvr7tv2ds0n6lkdlaen3u50q8i, USER_ID: 30, USER_TYPE: customerCart: After session.php, USER_ID: 30, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE customer_id = :customer_id AND ROWNUM <= 1 ORDER BY cart_id DESCExecuting Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idSignin: Session started, ID: 8e7n7fsevtbe7evs3in3g1igbvSignin: Session started, ID: cntbs5af59vo6un37c039uv954
