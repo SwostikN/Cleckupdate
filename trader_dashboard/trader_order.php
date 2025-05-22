@@ -36,7 +36,7 @@ oci_free_statement($stmt);
 }
 
 // Get the trader user ID passed by us
-$trader_user_id = $_SESSION["userid"];;
+$trader_user_id = $_SESSION["USER_ID"];;
 
 $sql = "SELECT 
             o.ORDER_PRODUCT_ID, 
