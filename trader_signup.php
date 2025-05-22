@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 ini_set('error_log', 'C:/xampp/htdocs/newpull/error.log');
 
-require 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 

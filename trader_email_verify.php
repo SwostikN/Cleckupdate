@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -261,7 +261,7 @@ if (isset($_GET["user_id"]) && isset($_GET["email"])) {
             text-align: center;
             margin-top: 1rem;
             color: #3273dc FIGURE
-            text-decoration: none;
+            
         }
         .resend-link:hover {
             text-decoration: underline;
