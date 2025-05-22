@@ -333,7 +333,6 @@ oci_free_statement($stmt);
                         </p>
                     </div>
                     <div class="buttons">
-                        <button class="button is-primary" id="buy_now" onclick="buyNow(<?php echo $productId; ?>, <?php echo $user_id; ?>, '<?php echo addslashes($searchText); ?>', document.getElementById('quantity_input').value)">BUY NOW</button>
                         <button class="button is-success add-to-cart" onclick="addToCart(<?php echo $productId; ?>, <?php echo $user_id; ?>, '<?php echo addslashes($searchText); ?>', document.getElementById('quantity_input').value)">
                             <span class="icon"><i class="fas fa-shopping-cart"></i></span>
                             <span>Add to Cart</span>
@@ -554,9 +553,7 @@ oci_free_statement($stmt);
                     </div>
                 </div>
             <?php endforeach; ?>
-            <div class="column is-full has-text-right">
-                <a class="button is-light">VIEW MORE...</a>
-            </div>
+ 
         </div>
     </section>
 
@@ -646,16 +643,6 @@ oci_free_statement($stmt);
                 }
             });
         });
-
-        function buyNow(productId, userId, searchText, quantity) {
-            if (!userId || userId === 0) {
-                alert('Please log in to proceed to checkout.');
-                window.location.href = 'customer_signin.php?return_url=' + encodeURIComponent(window.location.href);
-                return;
-            }
-            window.location.href = 'checkout.php?productid=' + productId + '&userid=' + userId + 
-                                  '&searchtext=' + encodeURIComponent(searchText) + '&quantity=' + quantity;
-        }
 
         function addToCart(productId, userId, searchText, quantity) {
             if (!userId || userId === 0) {

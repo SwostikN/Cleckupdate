@@ -176,14 +176,9 @@ oci_close($conn);
         #discount { color: #ff3860; font-weight: bold; }
         #discount_price { font-size: 1.2rem; font-weight: bold; color: #3273dc; }
         .button-container { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; padding-top: 0.5rem; }
-        .buy-now-btn { background-color: #28a745; color: #fff; border: none; padding: 0.5rem 1rem; 
-                      border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease; }
-        .buy-now-btn:hover { background-color: #218838; }
-        .buy-now-btn:disabled { background-color: #dbdbdb; cursor: not-allowed; }
-        .add-to-cart-btn { background-color: #3273dc; color: #fff; border: none; padding: 0.5rem 1rem; 
-                          border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease; 
-                          display: flex; align-items: center; gap: 0.5rem; }
-        .add-to-cart-btn:hover { background-color: #2557a7; }
+        .add-to-cart-btn { background-color: #28a745; color: #fff; border: none; padding: 0.5rem 1rem; 
+                          border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease; }
+        .add-to-cart-btn:hover { background-color: #218838; }
         .add-to-cart-btn:disabled { background-color: #dbdbdb; cursor: not-allowed; }
         .wishlist-icon { background: none; border: none; color: #4a4a4a; font-size: 1rem; 
                         cursor: pointer; transition: transform 0.2s ease, color 0.2s ease; }
@@ -325,15 +320,12 @@ oci_close($conn);
                         </div>
                         <div class="button-container">
                             <?php if ($row['PRODUCT_QUANTITY'] <= 0): ?>
-                                <button class="buy-now-btn" disabled>Buy Now</button>
-                                <button class="add-to-cart-btn" disabled><i class="fas fa-shopping-cart"></i></button>
+                                <button class="add-to-cart-btn" disabled>Add to Cart</button>
                                 <button class="wishlist-icon" disabled><i class="fas fa-heart"></i></button>
                             <?php else: ?>
-                                <button class="buy-now-btn" 
-                                        onclick="buyNow(<?php echo $row['PRODUCT_ID']; ?>, <?php echo $user_id; ?>, '<?php echo addslashes($Search_text); ?>')">Buy Now</button>
                                 <button class="add-to-cart-btn" 
                                         onclick="addToCart(<?php echo $row['PRODUCT_ID']; ?>, <?php echo $user_id; ?>, '<?php echo addslashes($Search_text); ?>')">
-                                    <i class="fas fa-shopping-cart"></i>
+                                    Add to Cart
                                 </button>
                                 <button class="wishlist-icon" 
                                         data-product="<?php echo $row['PRODUCT_ID']; ?>" 
@@ -452,12 +444,6 @@ function addToWishlist(productId, userId, searchText) {
             console.error('Wishlist Error:', error);
             alert('An error occurred while adding to wishlist: ' + error.message);
         });
-}
-
-function buyNow(productId, userId, searchText) {
-    event.stopPropagation();
-    window.location.href = 'checkout.php?productid=' + productId + '&userid=' + userId + 
-                         '&searchtext=' + encodeURIComponent(searchText);
 }
 
 function redirectToProductPage(productId) {

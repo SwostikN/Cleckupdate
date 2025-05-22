@@ -64,7 +64,6 @@ $searchtext = "";
     <link rel="icon" href="logo_ico.png" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <!-- <link rel="stylesheet" href="wishlist.css"> -->
     <style>
         html, body {
             margin: 0;
@@ -139,7 +138,7 @@ $searchtext = "";
             gap: 0.5rem;
             padding: 0 1rem 1rem 1rem;
         }
-        .buy-now-button, .remove-button {
+        .add-to-cart-button, .remove-button {
             display: block;
             text-align: center;
             padding: 0.5rem;
@@ -147,11 +146,11 @@ $searchtext = "";
             border-radius: 4px;
             transition: background-color 0.3s ease;
         }
-        .buy-now-button {
+        .add-to-cart-button {
             background-color: #28a745;
             color: white;
         }
-        .buy-now-button:hover {
+        .add-to-cart-button:hover {
             background-color: #218838;
         }
         .remove-button {
@@ -195,7 +194,10 @@ $searchtext = "";
                                     <p>Price: €<?php echo number_format($discounted_price, 2); ?></p>
                                 </div>
                                 <div class="product-actions">
-                                    <a href="checkout.php?productid=<?php echo htmlspecialchars($row['PRODUCT_ID'], ENT_QUOTES, 'UTF-8'); ?>&userid=<?php echo htmlspecialchars($user_id, ENT_QUOTES, 'UTF-8'); ?>&searchtext=<?php echo htmlspecialchars($searchtext, ENT_QUOTES, 'UTF-8'); ?>" class="buy-now-button">Buy Now</a>
+                                    <button class="add-to-cart-button" onclick="addToCart(<?php echo htmlspecialchars($row['PRODUCT_ID'], ENT_QUOTES, 'UTF-8'); ?>, <?php echo htmlspecialchars($user_id, ENT_QUOTES, 'UTF-8'); ?>, '<?php echo htmlspecialchars($searchtext, ENT_QUOTES, 'UTF-8'); ?>'); event.stopPropagation();">
+                                        <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+                                        <span>Add to Cart</span>
+                                    </button>
                                     <a href="delete_wishlist_item.php?wishlist_id=<?php echo htmlspecialchars($wishlist_id, ENT_QUOTES, 'UTF-8'); ?>&product_id=<?php echo htmlspecialchars($row['PRODUCT_ID'], ENT_QUOTES, 'UTF-8'); ?>" class="remove-button">Remove</a>
                                 </div>
                             </div>
@@ -210,6 +212,28 @@ $searchtext = "";
     <script>
         function redirectToProductPage(productId) {
             window.location.href = "product_detail.php?productId=" + encodeURIComponent(productId);
+        }
+
+        function addToCart(productId, userId, searchText) {
+            fetch(`add_to_cart.php?productid=${productId}&userid=${userId}&searchtext=${encodeURIComponent(searchText)}`)
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Product added to cart!');
+                        if (confirm('Do you want to view your cart?')) {
+                            window.location.href = 'cart.php';
+                        }
+                    } else {
+                        alert('Failed to add product to cart: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Cart Error:', error);
+                    alert('An error occurred while adding to cart: ' + error.message);
+                });
         }
     </script>
 </body>

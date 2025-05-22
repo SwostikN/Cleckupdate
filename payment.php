@@ -28,8 +28,8 @@ $amount = $_GET['total_price']; // Amount in pence or smallest currency unit
 $currency = 'GBP'; // Currency code for pound sterling
 
 // Set up your product details
-$productName = "HudderFoods";
-$productDescription = "Purchased " . $_GET["total_products"] . " Products From HudderFoods";
+$productName = "";
+$productDescription = "Purchased " . $_GET["total_products"] . " Products From Cleckfax Trader Hub";
 
 // Set up PayPal API endpoints for sandbox
 $apiEndpoint = 'https://api.sandbox.paypal.com';

@@ -551,3 +551,221 @@
 2025-05-21 20:59:51 - Existing quantity of product 623 in cart: 0
 2025-05-21 20:59:51 - Inserted product 623 into cart with quantity 1
 2025-05-21 20:59:51 - Database connection closed.
+2025-05-22 04:20:52 - Session started. USER_ID: 11, USER_TYPE: customer
+2025-05-22 04:20:52 - Parameters - user_id: 11, product_id: 623, quantity: 1, search_text: 
+2025-05-22 04:20:52 - Database connection established.
+2025-05-22 04:20:52 - Customer ID retrieved: 302
+2025-05-22 04:20:52 - Cart ID from DB: 903
+2025-05-22 04:20:52 - Product price: 1, Discount: 0%, Discounted price: 1
+2025-05-22 04:20:52 - Total products in cart: 18
+2025-05-22 04:20:52 - Existing quantity of product 623 in cart: 13
+2025-05-22 04:20:52 - Updated quantity of product 623 to 14
+2025-05-22 04:20:52 - Database connection closed.
+2025-05-22 04:24:24 - Session started. USER_ID: 10, USER_TYPE: customer
+2025-05-22 04:24:24 - Parameters - user_id: 10, product_id: 623, quantity: 1, search_text: 
+2025-05-22 04:24:24 - Database connection established.
+2025-05-22 04:24:24 - Customer ID retrieved: 301
+2025-05-22 04:24:24 - Product price: 1, Discount: 0%, Discounted price: 1
+2025-05-22 04:24:24 - Total products in cart: 0
+2025-05-22 04:24:24 - Existing quantity of product 623 in cart: 0
+2025-05-22 04:24:24 - Inserted product 623 into cart with quantity 1
+2025-05-22 04:24:24 - Database connection closed.
+2025-05-22 04:24:35 - Session started. USER_ID: 10, USER_TYPE: customer
+2025-05-22 04:24:35 - Parameters - user_id: 10, product_id: 614, quantity: 1, search_text: 
+2025-05-22 04:24:35 - Database connection established.
+2025-05-22 04:24:35 - Customer ID retrieved: 301
+2025-05-22 04:24:35 - Product price: 100, Discount: 0%, Discounted price: 100
+2025-05-22 04:24:35 - Total products in cart: 1
+2025-05-22 04:24:35 - Existing quantity of product 614 in cart: 0
+2025-05-22 04:24:35 - Inserted product 614 into cart with quantity 1
+2025-05-22 04:24:35 - Database connection closed.
+2025-05-22 05:07:48 - Session started. USER_ID: 10, USER_TYPE: customer
+2025-05-22 05:07:48 - Parameters - user_id: 10, product_id: 624, quantity: 1, search_text: 
+2025-05-22 05:07:48 - Database connection established.
+2025-05-22 05:07:48 - Customer ID retrieved: 301
+2025-05-22 05:07:48 - Product price: 3, Discount: 0%, Discounted price: 3
+2025-05-22 05:07:48 - Total products in cart: 0
+2025-05-22 05:07:48 - Existing quantity of product 624 in cart: 0
+2025-05-22 05:07:48 - Inserted product 624 into cart with quantity 1
+2025-05-22 05:07:48 - Database connection closed.
+2025-05-22 05:07:54 - Session started. USER_ID: 10, USER_TYPE: customer
+2025-05-22 05:07:54 - Parameters - user_id: 10, product_id: 623, quantity: 1, search_text: 
+2025-05-22 05:07:54 - Database connection established.
+2025-05-22 05:07:54 - Customer ID retrieved: 301
+2025-05-22 05:07:54 - Product price: 1, Discount: 0%, Discounted price: 1
+2025-05-22 05:07:54 - Total products in cart: 1
+2025-05-22 05:07:54 - Existing quantity of product 623 in cart: 0
+2025-05-22 05:07:54 - Inserted product 623 into cart with quantity 1
+2025-05-22 05:07:54 - Database connection closed.
+2025-05-22 05:08:12 - Session started. USER_ID: 10, USER_TYPE: customer
+2025-05-22 05:08:12 - Parameters - user_id: 10, product_id: 623, quantity: 1, search_text: 
+2025-05-22 05:08:12 - Database connection established.
+2025-05-22 05:08:12 - Customer ID retrieved: 301
+2025-05-22 05:08:12 - Cart ID from DB: 902
+2025-05-22 05:08:12 - Product price: 1, Discount: 0%, Discounted price: 1
+2025-05-22 05:08:12 - Total products in cart: 2
+2025-05-22 05:08:12 - Existing quantity of product 623 in cart: 1
+2025-05-22 05:08:12 - Updated quantity of product 623 to 2
+2025-05-22 05:08:12 - Database connection closed.
+2025-05-22 05:09:39 - Session started. USER_ID: 11, USER_TYPE: customer
+2025-05-22 05:09:39 - Parameters - user_id: 11, product_id: 623, quantity: 1, search_text: 
+2025-05-22 05:09:39 - Database connection established.
+2025-05-22 05:09:39 - Customer ID retrieved: 302
+2025-05-22 05:09:39 - Cart ID from DB: null
+2025-05-22 05:09:39 - New cart created with ID: 903
+2025-05-22 05:09:39 - Product price: 1, Discount: 0%, Discounted price: 1
+2025-05-22 05:09:39 - Total products in cart: 0
+2025-05-22 05:09:39 - Existing quantity of product 623 in cart: 0
+2025-05-22 05:09:39 - Inserted product 623 into cart with quantity 1
+2025-05-22 05:09:39 - Database connection closed.
+2025-05-22 06:35:31 - Session started. USER_ID: 11, USER_TYPE: customer
+2025-05-22 06:35:31 - Parameters - user_id: 11, product_id: 601, quantity: 1, search_text: 
+2025-05-22 06:35:31 - Database connection established.
+2025-05-22 06:35:31 - Customer ID retrieved: 302
+2025-05-22 06:35:31 - Cart ID from DB: null
+2025-05-22 06:35:31 - New cart created with ID: 904
+2025-05-22 06:35:31 - Product price: 10, Discount: 0%, Discounted price: 10
+2025-05-22 06:35:31 - Total products in cart: 0
+2025-05-22 06:35:31 - Existing quantity of product 601 in cart: 0
+2025-05-22 06:35:31 - Inserted product 601 into cart with quantity 1
+2025-05-22 06:35:31 - Database connection closed.
+2025-05-22 06:40:29 - Session started. USER_ID: 11, USER_TYPE: customer
+2025-05-22 06:40:29 - Parameters - user_id: 11, product_id: 609, quantity: 1, search_text: 
+2025-05-22 06:40:29 - Database connection established.
+2025-05-22 06:40:29 - Customer ID retrieved: 302
+2025-05-22 06:40:29 - Product price: 20, Discount: 0%, Discounted price: 20
+2025-05-22 06:40:29 - Total products in cart: 1
+2025-05-22 06:40:29 - Existing quantity of product 609 in cart: 0
+2025-05-22 06:40:29 - Inserted product 609 into cart with quantity 1
+2025-05-22 06:40:29 - Database connection closed.
+2025-05-22 06:43:45 - Session started. USER_ID: 11, USER_TYPE: customer
+2025-05-22 06:43:45 - Parameters - user_id: 11, product_id: 623, quantity: 1, search_text: p
+2025-05-22 06:43:45 - Database connection established.
+2025-05-22 06:43:45 - Customer ID retrieved: 302
+2025-05-22 06:43:45 - Product price: 1, Discount: 0%, Discounted price: 1
+2025-05-22 06:43:45 - Total products in cart: 2
+2025-05-22 06:43:45 - Existing quantity of product 623 in cart: 0
+2025-05-22 06:43:45 - Inserted product 623 into cart with quantity 1
+2025-05-22 06:43:45 - Database connection closed.
+2025-05-22 06:58:07 - Session started. USER_ID: 11, USER_TYPE: customer
+2025-05-22 06:58:07 - Parameters - user_id: 11, product_id: 624, quantity: 1, search_text: 
+2025-05-22 06:58:07 - Database connection established.
+2025-05-22 06:58:07 - Customer ID retrieved: 302
+2025-05-22 06:58:07 - Product price: 3, Discount: 0%, Discounted price: 3
+2025-05-22 06:58:07 - Total products in cart: 3
+2025-05-22 06:58:07 - Existing quantity of product 624 in cart: 0
+2025-05-22 06:58:07 - Inserted product 624 into cart with quantity 1
+2025-05-22 06:58:07 - Database connection closed.
+2025-05-22 06:58:11 - Session started. USER_ID: 11, USER_TYPE: customer
+2025-05-22 06:58:11 - Parameters - user_id: 11, product_id: 623, quantity: 1, search_text: 
+2025-05-22 06:58:11 - Database connection established.
+2025-05-22 06:58:11 - Customer ID retrieved: 302
+2025-05-22 06:58:11 - Product price: 1, Discount: 0%, Discounted price: 1
+2025-05-22 06:58:11 - Total products in cart: 4
+2025-05-22 06:58:11 - Existing quantity of product 623 in cart: 1
+2025-05-22 06:58:11 - Updated quantity of product 623 to 2
+2025-05-22 06:58:11 - Database connection closed.
+2025-05-22 06:59:59 - Session started. USER_ID: 11, USER_TYPE: customer
+2025-05-22 06:59:59 - Parameters - user_id: 11, product_id: 622, quantity: 1, search_text: 
+2025-05-22 06:59:59 - Database connection established.
+2025-05-22 06:59:59 - Customer ID retrieved: 302
+2025-05-22 06:59:59 - Product price: 14, Discount: 0%, Discounted price: 14
+2025-05-22 06:59:59 - Total products in cart: 0
+2025-05-22 06:59:59 - Existing quantity of product 622 in cart: 0
+2025-05-22 06:59:59 - Inserted product 622 into cart with quantity 1
+2025-05-22 06:59:59 - Database connection closed.
+2025-05-22 07:00:09 - Session started. USER_ID: 11, USER_TYPE: customer
+2025-05-22 07:00:09 - Parameters - user_id: 11, product_id: 623, quantity: 1, search_text: 
+2025-05-22 07:00:09 - Database connection established.
+2025-05-22 07:00:09 - Customer ID retrieved: 302
+2025-05-22 07:00:09 - Product price: 1, Discount: 0%, Discounted price: 1
+2025-05-22 07:00:09 - Total products in cart: 1
+2025-05-22 07:00:09 - Existing quantity of product 623 in cart: 0
+2025-05-22 07:00:09 - Inserted product 623 into cart with quantity 1
+2025-05-22 07:00:09 - Database connection closed.
+2025-05-22 07:00:34 - Session started. USER_ID: 11, USER_TYPE: customer
+2025-05-22 07:00:34 - Parameters - user_id: 11, product_id: 601, quantity: 1, search_text: 
+2025-05-22 07:00:34 - Database connection established.
+2025-05-22 07:00:34 - Customer ID retrieved: 302
+2025-05-22 07:00:34 - Cart ID from DB: 905
+2025-05-22 07:00:34 - Product price: 10, Discount: 0%, Discounted price: 10
+2025-05-22 07:00:34 - Total products in cart: 2
+2025-05-22 07:00:34 - Existing quantity of product 601 in cart: 0
+2025-05-22 07:00:34 - Inserted product 601 into cart with quantity 1
+2025-05-22 07:00:34 - Database connection closed.
+2025-05-22 07:03:28 - Session started. USER_ID: 12, USER_TYPE: customer
+2025-05-22 07:03:28 - Parameters - user_id: 12, product_id: 623, quantity: 1, search_text: 
+2025-05-22 07:03:28 - Database connection established.
+2025-05-22 07:03:28 - Customer ID retrieved: 303
+2025-05-22 07:03:28 - Cart ID from DB: null
+2025-05-22 07:03:28 - New cart created with ID: 906
+2025-05-22 07:03:28 - Product price: 1, Discount: 0%, Discounted price: 1
+2025-05-22 07:03:28 - Total products in cart: 0
+2025-05-22 07:03:28 - Existing quantity of product 623 in cart: 0
+2025-05-22 07:03:28 - Inserted product 623 into cart with quantity 1
+2025-05-22 07:03:28 - Database connection closed.
+2025-05-22 07:03:38 - Session started. USER_ID: 12, USER_TYPE: customer
+2025-05-22 07:03:38 - Parameters - user_id: 12, product_id: 623, quantity: 1, search_text: 
+2025-05-22 07:03:38 - Database connection established.
+2025-05-22 07:03:38 - Customer ID retrieved: 303
+2025-05-22 07:03:38 - Product price: 1, Discount: 0%, Discounted price: 1
+2025-05-22 07:03:38 - Total products in cart: 1
+2025-05-22 07:03:38 - Existing quantity of product 623 in cart: 1
+2025-05-22 07:03:38 - Updated quantity of product 623 to 2
+2025-05-22 07:03:38 - Database connection closed.
+2025-05-22 07:03:43 - Session started. USER_ID: 12, USER_TYPE: customer
+2025-05-22 07:03:43 - Parameters - user_id: 12, product_id: 604, quantity: 1, search_text: 
+2025-05-22 07:03:43 - Database connection established.
+2025-05-22 07:03:43 - Customer ID retrieved: 303
+2025-05-22 07:03:43 - Product price: 9, Discount: 0%, Discounted price: 9
+2025-05-22 07:03:43 - Total products in cart: 2
+2025-05-22 07:03:43 - Existing quantity of product 604 in cart: 0
+2025-05-22 07:03:43 - Inserted product 604 into cart with quantity 1
+2025-05-22 07:03:43 - Database connection closed.
+2025-05-22 07:03:50 - Session started. USER_ID: 12, USER_TYPE: customer
+2025-05-22 07:03:50 - Parameters - user_id: 12, product_id: 614, quantity: 1, search_text: 
+2025-05-22 07:03:50 - Database connection established.
+2025-05-22 07:03:50 - Customer ID retrieved: 303
+2025-05-22 07:03:50 - Product price: 100, Discount: 0%, Discounted price: 100
+2025-05-22 07:03:50 - Total products in cart: 3
+2025-05-22 07:03:50 - Existing quantity of product 614 in cart: 0
+2025-05-22 07:03:50 - Inserted product 614 into cart with quantity 1
+2025-05-22 07:03:50 - Database connection closed.
+2025-05-22 07:11:54 - Session started. USER_ID: 12, USER_TYPE: customer
+2025-05-22 07:11:54 - Parameters - user_id: 12, product_id: 622, quantity: 1, search_text: 
+2025-05-22 07:11:54 - Database connection established.
+2025-05-22 07:11:54 - Customer ID retrieved: 303
+2025-05-22 07:11:54 - Product price: 14, Discount: 0%, Discounted price: 14
+2025-05-22 07:11:54 - Total products in cart: 0
+2025-05-22 07:11:54 - Existing quantity of product 622 in cart: 0
+2025-05-22 07:11:54 - Inserted product 622 into cart with quantity 1
+2025-05-22 07:11:54 - Database connection closed.
+2025-05-22 07:12:09 - Session started. USER_ID: 12, USER_TYPE: customer
+2025-05-22 07:12:09 - Parameters - user_id: 12, product_id: 623, quantity: 1, search_text: 
+2025-05-22 07:12:09 - Database connection established.
+2025-05-22 07:12:09 - Customer ID retrieved: 303
+2025-05-22 07:12:09 - Product price: 1, Discount: 0%, Discounted price: 1
+2025-05-22 07:12:09 - Total products in cart: 1
+2025-05-22 07:12:09 - Existing quantity of product 623 in cart: 0
+2025-05-22 07:12:09 - Inserted product 623 into cart with quantity 1
+2025-05-22 07:12:09 - Database connection closed.
+2025-05-22 07:12:25 - Session started. USER_ID: 12, USER_TYPE: customer
+2025-05-22 07:12:25 - Parameters - user_id: 12, product_id: 619, quantity: 1, search_text: 
+2025-05-22 07:12:25 - Database connection established.
+2025-05-22 07:12:25 - Customer ID retrieved: 303
+2025-05-22 07:12:25 - Product price: 17, Discount: 0%, Discounted price: 17
+2025-05-22 07:12:25 - Total products in cart: 2
+2025-05-22 07:12:25 - Existing quantity of product 619 in cart: 0
+2025-05-22 07:12:25 - Inserted product 619 into cart with quantity 1
+2025-05-22 07:12:25 - Database connection closed.
+2025-05-22 07:23:56 - Session started. USER_ID: 13, USER_TYPE: customer
+2025-05-22 07:23:56 - Parameters - user_id: 13, product_id: 623, quantity: 1, search_text: 
+2025-05-22 07:23:56 - Database connection established.
+2025-05-22 07:23:56 - Customer ID retrieved: 304
+2025-05-22 07:23:56 - Cart ID from DB: null
+2025-05-22 07:23:56 - New cart created with ID: 908
+2025-05-22 07:23:56 - Product price: 1, Discount: 0%, Discounted price: 1
+2025-05-22 07:23:56 - Total products in cart: 0
+2025-05-22 07:23:56 - Existing quantity of product 623 in cart: 0
+2025-05-22 07:23:56 - Inserted product 623 into cart with quantity 1
+2025-05-22 07:23:56 - Database connection closed.

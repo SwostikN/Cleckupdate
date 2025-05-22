@@ -1,11 +1,13 @@
 <?php
 include("session/session.php");
-$total_price = $_GET["total_price"];
-$total_products = $_GET["nuber_product"];
-$order_id = $_GET["order_id"];
-$customer_id = $_GET["customerid"];
-$cart_id = $_GET["cartid"];
-$discount_amount = isset($_GET["discount"]) ? $_GET["discount"] : 0;
+
+// Validate and assign GET parameters
+$total_price = isset($_GET['total_price']) ? $_GET['total_price'] : 0;
+$total_products = isset($_GET['number_product']) ? $_GET['number_product'] : 0;
+$order_id = isset($_GET['order_id']) ? $_GET['order_id'] : null;
+$customer_id = isset($_GET['customerid']) ? $_GET['customerid'] : null;
+$cart_id = isset($_GET['cartid']) ? $_GET['cartid'] : null;
+$discount_amount = isset($_GET['discount']) ? $_GET['discount'] : 0;
 $selectedTime = isset($_POST['time']) ? $_POST['time'] : '';
 $selectedDay = isset($_POST['day']) ? $_POST['day'] : '';
 $selectedLocation = isset($_POST['location']) ? $_POST['location'] : '';
@@ -22,7 +24,6 @@ if (isset($_POST['submit'])) {
         $selectedDayName = $dayParts[0];
         $selectedDate = $dayParts[1];
     } else {
-        // Default values or error handling
         $selectedDayName = '';
         $selectedDate = '';
     }
@@ -40,7 +41,7 @@ if (isset($_POST['submit'])) {
     $slotRow = oci_fetch_assoc($checkSlotStmt);
 
     if ($slotRow) {
-        // Slot already allocated, store the SLOT_ID in a variable
+        // Slot already allocated, store the SLOT_ID
         $slot_id = $slotRow['SLOT_ID'];
 
         // Update the existing slot
@@ -92,7 +93,7 @@ if (isset($_POST['submit'])) {
     }
 
     if (isset($slot_id)) {
-        // Proceed with updating ORDER_PRODUCT with SLOT_ID
+        // Update ORDER_PRODUCT with SLOT_ID
         $updateSql = "UPDATE ORDER_PRODUCT SET SLOT_ID = :slot_id WHERE ORDER_PRODUCT_ID = :order_id";
         $updateStmt = oci_parse($conn, $updateSql);
 
@@ -155,95 +156,102 @@ $availability = getUpcomingAvailability();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pickup slot</title>
     <link rel="icon" href="logo_ico.png" type="image/png">
-    <link rel="stylesheet" href="without_session_navbar.css">
-    <link rel="stylesheet" href="footer.css">
-    <link rel="stylesheet" href="slot_time.css">
-
-    <!-- swiper css file web -->
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <!-- font link -->  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="cart.css">
+    <link rel="stylesheet" href="slot_time.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; }
+        .container_cat { display: flex; flex-direction: column; min-height: 100vh; }
+        .content { flex-grow: 1; display: flex; justify-content: center; align-items: center; }
+    </style>
 </head>
 <body>
-    <?php include("session_navbar.php"); ?>
-    <div class="container1">
-        <div class="left-container">
-            <h2 id="order-summary-title">Order Summary</h2>
-            <div class="order-details">
-                <div class="detail">
-                    <span class="detail-title">Total:</span>
-                    <span class="detail-value" id="total"><?php echo $total_price; ?></span>
+    <?php include("navbar.php"); ?>
+    <div class="container_cat">
+        <div class="content">
+            <div class="container1">
+                <div class="left-container">
+                    <h2 id="order-summary-title">Order Summary</h2>
+                    <div class="order-details">
+                        <div class="detail">
+                            <span class="detail-title">Total:</span>
+                            <span class="detail-value" id="total"><?php echo htmlspecialchars($total_price); ?></span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-title">Net Total:</span>
+                            <span class="detail-value" id="net-total"><?php echo htmlspecialchars($total_price); ?></span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-title">Discount Amount:</span>
+                            <span class="detail-value" id="discount"><?php echo htmlspecialchars($discount_amount); ?></span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-title">Number of Items:</span>
+                            <span class="detail-value" id="item-count"><?php echo htmlspecialchars($total_products); ?></span>
+                        </div>
+                    </div>
                 </div>
-                <div class="detail">
-                    <span class="detail-title">Net Total:</span>
-                    <span class="detail-value" id="net-total"><?php echo $total_price; ?></span>
-                </div>
-                <div class="detail">
-                    <span class="detail-title">Discount Amount:</span>
-                    <span class="detail-value" id="discount"><?php echo $discount_amount; ?></span>
-                </div>
-                <div class="detail">
-                    <span class="detail-title">Number of Items:</span>
-                    <span class="detail-value" id="item-count"><?php echo $total_products; ?></span>
+                
+                <div class="right-container">
+                    <form class="top-form" id="pickup-form" name="pickup-form" method="POST" action="">
+                        <h3>Select Pick Up Time and Date:</h3>
+                        <label for="day">Pick a Day:</label>
+                        <select id="day" name="day" onchange="updateTimeSlots()">
+                            <?php if (!empty($availability)) : ?>
+                                <?php foreach ($availability as $index => $availableItem) : ?>
+                                    <option value="<?php echo $availableItem['day_name'] . ', ' . $availableItem['date']; ?>"
+                                        <?php echo ($selectedDay == $availableItem['day_name'] . ', ' . $availableItem['date'] || ($selectedDay === '' && $index === 0)) ? 'selected' : ''; ?>>
+                                        <?php echo $availableItem['day_name'] . ', ' . $availableItem['date']; ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
+
+                        <div id="time-slots">
+                            <?php
+                            $firstAvailableDay = $selectedDay ? $selectedDay : $availability[0]['day_name'] . ', ' . $availability[0]['date'];
+                            foreach ($availability as $availableItem) {
+                                if ($availableItem['day_name'] . ', ' . $availableItem['date'] === $firstAvailableDay) {
+                                    foreach ($availableItem['time_slot'] as $slot) {
+                                        $slotLabel = $slot;
+                                        $radioId = 'time-' . str_replace([':', '-'], '', $slotLabel);
+                                        $checked = ($slotLabel == $selectedTime) ? 'checked' : '';
+                                        echo "<label for='$radioId'><input type='radio' id='$radioId' name='time' value='$slotLabel' $checked required>$slotLabel</label><br>";
+                                    }
+                                    break;
+                                }
+                            }
+                            ?>
+                        </div>
+                        <br>
+                        <label for="location">Pick a Location:</label>
+                        <select id="location" name="location">
+                            <option value="Location 1" <?php if(isset($selectedLocation) && $selectedLocation == "Location 1") { echo "selected"; } ?>>Location 1</option>
+                            <option value="Location 2" <?php if(isset($selectedLocation) && $selectedLocation == "Location 2") { echo "selected"; } ?>>Location 2</option>
+                            <option value="Location 3" <?php if(isset($selectedLocation) && $selectedLocation == "Location 3") { echo "selected"; } ?>>Location 3</option>
+                        </select>
+                        <button type="submit" name="submit">Submit</button>
+                    </form>
+
+                    <?php if(isset($_POST['submit'])): ?>
+                        <form class="bottom-form" id="payment-form">
+                            <h3>Select Payment Option:</h3>
+                            <input type='radio' id='paypal' name='payment' value='PayPal' required checked>
+                            <label for='paypal'>PayPal</label><br>
+                            <button type='button' id='paypal-button'>Proceed to PayPal</button>
+                        </form>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
-        
-        <div class="right-container">
-            <form class="top-form" id="pickup-form" name="pickup-form" method="POST" action="">
-                <h3>Select Pick Up Time and Date:</h3>
-                <label for="day">Pick a Day:</label>
-                <select id="day" name="day" onchange="updateTimeSlots()">
-                    <?php if (!empty($availability)) : ?>
-                        <?php foreach ($availability as $index => $availableItem) : ?>
-                            <option value="<?php echo $availableItem['day_name'] . ', ' . $availableItem['date']; ?>"
-                                <?php echo ($selectedDay == $availableItem['day_name'] . ', ' . $availableItem['date'] || ($selectedDay === '' && $index === 0)) ? 'selected' : ''; ?>>
-                                <?php echo $availableItem['day_name'] . ', ' . $availableItem['date']; ?>
-                            </option>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </select>
-
-                <div id="time-slots">
-                    <?php
-                    $firstAvailableDay = $selectedDay ? $selectedDay : $availability[0]['day_name'] . ', ' . $availability[0]['date'];
-                    foreach ($availability as $availableItem) {
-                        if ($availableItem['day_name'] . ', ' . $availableItem['date'] === $firstAvailableDay) {
-                            foreach ($availableItem['time_slot'] as $slot) {
-                                $slotLabel = $slot;
-                                $radioId = 'time-' . str_replace([':', '-'], '', $slotLabel);
-                                $checked = ($slotLabel == $selectedTime) ? 'checked' : '';
-                                echo "<label for='$radioId'><input type='radio' id='$radioId' name='time' value='$slotLabel' $checked required>$slotLabel</label><br>";
-                            }
-                            break;
-                        }
-                    }
-                    ?>
-                </div>
-                <br>
-                <label for="location">Pick a Location:</label>
-                <select id="location" name="location">
-                    <option value="Location 1" <?php if(isset($selectedLocation) && $selectedLocation == "Location 1") { echo "selected"; } ?>>Location 1</option>
-                    <option value="Location 2" <?php if(isset($selectedLocation) && $selectedLocation == "Location 2") { echo "selected"; } ?>>Location 2</option>
-                    <option value="Location 3" <?php if(isset($selectedLocation) && $selectedLocation == "Location 3") { echo "selected"; } ?>>Location 3</option>
-                </select>
-                <button type="submit" name="submit">Submit</button>
-            </form>
-
-            <?php if(isset($_POST['submit'])): ?>
-                <form class="bottom-form" id="payment-form">
-                    <h3>Select Payment Option:</h3>
-                    <input type='radio' id='paypal' name='payment' value='PayPal' required checked>
-                    <label for='paypal'>PayPal</label><br>
-                    <button type='button' id='paypal-button'>Proceed to PayPal</button>
-                </form>
-            <?php endif; ?>
-        </div>
+        <?php include("footer.php"); ?>
     </div>
-    <?php include("footer.php"); ?>
+    <script src="js/script.js"></script>
     <script src="slot_time.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="without_session_navbar.js"></script>
     <script>
         function updateTimeSlots() {
             var daySelect = document.getElementById('day');
@@ -289,10 +297,10 @@ $availability = getUpcomingAvailability();
                     var selectedPaymentMethod = document.querySelector('input[name="payment"]:checked');
                     if (selectedPaymentMethod) {
                         var paymentMethod = selectedPaymentMethod.value;
-                        var totalPrice = "<?php echo $total_price; ?>";
-                        var totalProducts = "<?php echo $total_products; ?>";
-                        var orderId = "<?php echo $order_id; ?>";
-                        var customerId = "<?php echo $customer_id; ?>";
+                        var totalPrice = "<?php echo htmlspecialchars($total_price); ?>";
+                        var totalProducts = "<?php echo htmlspecialchars($total_products); ?>";
+                        var orderId = "<?php echo htmlspecialchars($order_id); ?>";
+                        var customerId = "<?php echo htmlspecialchars($customer_id); ?>";
                         window.location.href = 'payment.php?method=' + encodeURIComponent(paymentMethod) + 
                             '&total_price=' + encodeURIComponent(totalPrice) + 
                             '&total_products=' + encodeURIComponent(totalProducts) +

@@ -488,7 +488,6 @@ try {
                 $discount_percent = $product['DISCOUNT_PERCENT'];
                 $discount_amount = ($product['PRODUCT_PRICE'] * $discount_percent) / 100;
                 $discount_price = number_format($product['PRODUCT_PRICE'] - $discount_amount, 2);
-                // Hardcoding "Watermelon" for the first product as an example
                 $product_name = ($index === $selected_indices[0]) ? "Watermelon" : $product['PRODUCT_NAME'];
             ?>
                 <div class="column is-one-fifth">
@@ -526,11 +525,8 @@ try {
                                 </span>
                             </p>
                             <div class="product-actions">
-                                <a href="checkout.php?productid=<?php echo $product['PRODUCT_ID']; ?>&userid=<?php echo $user_id; ?>&searchtext=<?php echo $searchText; ?>" class="button is-success is-small">
-                                    <span>Buy Now</span>
-                                </a>
-                                <button class="icon-btn cart-icon" data-product="<?php echo $product['PRODUCT_ID']; ?>" data-user="<?php echo $user_id; ?>" data-search="<?php echo $searchText; ?>">
-                                    <i class="fas fa-shopping-cart"></i>
+                                <button class="button is-success is-small add-to-cart" data-product="<?php echo $product['PRODUCT_ID']; ?>" data-user="<?php echo $user_id; ?>" data-search="<?php echo $searchText; ?>">
+                                    <span>Add to Cart</span>
                                 </button>
                                 <button class="icon-btn heart-icon" data-product="<?php echo $product['PRODUCT_ID']; ?>" data-user="<?php echo $user_id; ?>" data-search="<?php echo $searchText; ?>">
                                     <i class="fas fa-heart"></i>
@@ -569,7 +565,6 @@ try {
                 $discount_percent = $product['DISCOUNT_PERCENT'];
                 $discount_amount = ($product['PRODUCT_PRICE'] * $discount_percent) / 100;
                 $discount_price = number_format($product['PRODUCT_PRICE'] - $discount_amount, 2);
-                // Hardcoding "Watermelon" for the first product as an example
                 $product_name = ($index === $build_basket_indices[0]) ? "Watermelon" : $product['PRODUCT_NAME'];
             ?>
                 <div class="column is-one-fifth">
@@ -596,14 +591,9 @@ try {
                                 </span>
                             </p>
                             <div class="product-actions">
-                                <a href="checkout.php?productid=<?php echo $product['PRODUCT_ID']; ?>&userid=<?php echo $user_id; ?>&searchtext=<?php echo $searchText; ?>" class="button is-success is-small">
-                                    <span>Buy Now</span>
-                                </a>
-                                <button class="icon-btn cart-icon" data-product="<?php echo $product['PRODUCT_ID']; ?>" data-user="<?php echo $user_id; ?>" data-search="<?php echo $searchText; ?>">
-                                    <i class="fas fa-shopping-cart"></i>
+                                <button class="button is-success is-small add-to-cart" data-product="<?php echo $product['PRODUCT_ID']; ?>" data-user="<?php echo $user_id; ?>" data-search="<?php echo $searchText; ?>">
+                                    <span>Add to Cart</span>
                                 </button>
-                                <div id="wishlist-message" style="color: green; margin-top: 10px;"></div>
-
                                 <button class="icon-btn heart-icon" data-product="<?php echo $product['PRODUCT_ID']; ?>" data-user="<?php echo $user_id; ?>" data-search="<?php echo $searchText; ?>">
                                     <i class="fas fa-heart"></i>
                                 </button>
@@ -693,9 +683,9 @@ try {
             });
         });
 
-        // Cart Icon Action
-        document.querySelectorAll('.cart-icon').forEach(icon => {
-            icon.addEventListener('click', function(e) {
+        // Add to Cart Action
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function(e) {
                 e.preventDefault();
                 const productId = this.getAttribute('data-product');
                 const userId = this.getAttribute('data-user');
@@ -705,7 +695,6 @@ try {
                     .then(data => {
                         if (data.status === 'success') {
                             alert('Product added to cart!');
-                            // Optionally redirect to cart page
                             if (confirm('Do you want to view your cart?')) {
                                 window.location.href = 'cart.php';
                             }

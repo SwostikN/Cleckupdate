@@ -376,4 +376,290 @@ Check_out: Session ID: sh9qe8g0cqr8uvis5iaf8a5lh5, USER_ID: 12, USER_TYPE: custo
                 SET product_quantity = product_quantity - :quantity 
                 WHERE product_id = :product_id AND product_quantity >= :quantityExecuting Query: DELETE FROM CART_ITEM WHERE cart_id = :cart_id AND product_id = :product_idExecuting Query: UPDATE PRODUCT 
             SET stock_available = 'no', is_disabled = 0 
+            WHERE product_quantity < 1Cart: Session ID: 3p6d21br3jqh3oaf5roikorg8k, USER_ID: 11, USER_TYPE: customerCart: After session.php, USER_ID: 11, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: 3p6d21br3jqh3oaf5roikorg8k, USER_ID: 11, USER_TYPE: customerCart: After session.php, USER_ID: 11, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: rqhrraa00tcokk4589qtnu1n7m, USER_ID: 10, USER_TYPE: customerCart: After session.php, USER_ID: 10, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Cart Creation Error: ORA-00001: unique constraint (SAMPURNA.PK_CART_ID) violated for SQL: INSERT INTO CART (customer_id, order_product_id) VALUES (:customer_id, ORDER_PRODUCT_SEQ.NEXTVAL) RETURNING cart_id INTO :cart_idCart: Session ID: rqhrraa00tcokk4589qtnu1n7m, USER_ID: 10, USER_TYPE: customerCart: After session.php, USER_ID: 10, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Cart: Created new cart with ID: 901Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: rqhrraa00tcokk4589qtnu1n7m, USER_ID: 10, USER_TYPE: customerCart: After session.php, USER_ID: 10, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: rqhrraa00tcokk4589qtnu1n7m, USER_ID: 10, USER_TYPE: customerCart: After session.php, USER_ID: 10, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: rqhrraa00tcokk4589qtnu1n7m, USER_ID: 10, USER_TYPE: customerCart: After session.php, USER_ID: 10, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCheckout: Session ID: rqhrraa00tcokk4589qtnu1n7m, USER_ID: 10Executing Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT product_id, no_of_products, product_price FROM CART_ITEM 
+            WHERE cart_id = :cart_id AND product_id IN (623,614)Executing Query: SELECT order_product_id FROM CART WHERE cart_id = :cart_idExecuting Query: SELECT DISCOUNT_PERCENT FROM DISCOUNT WHERE PRODUCT_ID = :product_idExecuting Query: INSERT INTO ORDER_DETAILS (order_product_id, product_id, product_qty, product_price, trader_user_id) 
+                VALUES (:order_product_id, :product_id, :product_qty, :product_price, 
+                        (SELECT user_id FROM PRODUCT WHERE product_id = :product_id))Executing Query: UPDATE PRODUCT 
+                SET product_quantity = product_quantity - :quantity 
+                WHERE product_id = :product_id AND product_quantity >= :quantityExecuting Query: DELETE FROM CART_ITEM WHERE cart_id = :cart_id AND product_id = :product_idExecuting Query: SELECT DISCOUNT_PERCENT FROM DISCOUNT WHERE PRODUCT_ID = :product_idExecuting Query: INSERT INTO ORDER_DETAILS (order_product_id, product_id, product_qty, product_price, trader_user_id) 
+                VALUES (:order_product_id, :product_id, :product_qty, :product_price, 
+                        (SELECT user_id FROM PRODUCT WHERE product_id = :product_id))Executing Query: UPDATE PRODUCT 
+                SET product_quantity = product_quantity - :quantity 
+                WHERE product_id = :product_id AND product_quantity >= :quantityExecuting Query: DELETE FROM CART_ITEM WHERE cart_id = :cart_id AND product_id = :product_idExecuting Query: UPDATE PRODUCT 
+            SET stock_available = 'no', is_disabled = 0 
+            WHERE product_quantity < 1Cart: Session ID: ifcpq4jd21d6dbdj2da7hlhvs3, USER_ID: 10, USER_TYPE: customerCart: After session.php, USER_ID: 10, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Cart: Created new cart with ID: 902Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: ifcpq4jd21d6dbdj2da7hlhvs3, USER_ID: 10, USER_TYPE: customerCart: After session.php, USER_ID: 10, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: ifcpq4jd21d6dbdj2da7hlhvs3, USER_ID: 10, USER_TYPE: customerCart: After session.php, USER_ID: 10, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: lnfkgbmulo6aprevov4t2d4ita, USER_ID: 10, USER_TYPE: customerCart: After session.php, USER_ID: 10, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: lnfkgbmulo6aprevov4t2d4ita, USER_ID: 10, USER_TYPE: customerCart: After session.php, USER_ID: 10, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: rtehe53v7gkd9v34dpo50bklrp, USER_ID: 11, USER_TYPE: customerCart: After session.php, USER_ID: 11, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCheckout: Session ID: rtehe53v7gkd9v34dpo50bklrp, USER_ID: 11Executing Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT product_id, no_of_products, product_price FROM CART_ITEM 
+            WHERE cart_id = :cart_id AND product_id IN (623)Executing Query: SELECT order_product_id FROM CART WHERE cart_id = :cart_idExecuting Query: SELECT DISCOUNT_PERCENT FROM DISCOUNT WHERE PRODUCT_ID = :product_idExecuting Query: INSERT INTO ORDER_DETAILS (order_product_id, product_id, product_qty, product_price, trader_user_id) 
+                VALUES (:order_product_id, :product_id, :product_qty, :product_price, 
+                        (SELECT user_id FROM PRODUCT WHERE product_id = :product_id))Executing Query: UPDATE PRODUCT 
+                SET product_quantity = product_quantity - :quantity 
+                WHERE product_id = :product_id AND product_quantity >= :quantityExecuting Query: DELETE FROM CART_ITEM WHERE cart_id = :cart_id AND product_id = :product_idExecuting Query: UPDATE PRODUCT 
+            SET stock_available = 'no', is_disabled = 0 
+            WHERE product_quantity < 1Checkout: Session ID: d43stoukhdtli73jcbcbh9vln9, USER_ID: 11Checkout Error: Invalid input parametersCart: Session ID: d43stoukhdtli73jcbcbh9vln9, USER_ID: 11, USER_TYPE: customerCart: After session.php, USER_ID: 11, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: d43stoukhdtli73jcbcbh9vln9, USER_ID: 11, USER_TYPE: customerCart: After session.php, USER_ID: 11, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: d43stoukhdtli73jcbcbh9vln9, USER_ID: 11, USER_TYPE: customerCart: After session.php, USER_ID: 11, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: d43stoukhdtli73jcbcbh9vln9, USER_ID: 11, USER_TYPE: customerCart: After session.php, USER_ID: 11, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: d43stoukhdtli73jcbcbh9vln9, USER_ID: 11, USER_TYPE: customerCart: After session.php, USER_ID: 11, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: d43stoukhdtli73jcbcbh9vln9, USER_ID: 11, USER_TYPE: customerCart: After session.php, USER_ID: 11, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: d43stoukhdtli73jcbcbh9vln9, USER_ID: 11, USER_TYPE: customerCart: After session.php, USER_ID: 11, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCheckout: Session ID: d43stoukhdtli73jcbcbh9vln9, USER_ID: 11Executing Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT product_id, no_of_products, product_price FROM CART_ITEM 
+            WHERE cart_id = :cart_id AND product_id IN (623,624,601,609)Executing Query: SELECT order_product_id FROM CART WHERE cart_id = :cart_idExecuting Query: SELECT DISCOUNT_PERCENT FROM DISCOUNT WHERE PRODUCT_ID = :product_idExecuting Query: INSERT INTO ORDER_DETAILS (order_product_id, product_id, product_qty, product_price, trader_user_id) 
+                VALUES (:order_product_id, :product_id, :product_qty, :product_price, 
+                        (SELECT user_id FROM PRODUCT WHERE product_id = :product_id))Executing Query: UPDATE PRODUCT 
+                SET product_quantity = product_quantity - :quantity 
+                WHERE product_id = :product_id AND product_quantity >= :quantityExecuting Query: DELETE FROM CART_ITEM WHERE cart_id = :cart_id AND product_id = :product_idExecuting Query: SELECT DISCOUNT_PERCENT FROM DISCOUNT WHERE PRODUCT_ID = :product_idExecuting Query: INSERT INTO ORDER_DETAILS (order_product_id, product_id, product_qty, product_price, trader_user_id) 
+                VALUES (:order_product_id, :product_id, :product_qty, :product_price, 
+                        (SELECT user_id FROM PRODUCT WHERE product_id = :product_id))Executing Query: UPDATE PRODUCT 
+                SET product_quantity = product_quantity - :quantity 
+                WHERE product_id = :product_id AND product_quantity >= :quantityExecuting Query: DELETE FROM CART_ITEM WHERE cart_id = :cart_id AND product_id = :product_idExecuting Query: SELECT DISCOUNT_PERCENT FROM DISCOUNT WHERE PRODUCT_ID = :product_idExecuting Query: INSERT INTO ORDER_DETAILS (order_product_id, product_id, product_qty, product_price, trader_user_id) 
+                VALUES (:order_product_id, :product_id, :product_qty, :product_price, 
+                        (SELECT user_id FROM PRODUCT WHERE product_id = :product_id))Executing Query: UPDATE PRODUCT 
+                SET product_quantity = product_quantity - :quantity 
+                WHERE product_id = :product_id AND product_quantity >= :quantityExecuting Query: DELETE FROM CART_ITEM WHERE cart_id = :cart_id AND product_id = :product_idExecuting Query: SELECT DISCOUNT_PERCENT FROM DISCOUNT WHERE PRODUCT_ID = :product_idExecuting Query: INSERT INTO ORDER_DETAILS (order_product_id, product_id, product_qty, product_price, trader_user_id) 
+                VALUES (:order_product_id, :product_id, :product_qty, :product_price, 
+                        (SELECT user_id FROM PRODUCT WHERE product_id = :product_id))Executing Query: UPDATE PRODUCT 
+                SET product_quantity = product_quantity - :quantity 
+                WHERE product_id = :product_id AND product_quantity >= :quantityExecuting Query: DELETE FROM CART_ITEM WHERE cart_id = :cart_id AND product_id = :product_idExecuting Query: UPDATE PRODUCT 
+            SET stock_available = 'no', is_disabled = 0 
+            WHERE product_quantity < 1Cart: Session ID: d43stoukhdtli73jcbcbh9vln9, USER_ID: 11, USER_TYPE: customerCart: After session.php, USER_ID: 11, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Cart: Created new cart with ID: 905Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: d43stoukhdtli73jcbcbh9vln9, USER_ID: 11, USER_TYPE: customerCart: After session.php, USER_ID: 11, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: d43stoukhdtli73jcbcbh9vln9, USER_ID: 11, USER_TYPE: customerCart: After session.php, USER_ID: 11, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: d43stoukhdtli73jcbcbh9vln9, USER_ID: 11, USER_TYPE: customerCart: After session.php, USER_ID: 11, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: hfv6k8k8pfh65lapq2qdotdag6, USER_ID: 11, USER_TYPE: customerCart: After session.php, USER_ID: 11, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCheckout: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12Executing Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT product_id, no_of_products, product_price FROM CART_ITEM 
+            WHERE cart_id = :cart_id AND product_id IN (623,614)Executing Query: SELECT order_product_id FROM CART WHERE cart_id = :cart_idExecuting Query: SELECT DISCOUNT_PERCENT FROM DISCOUNT WHERE PRODUCT_ID = :product_idExecuting Query: INSERT INTO ORDER_DETAILS (order_product_id, product_id, product_qty, product_price, trader_user_id) 
+                VALUES (:order_product_id, :product_id, :product_qty, :product_price, 
+                        (SELECT user_id FROM PRODUCT WHERE product_id = :product_id))Executing Query: UPDATE PRODUCT 
+                SET product_quantity = product_quantity - :quantity 
+                WHERE product_id = :product_id AND product_quantity >= :quantityExecuting Query: DELETE FROM CART_ITEM WHERE cart_id = :cart_id AND product_id = :product_idExecuting Query: SELECT DISCOUNT_PERCENT FROM DISCOUNT WHERE PRODUCT_ID = :product_idExecuting Query: INSERT INTO ORDER_DETAILS (order_product_id, product_id, product_qty, product_price, trader_user_id) 
+                VALUES (:order_product_id, :product_id, :product_qty, :product_price, 
+                        (SELECT user_id FROM PRODUCT WHERE product_id = :product_id))Executing Query: UPDATE PRODUCT 
+                SET product_quantity = product_quantity - :quantity 
+                WHERE product_id = :product_id AND product_quantity >= :quantityExecuting Query: DELETE FROM CART_ITEM WHERE cart_id = :cart_id AND product_id = :product_idExecuting Query: UPDATE PRODUCT 
+            SET stock_available = 'no', is_disabled = 0 
+            WHERE product_quantity < 1Cart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Cart: Created new cart with ID: 907Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCheckout: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12Executing Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Checkout Error: Invalid or already processed cartCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCheckout: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12Executing Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Checkout Error: Invalid or already processed cartCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCheckout: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12Checkout Error: Invalid input parametersCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCheckout: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12Checkout Error: Invalid input parametersCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCheckout: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12Executing Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Checkout Error: Invalid or already processed cartCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCheckout: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12Executing Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Checkout Error: Invalid or already processed cartCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCart: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12, USER_TYPE: customerCart: After session.php, USER_ID: 12, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCheckout: Session ID: 9p5rucpp7ig5el4stq20jh9cft, USER_ID: 12Executing Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Checkout Error: Invalid or already processed cartCart: Session ID: f6ohmc12drnp4kr366jli6p5dd, USER_ID: 13, USER_TYPE: customerCart: After session.php, USER_ID: 13, USER_TYPE: customerExecuting Query: SELECT customer_id FROM CUSTOMER WHERE user_id = :user_idExecuting Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT ci.cart_id, ci.product_id, ci.no_of_products, ci.product_price, 
+                   p.product_name, p.product_picture, p.product_price AS original_price
+            FROM CART_ITEM ci
+            JOIN PRODUCT p ON ci.product_id = p.product_id
+            WHERE ci.cart_id = :cart_idCheckout: Session ID: f6ohmc12drnp4kr366jli6p5dd, USER_ID: 13Executing Query: SELECT cart_id FROM CART WHERE cart_id = :cart_id AND customer_id = :customer_id 
+            AND NOT EXISTS (SELECT 1 FROM ORDER_PRODUCT op WHERE op.order_product_id = CART.order_product_id)Executing Query: SELECT product_id, no_of_products, product_price FROM CART_ITEM 
+            WHERE cart_id = :cart_id AND product_id IN (623)Executing Query: SELECT order_product_id FROM CART WHERE cart_id = :cart_idExecuting Query: SELECT DISCOUNT_PERCENT FROM DISCOUNT WHERE PRODUCT_ID = :product_idExecuting Query: INSERT INTO ORDER_DETAILS (order_product_id, product_id, product_qty, product_price, trader_user_id) 
+                VALUES (:order_product_id, :product_id, :product_qty, :product_price, 
+                        (SELECT user_id FROM PRODUCT WHERE product_id = :product_id))Executing Query: UPDATE PRODUCT 
+                SET product_quantity = product_quantity - :quantity 
+                WHERE product_id = :product_id AND product_quantity >= :quantityExecuting Query: DELETE FROM CART_ITEM WHERE cart_id = :cart_id AND product_id = :product_idExecuting Query: UPDATE PRODUCT 
+            SET stock_available = 'no', is_disabled = 0 
             WHERE product_quantity < 1
