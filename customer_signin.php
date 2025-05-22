@@ -48,7 +48,7 @@ if (isset($_POST["sign_in"])) {
                 HU.USER_PASSWORD, 
                 HU.USER_PROFILE_PICTURE, 
                 HU.USER_TYPE, 
-                T.VERIFICATION_STATUS
+                T.VERFIED_ADMIN
             FROM 
                 CLECK_USER HU
             JOIN 
@@ -87,7 +87,7 @@ if (isset($_POST["sign_in"])) {
                     $_SESSION["accesstime"] = date("ymdhis");
                     $_SESSION["role"] = $user_role;
 
-                    if ($row["VERIFICATION_STATUS"] != 1) {
+                    if ($row["VERFIED_ADMIN"] != 1) {
                         $account_error = "Please verify your trader account!";
                     } else {
                         if (isset($_POST["remember"])) {

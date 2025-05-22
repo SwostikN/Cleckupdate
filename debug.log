@@ -502,4 +502,4 @@ Check_out: Session ID: sh9qe8g0cqr8uvis5iaf8a5lh5, USER_ID: 12, USER_TYPE: custo
                    p.product_name, p.product_picture, p.product_price AS original_price
             FROM CART_ITEM ci
             JOIN PRODUCT p ON ci.product_id = p.product_id
-            WHERE ci.cart_id = :cart_id
+            WHERE ci.cart_id = :cart_idSignin: Session started, ID: l32d8877pc4ickq9ibei32b4aaSignin: Session started, ID: 2jlc6ssqe43bkfc29l8v1iou3sSignin: Session started, ID: tqgj0l6mhuhqkhvh1je2mt7scbSignin: Session started, ID: lvo17gif2b3i0l9h8ch8t2m5smSignin: Session started, ID: lchg6h3v3od16023e7ngqm8ungSignin: Session started, ID: 8ut8is0afonhfkicb9bp064hhtSignin: Session started, ID: n1gv8m5s4aot74efgdkt5f50gbSignin: Session started, ID: 9csneb7gibkg6b33j9olh6njs6Signin: Session started, ID: fou9tgf4pllhk847k658ilb05fSignin: Session started, ID: s8hl0ubbnigh2u92sjli96lkctSignin: Session started, ID: na8ctuh4c3j47u1rrjdt4ft6bsSignin: Session started, ID: kj5p7vvnlpipqvfiqbspltn76aSignin: Session started, ID: 8pcsequcsf9a5vig5nr10mt67q
