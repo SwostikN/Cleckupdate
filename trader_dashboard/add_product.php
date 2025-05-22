@@ -24,6 +24,16 @@ while ($row = oci_fetch_assoc($stmt)) {
     $productCategories[] = $row;
 }
 
+function sanitizeInput($input) {
+    // Remove extra spaces
+    $input = trim($input);
+    // Remove HTML special characters
+    $input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+    // Optionally, remove any non-numeric characters (if you're expecting numbers)
+    $input = preg_replace("/[^0-9.]/", "", $input); // allows digits and decimal points
+    return $input;
+}
+
 // Free statement resources
 oci_free_statement($stmt);
 
@@ -34,10 +44,10 @@ if(isset($_POST["saveChangesBtn"])){
     $product_name = isset($_POST["productName"]) ? sanitizeShopName($_POST["productName"]) : "";
 
     // Check if $_POST["company-registration-no"] Exists before sanitizing 
-    $product_price = isset($_POST["productPrice"]) ? sanitizeCompanyRegNo($_POST["productPrice"]) : "";
+    $product_price = isset($_POST["productPrice"]) ? sanitizeInput($_POST["productPrice"]) : "";
 
     // Check if $_POST["company-registration-no"] Exists before sanitizing 
-    $product_quantity = isset($_POST["stockQuantity"]) ? sanitizeCompanyRegNo($_POST["stockQuantity"]) : "";
+    $product_quantity = isset($_POST["stockQuantity"]) ? sanitizeInput($_POST["stockQuantity"]) : "";
 
     // Check if $_POST["shop-description"] Exists before sanitizing 
     $product_description = isset($_POST["productDescription"]) ? sanitizeShopDescription($_POST["productDescription"]) : "";
@@ -113,43 +123,44 @@ if(isset($_POST["saveChangesBtn"])){
         $update_date = date('Y-m-d'); // Format: YYYY-MM-DD
         $isdisabled = 0;
         $admin_verify = 0;
-        $user_id = $_SESSION["userid"];
+        $user_id = $_SESSION["USER_ID"];
         $stockAvailable = "yes";
         if ($input_validation_passed) {
             include("../connection/connection.php");
             // Prepare the SQL statement for inserting data into the product table
             $sql_insert_product = "
-            INSERT INTO product (
-                PRODUCT_NAME, 
-                PRODUCT_DESCRIPTION, 
-                PRODUCT_PRICE, 
-                PRODUCT_QUANTITY, 
-                STOCK_AVAILABLE, 
-                IS_DISABLED,  
-                ALLERGY_INFORMATION, 
-                PRODUCT_PICTURE, 
-                PRODUCT_ADDED_DATE, 
-                PRODUCT_UPDATE_DATE, 
-                CATEGORY_ID, 
-                USER_ID,
-                ADMIN_VERIFIED
-            ) 
-            VALUES (
-                :productName, 
-                :productDescription, 
-                :productPrice, 
-                :productQuantity, 
-                :stockAvailable, 
-                :isDisabled, 
-                :allergyInformation, 
-                :productPicture, 
-                TO_DATE(:productAddedDate, 'YYYY-MM-DD'), 
-                TO_DATE(:productUpdateDate, 'YYYY-MM-DD'), 
-                :categoryID, 
-                :userID,
-                :ad_var
-            )";
-
+    INSERT INTO product (
+        PRODUCT_ID,
+        PRODUCT_NAME, 
+        PRODUCT_DESCRIPTION, 
+        PRODUCT_PRICE, 
+        PRODUCT_QUANTITY, 
+        STOCK_AVAILABLE, 
+        IS_DISABLED,  
+        ALLERGY_INFORMATION, 
+        PRODUCT_PICTURE, 
+        PRODUCT_ADDED_DATE, 
+        PRODUCT_UPDATE_DATE, 
+        CATEGORY_ID, 
+        USER_ID,
+        ADMIN_VERIFIED
+    ) 
+    VALUES (
+        SEQ_PRODUCT.NEXTVAL,
+        :productName, 
+        :productDescription, 
+        :productPrice, 
+        :productQuantity, 
+        :stockAvailable, 
+        :isDisabled, 
+        :allergyInformation, 
+        :productPicture, 
+        TO_DATE(:productAddedDate, 'YYYY-MM-DD'), 
+        TO_DATE(:productUpdateDate, 'YYYY-MM-DD'), 
+        :categoryID, 
+        :userID,
+        :ad_var
+    )";
             // Prepare the OCI statement
             $stmt_insert_product = oci_parse($conn, $sql_insert_product);
 

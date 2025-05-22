@@ -48,7 +48,7 @@ if (isset($_POST["sign_in"])) {
                 HU.USER_PASSWORD, 
                 HU.USER_PROFILE_PICTURE, 
                 HU.USER_TYPE, 
-                T.VERFIED_ADMIN
+                T.VERIFICATION_STATUS
             FROM 
                 CLECK_USER HU
             JOIN 
@@ -73,89 +73,69 @@ if (isset($_POST["sign_in"])) {
         oci_bind_by_name($stmt, ':email', $email);
         oci_execute($stmt);
 
-    if ($row = oci_fetch_assoc($stmt)) {
-        error_log("Stored password for email $email: " . $row["USER_PASSWORD"]);
-        if (password_verify($password, $row["USER_PASSWORD"])) {
-            if ($user_role === 'trader') {
-                if ($row["VERFIED_ADMIN"] != 1) {
-                    $account_error = "Please verify your trader account!";
-                } else {
-                    // Only set session variables if verified
-                    $_SESSION["USER_ID"] = $row["USER_ID"];
-                    $_SESSION["USER_TYPE"] = $row["USER_TYPE"];
-                    $_SESSION["FIRST_NAME"] = $row["FIRST_NAME"];
-                    $_SESSION["LAST_NAME"] = $row["LAST_NAME"];
-                    $_SESSION["USER_PROFILE_PICTURE"] = $row["USER_PROFILE_PICTURE"];
-                    $_SESSION["email"] = $email;
-                    $_SESSION["accesstime"] = date("ymdhis");
-                    $_SESSION["role"] = $user_role;
-
-                    if (isset($_POST["remember"])) {
-                        $token = bin2hex(random_bytes(32));
-                        setcookie("remember_token", $token, time() + (86400 * 30), "/");
-                    } else {
-                        if (isset($_COOKIE["remember_token"])) {
-                            setcookie("remember_token", "", time() - 3600, "/");
-                        }
-                    }
-                    header("Location: trader_dashboard/trader_dashboard.php");
-                    exit();
-                }
-            } elseif ($user_role === 'customer') {
-                if ($row["VERIFIED_CUSTOMER"] != 1) {
-                    $account_error = "Please verify your customer account!";
-                } else {
-                    // Set session variables for customer
-                    $_SESSION["USER_ID"] = $row["USER_ID"];
-                    $_SESSION["USER_TYPE"] = $row["USER_TYPE"];
-                    $_SESSION["FIRST_NAME"] = $row["FIRST_NAME"];
-                    $_SESSION["LAST_NAME"] = $row["LAST_NAME"];
-                    $_SESSION["USER_PROFILE_PICTURE"] = $row["USER_PROFILE_PICTURE"];
-                    $_SESSION["email"] = $email;
-                    $_SESSION["accesstime"] = date("ymdhis");
-                    $_SESSION["role"] = $user_role;
-
-                    if (isset($_POST["remember"])) {
-                        $token = bin2hex(random_bytes(32));
-                        setcookie("remember_token", $token, time() + (86400 * 30), "/");
-                    } else {
-                        if (isset($_COOKIE["remember_token"])) {
-                            setcookie("remember_token", "", time() - 3600, "/");
-                        }
-                    }
-                    header("Location: index.php");
-                    exit();
-                }
-            } elseif ($user_role === 'admin') {
-                // Set session variables for admin
+        if ($row = oci_fetch_assoc($stmt)) {
+            error_log("Stored password for email $email: " . $row["USER_PASSWORD"]);
+            if (password_verify($password, $row["USER_PASSWORD"])) {
                 $_SESSION["USER_ID"] = $row["USER_ID"];
                 $_SESSION["USER_TYPE"] = $row["USER_TYPE"];
                 $_SESSION["FIRST_NAME"] = $row["FIRST_NAME"];
                 $_SESSION["LAST_NAME"] = $row["LAST_NAME"];
                 $_SESSION["USER_PROFILE_PICTURE"] = $row["USER_PROFILE_PICTURE"];
-                $_SESSION["email"] = $email;
-                $_SESSION["accesstime"] = date("ymdhis");
-                $_SESSION["role"] = $user_role;
 
-                if (isset($_POST["remember"])) {
-                    $token = bin2hex(random_bytes(32));
-                    setcookie("remember_token", $token, time() + (86400 * 30), "/");
-                } else {
-                    if (isset($_COOKIE["remember_token"])) {
-                        setcookie("remember_token", "", time() - 3600, "/");
+                if ($user_role === 'trader') {
+                    $_SESSION["email"] = $email;
+                    $_SESSION["accesstime"] = date("ymdhis");
+                    $_SESSION["role"] = $user_role;
+
+                    if ($row["VERIFICATION_STATUS"] != 1) {
+                        $account_error = "Please verify your trader account!";
+                    } else {
+                        if (isset($_POST["remember"])) {
+                            $token = bin2hex(random_bytes(32));
+                            setcookie("remember_token", $token, time() + (86400 * 30), "/");
+                        } else {
+                            if (isset($_COOKIE["remember_token"])) {
+                                setcookie("remember_token", "", time() - 3600, "/");
+                            }
+                        }
+                        header("Location: trader_dashboard/trader_dashboard.php");
+                        exit();
                     }
+                } elseif ($user_role === 'customer') {
+                    if ($row["VERIFIED_CUSTOMER"] != 1) {
+                        $account_error = "Please verify your customer account!";
+                    } else {
+                        if (isset($_POST["remember"])) {
+                            $token = bin2hex(random_bytes(32));
+                            setcookie("remember_token", $token, time() + (86400 * 30), "/");
+                        } else {
+                            if (isset($_COOKIE["remember_token"])) {
+                                setcookie("remember_token", "", time() - 3600, "/");
+                            }
+                        }
+                        header("Location: index.php");
+                        exit();
+                    }
+                } elseif ($user_role === 'admin') {
+                    if (isset($_POST["remember"])) {
+                        $token = bin2hex(random_bytes(32));
+                        setcookie("remember_token", $token, time() + (86400 * 30), "/");
+                    } else {
+                        if (isset($_COOKIE["remember_token"])) {
+                            setcookie("remember_token", "", time() - 3600, "/");
+                        }
+                    }
+                    header("Location: admin_dashboard.php");
+                    exit();
+                } else {
+                    $error_message = "Invalid user role redirection!";
                 }
-                header("Location: admin_dashboard.php");
-                exit();
             } else {
-                $error_message = "Invalid user role redirection!";
+                $error_message = "Incorrect email or password! (Debug: Password mismatch)";
             }
         } else {
-            $error_message = "Incorrect email or password! (Debug: Password mismatch)";
+            $error_message = "Incorrect email or password! (Debug: No user found)";
         }
-    } else {
-        $error_message = "Incorrect email or password! (Debug: No user found)";
-    }
 
         oci_free_statement($stmt);
     }

@@ -3,9 +3,18 @@ include("trader_session.php");
 // Error Reporting If any error ocuurs
 error_reporting(E_ALL);
 ini_set('display_errors',1);
-$user_id = $_SESSION["userid"];
+$user_id = $_SESSION["USER_ID"] ?? null;
 // Variable for Input_validation 
 $input_validation_passed = true;
+function sanitizeInput($input) {
+    // Remove extra spaces
+    $input = trim($input);
+    // Remove HTML special characters
+    $input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+    // Optionally, remove any non-numeric characters (if you're expecting numbers)
+    $input = preg_replace("/[^0-9.]/", "", $input); // allows digits and decimal points
+    return $input;
+}
 if(isset($_POST["submit_product"])){
      // Input Sanizatization 
      require("../input_validation/input_sanitization.php");
@@ -13,10 +22,10 @@ if(isset($_POST["submit_product"])){
     $product_name = isset($_POST["productName"]) ? sanitizeShopName($_POST["productName"]) : "";
 
     // Check if $_POST["company-registration-no"] Exists before sanitizing 
-    $product_price = isset($_POST["price"]) ? sanitizeCompanyRegNo($_POST["price"]) : "";
+    $product_price = isset($_POST["price"]) ? sanitizeInput($_POST["price"]) : "";
 
     // Check if $_POST["company-registration-no"] Exists before sanitizing 
-    $product_quantity = isset($_POST["quantity"]) ? sanitizeCompanyRegNo($_POST["quantity"]) : "";
+    $product_quantity = isset($_POST["quantity"]) ? sanitizeInput($_POST["quantity"]) : "";
 
     // Check if $_POST["shop-description"] Exists before sanitizing 
     $product_description = isset($_POST["description"]) ? sanitizeShopDescription($_POST["description"]) : "";

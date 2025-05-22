@@ -4,9 +4,10 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'src/Exception.php';
-require 'src/PHPMailer.php';
-require 'src/SMTP.php';
+require_once 'src/Exception.php';
+require_once 'src/PHPMailer.php';
+require_once 'src/SMTP.php';
+
 
 
 function sendApprovalEmail($to_email, $name, $shop_id, $trader_id, $SHOP_NAME, $TRADER_TYPE) {

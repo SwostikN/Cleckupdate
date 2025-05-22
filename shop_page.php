@@ -22,14 +22,14 @@ try {
             JOIN Cleck_User u ON s.user_id = u.user_id
             WHERE s.user_id = :trader_id AND u.user_type = 'trader'";
     $stmt = oci_parse($conn, $sql);
-    oci_bind_by_name($stmt, ':trader_id', $trader_id, -1, OCI_B_INT); // Fixed typo: $ader_id to $trader_id
+    oci_bind_by_name($stmt, ':trader_id', $trader_id, -1, OCI_B_INT);
     if (!oci_execute($stmt)) {
         $e = oci_error($stmt);
         error_log("Shop query error: " . $e['message']);
         throw new Exception("Failed to execute shop query: " . $e['message']);
     }
     if ($row = oci_fetch_assoc($stmt)) {
-        $shop_details = $row;
+        $shop_details = $row; // Fixed: Correct assignment of fetched row
     }
     error_log("Shop details query returned: " . ($shop_details ? print_r($shop_details, true) : 'null'));
     oci_free_statement($stmt);
@@ -210,7 +210,11 @@ try {
             padding: 15px;
             text-align: center;
         }
-        .prodight: 40px;
+        .product-card .name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            height: 40px;
             overflow: hidden;
             text-overflow: ellipsis;
         }
@@ -238,8 +242,8 @@ try {
             font-size: 14px;
             transition: background-color 0.2s;
         }
-        .product-card .button.is-primary:hover {
-            background-color: #2557a7;
+        .product-card .button.is-success:hover {
+            background-color: #218838;
         }
         .product-card .favorite {
             position: absolute;
@@ -329,7 +333,7 @@ try {
                     <?php foreach ($products as $product): ?>
                         <div class="product-card">
                             <img src="product_image/<?php echo htmlspecialchars($product['PRODUCT_PICTURE'] ?? 'default.png'); ?>" alt="<?php echo htmlspecialchars($product['PRODUCT_NAME']); ?>">
-                            <a href="add_to_wishlist.php?product_id=<?php echo htmlspecialchars($product['PRODUCT_ID']); ?>&user_id=<?php echo htmlspecialchars($user_id); ?>&searchtext=" class="favorite"><i class="fas fa-heart"></i></a>
+                            <a href="#" class="favorite" data-product="<?php echo htmlspecialchars($product['PRODUCT_ID']); ?>" data-user="<?php echo htmlspecialchars($user_id); ?>" data-search="<?php echo addslashes($searchText); ?>"><i class="fas fa-heart"></i></a>
                             <div class="content">
                                 <div class="name"><?php echo htmlspecialchars($product['PRODUCT_NAME']); ?></div>
                                 <div class="price">
@@ -344,10 +348,10 @@ try {
                                     <?php endif; ?>
                                 </div>
                                 <div class="buttons">
-                                    <a href="add_to_cart.php?productid=<?php echo htmlspecialchars($product['PRODUCT_ID']); ?>&userid=<?php echo htmlspecialchars($user_id); ?>&searchtext=" class="button is-primary">
+                                    <button class="button is-success" onclick="addToCart(<?php echo htmlspecialchars($product['PRODUCT_ID']); ?>, <?php echo htmlspecialchars($user_id); ?>, '<?php echo addslashes($searchText); ?>')">
                                         <span class="icon"><i class="fas fa-shopping-cart"></i></span>
                                         <span>Add to Cart</span>
-                                    </a>
+                                    </button>
                                     <a href="product_detail.php?productId=<?php echo htmlspecialchars($product['PRODUCT_ID']); ?>" class="see-more">See More...</a>
                                 </div>
                             </div>
@@ -364,17 +368,81 @@ try {
 
     <!-- JavaScript -->
     <script>
-        // Heart Icon Toggle
-        document.querySelectorAll('.favorite').forEach(icon => {
-            icon.addEventListener('click', function(e) {
-                e.preventDefault();
-                this.classList.toggle('active');
-            });
-        });
-
         // Sort Form Submission
         document.getElementById('sort-by').addEventListener('change', function() {
             document.getElementById('sort_form').submit();
+        });
+
+        // Add to Cart Function
+        function addToCart(productId, userId, searchText) {
+            event.preventDefault();
+            if (!userId || userId === '0') {
+                alert('Please log in to add items to your cart.');
+                window.location.href = 'customer_signin.php?return_url=' + encodeURIComponent(window.location.href);
+                return;
+            }
+            fetch(`add_to_cart.php?productid=${productId}&userid=${userId}&searchtext=${encodeURIComponent(searchText)}`)
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Product added to cart!');
+                        if (confirm('Do you want to view your cart?')) {
+                            window.location.href = 'cart.php';
+                        }
+                    } else {
+                        alert('Failed to add product to cart: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Cart Error:', error);
+                    alert('An error occurred while adding to cart: ' + error.message);
+                });
+        }
+
+        // Wishlist Toggle Function
+        function toggleWishlist(productId, userId, searchText) {
+            event.preventDefault();
+            if (!userId || userId === '0') {
+                alert('Please log in to add items to your wishlist.');
+                window.location.href = 'customer_signin.php?return_url=' + encodeURIComponent(window.location.href);
+                return;
+            }
+            const heartIcon = event.currentTarget;
+            const isActive = heartIcon.classList.contains('active');
+            const url = isActive
+                ? `remove_from_wishlist.php?product_id=${productId}&user_id=${userId}&searchtext=${encodeURIComponent(searchText)}`
+                : `add_to_wishlist.php?product_id=${productId}&user_id=${userId}&searchtext=${encodeURIComponent(searchText)}`;
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status === 'success') {
+                        heartIcon.classList.toggle('active');
+                        alert(isActive ? 'Product removed from wishlist!' : 'Product added to wishlist!');
+                    } else {
+                        alert('Failed to update wishlist: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Wishlist Error:', error);
+                    alert('An error occurred while updating wishlist: ' + error.message);
+                });
+        }
+
+        // Attach Wishlist Event Listeners
+        document.querySelectorAll('.favorite').forEach(icon => {
+            icon.addEventListener('click', function(e) {
+                e.preventDefault();
+                const productId = this.getAttribute('data-product');
+                const userId = this.getAttribute('data-user');
+                const searchText = this.getAttribute('data-search');
+                toggleWishlist(productId, userId, searchText);
+            });
         });
     </script>
 </body>

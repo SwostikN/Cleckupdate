@@ -4,7 +4,7 @@ include("trader_session.php");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$user_id = $_SESSION["userid"];
+$user_id = $_SESSION["USER_ID"];
 
 include("../connection/connection.php");
 
@@ -57,6 +57,15 @@ if (isset($_POST["productCategory"])) {
     // Free the statement resources
     oci_free_statement($stmt);
 }
+function sanitizeInput($input) {
+    // Remove extra spaces
+    $input = trim($input);
+    // Remove HTML special characters
+    $input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+    // Optionally, remove any non-numeric characters (if you're expecting numbers)
+    $input = preg_replace("/[^0-9.]/", "", $input); // allows digits and decimal points
+    return $input;
+}
 
 $input_validation_passed = true;
 if (isset($_POST["saveChangesBtn"])) {
@@ -69,7 +78,7 @@ if (isset($_POST["saveChangesBtn"])) {
     $discount_occassion = isset($_POST["productDescription"]) ? sanitizeShopDescription($_POST["productDescription"]) : "";
 
     // Check if $_POST["company-registration-no"] Exists before sanitizing
-    $discount_percent = isset($_POST["stockQuantity"]) ? sanitizeCompanyRegNo($_POST["stockQuantity"]) : "";
+    $discount_percent = isset($_POST["stockQuantity"]) ? sanitizeInput($_POST["stockQuantity"]) : "";
 
     // Input Validation
     require("../input_validation/input_validation.php");
@@ -150,7 +159,7 @@ oci_close($conn);
     </div>
     <div id="productDetailsContainer" class="product-details-container">
         <div class="left-div">
-            <img src="../product_image/<?php echo $product_picture; ?>" alt="Product Picture" class="product-picture">
+            <!-- <img src="../product_image/<?php echo htmlspecialchars($product_picture); ?>" alt="Product Picture" class="product-picture"> -->
         </div>
 
         <div class="right-div">

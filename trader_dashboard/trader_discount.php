@@ -3,7 +3,7 @@ include("trader_session.php");
 // Error Reporting If any error ocuurs
 error_reporting(E_ALL);
 ini_set('display_errors',1);
-$user_id = $_SESSION["userid"];
+$user_id = $_SESSION["USER_ID"];
 // Variable for Input_validation 
 ?>
 <!DOCTYPE html>
