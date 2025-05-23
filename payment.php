@@ -4,8 +4,8 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Replace these placeholders with your actual sandbox credentials
-$clientId = 'AZEg4DFBVKyZtyLrWpUJARYghveukRyotzC4MmI2wmSkS8Gcgfd34uoXAwRVqs_wd33bJQHC391nBu7b';
-$clientSecret = 'EKflrEr2gKJCu6UqIte4az8H6p3JOQ3zVHHh61NRmf4DejaXl0mXXfapg4RYzskF4U48gdT1faaj4K8x';
+$clientId = 'AW7Va3T7aJJzbdEdc7-PoAM8UumMwBGknHhzBfwv1UCXQDvkfO8Up3F6c-UZTj_M7zcyhwJjRhpS_dr7';
+$clientSecret = 'EDVQS-C8iaUU3JwQHplLwQHsP0gOnSc_LVZ4-TIY4cLM1Q5YksmT7TNVH-bAADT4I3o-2eTYlVhZycZA';
 $orderId = $_GET['order_id']; // Assuming 'order_id' is passed from the previous page
 
 // Include connection file to the database
@@ -33,14 +33,16 @@ $productDescription = "Purchased " . $_GET["total_products"] . " Products From C
 
 // Set up PayPal API endpoints for sandbox
 $apiEndpoint = 'https://api.sandbox.paypal.com';
-$redirectUrl = 'http://localhost/payment_order.php'; // Replace with your thank you page URL
+$redirectUrl = 'http://localhost//newpull/thankyou.php'; 
 
 // Set up PayPal API request headers
 $headers = [
     'Content-Type: application/json',
     'Authorization: Basic ' . base64_encode("$clientId:$clientSecret")
 ];
-
+$productNames = isset($_GET['products']) ? $_GET['products'] : '';
+$slotDate = isset($_GET['slot_date']) ? $_GET['slot_date'] : '';
+$slotTime = isset($_GET['slot_time']) ? $_GET['slot_time'] : '';
 // Set up PayPal API request body
 $body = [
     'intent' => 'sale',
@@ -56,12 +58,14 @@ $body = [
             'description' => $productDescription
         ]
     ],
+    
     'redirect_urls' => [
         'return_url' => $redirectUrl . '?success=true' . 
                         '&total_price=' . urlencode($_GET['total_price']) . 
                         '&total_products=' . urlencode($_GET['total_products']) . 
                         '&order_id=' . urlencode($_GET['order_id']) . 
                         '&customer_id=' . urlencode($_GET['customer_id']),
+                        
         'cancel_url' => $redirectUrl . '?success=false'
     ]
 ];

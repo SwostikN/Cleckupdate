@@ -236,14 +236,15 @@ $availability = getUpcomingAvailability();
                         <button type="submit" name="submit">Submit</button>
                     </form>
 
-                    <?php if(isset($_POST['submit'])): ?>
-                        <form class="bottom-form" id="payment-form">
+                   <?php if(isset($_POST['submit'])): ?>
+                        <div class="bottom-form">
                             <h3>Select Payment Option:</h3>
-                            <input type='radio' id='paypal' name='payment' value='PayPal' required checked>
+                            <input type='radio' id='paypal' name='payment' value='PayPal' checked>
                             <label for='paypal'>PayPal</label><br>
                             <button type='button' id='paypal-button'>Proceed to PayPal</button>
-                        </form>
+                        </div>
                     <?php endif; ?>
+
                 </div>
             </div>
         </div>
@@ -288,12 +289,11 @@ $availability = getUpcomingAvailability();
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            updateTimeSlots();
-
+       document.addEventListener('DOMContentLoaded', function() {
             var paypalButton = document.getElementById('paypal-button');
             if (paypalButton) {
-                paypalButton.addEventListener('click', function() {
+                paypalButton.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent any default behavior
                     var selectedPaymentMethod = document.querySelector('input[name="payment"]:checked');
                     if (selectedPaymentMethod) {
                         var paymentMethod = selectedPaymentMethod.value;
@@ -301,17 +301,18 @@ $availability = getUpcomingAvailability();
                         var totalProducts = "<?php echo htmlspecialchars($total_products); ?>";
                         var orderId = "<?php echo htmlspecialchars($order_id); ?>";
                         var customerId = "<?php echo htmlspecialchars($customer_id); ?>";
-                        window.location.href = 'payment.php?method=' + encodeURIComponent(paymentMethod) + 
+                        var paypalUrl = 'payment.php?method=' + encodeURIComponent(paymentMethod) + 
                             '&total_price=' + encodeURIComponent(totalPrice) + 
                             '&total_products=' + encodeURIComponent(totalProducts) +
                             '&order_id=' + encodeURIComponent(orderId) +
                             '&customer_id=' + encodeURIComponent(customerId);
+                        window.open(paypalUrl, 'PayPalWindow', 'width=600,height=700,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes');
                     } else {
                         alert('Please select a payment method.');
                     }
                 });
-            }
-        });
+    }
+});
     </script>
 </body>
 </html>
