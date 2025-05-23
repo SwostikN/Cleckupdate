@@ -1,16 +1,19 @@
 <?php
 include("session/session.php");
 
-// Validate and assign GET parameters
-$total_price = isset($_GET['total_price']) ? $_GET['total_price'] : 0;
-$total_products = isset($_GET['number_product']) ? $_GET['number_product'] : 0;
-$order_id = isset($_GET['order_id']) ? $_GET['order_id'] : null;
-$customer_id = isset($_GET['customerid']) ? $_GET['customerid'] : null;
-$cart_id = isset($_GET['cartid']) ? $_GET['cartid'] : null;
-$discount_amount = isset($_GET['discount']) ? $_GET['discount'] : 0;
+// Validate and assign POST parameters with debugging
+$total_price = isset($_POST['total_price']) ? floatval($_POST['total_price']) : (isset($_GET['total_price']) ? floatval($_GET['total_price']) : 0);
+$total_products = isset($_POST['number_product']) ? intval($_POST['number_product']) : (isset($_GET['number_product']) ? intval($_GET['number_product']) : 0);
+$order_id = isset($_POST['order_id']) ? $_POST['order_id'] : (isset($_GET['order_id']) ? $_GET['order_id'] : null);
+$customer_id = isset($_POST['customerid']) ? $_POST['customerid'] : (isset($_GET['customerid']) ? $_GET['customerid'] : null);
+$cart_id = isset($_POST['cartid']) ? $_POST['cartid'] : (isset($_GET['cartid']) ? $_GET['cartid'] : null);
+$discount_amount = isset($_POST['discount']) ? floatval($_POST['discount']) : (isset($_GET['discount']) ? floatval($_GET['discount']) : 0);
 $selectedTime = isset($_POST['time']) ? $_POST['time'] : '';
 $selectedDay = isset($_POST['day']) ? $_POST['day'] : '';
 $selectedLocation = isset($_POST['location']) ? $_POST['location'] : '';
+
+// Log received parameters for debugging
+error_log("slot_time.php: Received parameters - total_price: $total_price, number_product: $total_products, order_id: $order_id, customer_id: $customer_id, cart_id: $cart_id, discount: $discount_amount at " . date('Y-m-d H:i:s'), 3, 'debug.log');
 
 if (isset($_POST['submit'])) {
     // Process the form data
@@ -233,10 +236,16 @@ $availability = getUpcomingAvailability();
                             <option value="Location 2" <?php if(isset($selectedLocation) && $selectedLocation == "Location 2") { echo "selected"; } ?>>Location 2</option>
                             <option value="Location 3" <?php if(isset($selectedLocation) && $selectedLocation == "Location 3") { echo "selected"; } ?>>Location 3</option>
                         </select>
+                        <input type="hidden" name="customerid" value="<?php echo htmlspecialchars($customer_id); ?>">
+                        <input type="hidden" name="order_id" value="<?php echo htmlspecialchars($order_id); ?>">
+                        <input type="hidden" name="cartid" value="<?php echo htmlspecialchars($cart_id); ?>">
+                        <input type="hidden" name="total_price" value="<?php echo htmlspecialchars($total_price); ?>">
+                        <input type="hidden" name="number_product" value="<?php echo htmlspecialchars($total_products); ?>">
+                        <input type="hidden" name="discount" value="<?php echo htmlspecialchars($discount_amount); ?>">
                         <button type="submit" name="submit">Submit</button>
                     </form>
 
-                   <?php if(isset($_POST['submit'])): ?>
+                    <?php if(isset($_POST['submit'])): ?>
                         <div class="bottom-form">
                             <h3>Select Payment Option:</h3>
                             <input type='radio' id='paypal' name='payment' value='PayPal' checked>
@@ -289,31 +298,31 @@ $availability = getUpcomingAvailability();
             }
         }
 
-       document.addEventListener('DOMContentLoaded', function() {
-    var paypalButton = document.getElementById('paypal-button');
-    if (paypalButton) {
-        paypalButton.addEventListener('click', function(event) {
-            event.preventDefault();
-            var selectedPaymentMethod = document.querySelector('input[name="payment"]:checked');
-            if (selectedPaymentMethod) {
-                var paymentMethod = selectedPaymentMethod.value;
-                var totalPrice = "<?php echo htmlspecialchars($total_price); ?>";
-                var totalProducts = "<?php echo htmlspecialchars($total_products); ?>";
-                var orderId = "<?php echo htmlspecialchars($order_id); ?>";
-                var customerId = "<?php echo htmlspecialchars($customer_id); ?>";
-                var paypalUrl = 'payment.php?method=' + encodeURIComponent(paymentMethod) + 
-                    '&total_price=' + encodeURIComponent(totalPrice) + 
-                    '&total_products=' + encodeURIComponent(totalProducts) +
-                    '&order_id=' + encodeURIComponent(orderId) +
-                    '&customer_id=' + encodeURIComponent(customerId);
-                // Open PayPal in a new window and do NOT change the main tab
-                window.open(paypalUrl, 'PayPalWindow', 'width=600,height=700,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes');
-            } else {
-                alert('Please select a payment method.');
+        document.addEventListener('DOMContentLoaded', function() {
+            var paypalButton = document.getElementById('paypal-button');
+            if (paypalButton) {
+                paypalButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    var selectedPaymentMethod = document.querySelector('input[name="payment"]:checked');
+                    if (selectedPaymentMethod) {
+                        var paymentMethod = selectedPaymentMethod.value;
+                        var totalPrice = "<?php echo htmlspecialchars($total_price); ?>";
+                        var totalProducts = "<?php echo htmlspecialchars($total_products); ?>";
+                        var orderId = "<?php echo htmlspecialchars($order_id); ?>";
+                        var customerId = "<?php echo htmlspecialchars($customer_id); ?>";
+                        var paypalUrl = 'payment.php?method=' + encodeURIComponent(paymentMethod) + 
+                            '&total_price=' + encodeURIComponent(totalPrice) + 
+                            '&total_products=' + encodeURIComponent(totalProducts) +
+                            '&order_id=' + encodeURIComponent(orderId) +
+                            '&customer_id=' + encodeURIComponent(customerId);
+                        // Open PayPal in a new window and do NOT change the main tab
+                        window.open(paypalUrl, 'PayPalWindow', 'width=600,height=700,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes');
+                    } else {
+                        alert('Please select a payment method.');
+                    }
+                });
             }
         });
-    }
-});
     </script>
 </body>
 </html>
