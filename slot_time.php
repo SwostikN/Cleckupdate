@@ -290,27 +290,28 @@ $availability = getUpcomingAvailability();
         }
 
        document.addEventListener('DOMContentLoaded', function() {
-            var paypalButton = document.getElementById('paypal-button');
-            if (paypalButton) {
-                paypalButton.addEventListener('click', function(event) {
-                    event.preventDefault(); // Prevent any default behavior
-                    var selectedPaymentMethod = document.querySelector('input[name="payment"]:checked');
-                    if (selectedPaymentMethod) {
-                        var paymentMethod = selectedPaymentMethod.value;
-                        var totalPrice = "<?php echo htmlspecialchars($total_price); ?>";
-                        var totalProducts = "<?php echo htmlspecialchars($total_products); ?>";
-                        var orderId = "<?php echo htmlspecialchars($order_id); ?>";
-                        var customerId = "<?php echo htmlspecialchars($customer_id); ?>";
-                        var paypalUrl = 'payment.php?method=' + encodeURIComponent(paymentMethod) + 
-                            '&total_price=' + encodeURIComponent(totalPrice) + 
-                            '&total_products=' + encodeURIComponent(totalProducts) +
-                            '&order_id=' + encodeURIComponent(orderId) +
-                            '&customer_id=' + encodeURIComponent(customerId);
-                        window.open(paypalUrl, 'PayPalWindow', 'width=600,height=700,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes');
-                    } else {
-                        alert('Please select a payment method.');
-                    }
-                });
+    var paypalButton = document.getElementById('paypal-button');
+    if (paypalButton) {
+        paypalButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            var selectedPaymentMethod = document.querySelector('input[name="payment"]:checked');
+            if (selectedPaymentMethod) {
+                var paymentMethod = selectedPaymentMethod.value;
+                var totalPrice = "<?php echo htmlspecialchars($total_price); ?>";
+                var totalProducts = "<?php echo htmlspecialchars($total_products); ?>";
+                var orderId = "<?php echo htmlspecialchars($order_id); ?>";
+                var customerId = "<?php echo htmlspecialchars($customer_id); ?>";
+                var paypalUrl = 'payment.php?method=' + encodeURIComponent(paymentMethod) + 
+                    '&total_price=' + encodeURIComponent(totalPrice) + 
+                    '&total_products=' + encodeURIComponent(totalProducts) +
+                    '&order_id=' + encodeURIComponent(orderId) +
+                    '&customer_id=' + encodeURIComponent(customerId);
+                // Open PayPal in a new window and do NOT change the main tab
+                window.open(paypalUrl, 'PayPalWindow', 'width=600,height=700,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes');
+            } else {
+                alert('Please select a payment method.');
+            }
+        });
     }
 });
     </script>

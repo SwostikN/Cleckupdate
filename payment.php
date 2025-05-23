@@ -52,7 +52,7 @@ $body = [
     'transactions' => [
         [
             'amount' => [
-                'total' => number_format($amount / 100, 2),
+                'total' => number_format($amount / 100, 2), //need to remove this in demo. 
                 'currency' => $currency
             ],
             'description' => $productDescription
@@ -60,13 +60,12 @@ $body = [
     ],
     
     'redirect_urls' => [
-        'return_url' => $redirectUrl . '?success=true' . 
-                        '&total_price=' . urlencode($_GET['total_price']) . 
-                        '&total_products=' . urlencode($_GET['total_products']) . 
-                        '&order_id=' . urlencode($_GET['order_id']) . 
-                        '&customer_id=' . urlencode($_GET['customer_id']),
-                        
-        'cancel_url' => $redirectUrl . '?success=false'
+    'return_url' => $redirectUrl . '?success=true' . 
+        '&total_price=' . urlencode($_GET['total_price']) . 
+        '&total_products=' . urlencode($_GET['total_products']) . 
+        '&order_id=' . urlencode($_GET['order_id']) . 
+        '&customer_id=' . urlencode($_GET['customer_id']),
+    'cancel_url' => $redirectUrl . '?success=false'
     ]
 ];
 
@@ -75,9 +74,16 @@ $payment = makePayPalApiCall($apiEndpoint, $headers, $body);
 
 // Redirect user to PayPal for payment authorization
 if(isset($payment['id'])) {
-    $redirectUrl = $payment['links'][1]['href'];
-    header('Location: ' . $redirectUrl); // Redirect to PayPal for payment authorization
-    exit;
+    foreach ($payment['links'] as $link) {
+        if ($link['rel'] === 'approval_url') {
+            $redirectUrl = $link['href'];
+            echo "<script>
+                window.open('$redirectUrl', '_blank');
+                
+            </script>";
+            exit;
+        }
+    }
 } else {
     echo "Payment failed. Please try again later.";
 }
