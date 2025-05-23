@@ -8,8 +8,8 @@ require_once 'src/SMTP.php';
 
 function sendQueryReceivedEmail($to_email, $name, $query_id) {
     // Gmail SMTP configuration
-    $smtp_username = "sampurnasimkhada@gmail.com@gmail.com"; // Your Gmail address
-    $smtp_password = ""; // Your Gmail password
+    $smtp_username = "adhikariroshankumar7@gmail.com"; // Your Gmail address
+    $smtp_password = "nbei mnqe qgvp lpcy"; // Your Gmail password
 
     // Create a PHPMailer instance
     $mail = new PHPMailer(true);

@@ -12,8 +12,8 @@ require_once 'src/SMTP.php';
 
 function sendApprovalEmail($to_email, $name, $shop_id, $trader_id, $SHOP_NAME, $TRADER_TYPE) {
     // Gmail SMTP configuration
-    $smtp_username = "sampurnasimkhada@gmail.com"; // Your Gmail address
-    $smtp_password = ""; // Your Gmail password
+    $smtp_username = "adhikariroshankumar7@gmail.com"; // Your Gmail address
+    $smtp_password = "nbei mnqe qgvp lpcy"; // Your Gmail password
 
     // Create a PHPMailer instance
     $mail = new PHPMailer(true);
